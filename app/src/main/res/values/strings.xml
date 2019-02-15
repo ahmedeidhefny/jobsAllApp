@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">JobsAll</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_profile">My Profile</string>
+    <string name="nav_categories">All Job Categories</string>
+    <string name="nav_saved_job">Saved Jobs</string>
+    <string name="nav_applied_job">Applied Jobs</string>
+    <string name="nav_my_job">My Jobs</string>
+    <string name="nav_logout">Log Out</string>
+
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
+    <string name="content_des_logo">JobsAll</string>
+    <string name="massage_notSeclect_userType">Please, Select UserType?</string>
+    <string name="massage_notSeclect_gender">Please, Select GenderType?</string>
+    <string name="massage_user_error">Not Have User Data</string>
+
+    <string-array name="subCategories">
+        <item>Android Developer</item>
+        <item>IOS Developer</item>
+        <item>Java Developer</item>
+        <item>Python Developer</item>
+        <item>PHP Developer</item>
+        <item>ASP.NET Developer</item>
+        <item>WordPress Developer</item>
+        <item>UI/UX Developer</item>
+        <item>Oracle Developer</item>
+        <item>Database Developer</item>
+        <item>System Analyst Developer</item>
+        <item>Developer</item>
+        <item>Other Jobs</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Programming Jobs</item>
+        <item>IT Jobs</item>
+        <item>Engineering Jobs</item>
+        <item>Other Jobs</item>
+    </string-array>
+
+</resources>

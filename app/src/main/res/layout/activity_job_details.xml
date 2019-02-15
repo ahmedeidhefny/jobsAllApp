@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.JobDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="70dp"
+                            app:cardBackgroundColor="@color/colorWhite"
+                            app:cardCornerRadius="10dp"
+                            app:contentPadding="16dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/job_details_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="75dp"
+                                    android:text="Android Developer"
+                                    android:textColor="@color/colorBlue"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/job_details_compName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@drawable/text_line_graphic"
+                                    android:text="International"
+                                    android:textColor="@color/colorBlue"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/jb_details_address"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="10dp"
+                                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                                    android:drawablePadding="4dp"
+                                    android:text="Egypt - Giza"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="14dp" />
+
+                                <android.support.v7.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="20dp"
+                                    android:elevation="4dp"
+                                    app:cardBackgroundColor="@color/colorPrimaryDark"
+                                    app:cardCornerRadius="8dp">
+
+                                    <RelativeLayout
+                                        android:id="@+id/apply_btn"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_centerInParent="true"
+                                            android:text="Apply To This Job"
+                                            android:textColor="@color/colorWhite"
+                                            android:textSize="14sp" />
+                                    </RelativeLayout>
+                                </android.support.v7.widget.CardView>
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
+                        <include
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            layout="@layout/partial_job_details_table_layout"></include>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="@color/colorWhite"
+                            app:cardCornerRadius="10dp"
+                            app:contentPaddingBottom="16dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/itemBackground"
+                                    android:padding="8dp"
+                                    android:text="Job Description"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="16dp"
+                                    android:paddingRight="16dp">
+
+                                    <TextView
+                                        android:id="@+id/job_details_des"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/colorBlack"
+                                        android:textSize="16dp"
+                                        android:textStyle="italic" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="30dp"
+                            app:cardBackgroundColor="@color/colorWhite"
+                            app:cardCornerRadius="10dp"
+                            app:contentPaddingBottom="16dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/itemBackground"
+                                    android:padding="8dp"
+                                    android:text="Job Requirement"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="16dp"
+                                    android:paddingRight="16dp">
+
+                                    <TextView
+                                        android:id="@+id/job_details_req"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/colorBlack"
+                                        android:textSize="16dp"
+                                        android:textStyle="italic" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
+
+                    </LinearLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_centerHorizontal="true"
+                        android:elevation="1dp"
+                        android:src="@drawable/logo"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="2dp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

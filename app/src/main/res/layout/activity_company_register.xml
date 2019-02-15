@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:padding="8dp"
+    tools:context=".Activities.CompanyRegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/company_data"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp">
+
+                <EditText
+                    android:id="@+id/company_name"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="4dp"
+                    android:drawableLeft="@drawable/ic_comp_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:hint="Company Name"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/websiteLink"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_below="@+id/company_name"
+                    android:drawableLeft="@drawable/ic_web_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:hint="Website Link"
+                    android:inputType="text" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/compSpinner"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/websiteLink"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="4dp"
+                    app:ms_arrowColor="@color/colorBlack"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/colorBlack"
+                    app:ms_floatingLabelText="Category:"
+                    app:ms_hint="Chosee Only One Category..."
+                    app:ms_hintColor="#A9A9A9"
+                    app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+
+                <EditText
+                    android:id="@+id/foundedDate"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/compSpinner"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="4dp"
+                    android:drawableRight="@drawable/ic_date_range_black_24dp"
+                    android:ems="10"
+                    android:hint="Founded Date"
+                    android:inputType="date" />
+
+                <LinearLayout
+                    android:id="@+id/compLocation_layout"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/foundedDate"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="4dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                        android:text="Location"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/compLocation"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/compCountry"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginRight="30dp"
+                            android:ems="10"
+                            android:hint="Country"
+                            android:inputType="text" />
+
+                        <EditText
+                            android:id="@+id/compCity"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="City"
+                            android:inputType="text" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/compLocation_layout"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_sum_linear_black_24dp"
+                        android:text="Company Profile"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/company_profile"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginRight="4dp"
+                        android:gravity="top|left"
+                        android:hint="Summery About This Company.."
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:lines="8"
+                        android:maxLines="20"
+                        android:scrollbars="vertical" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/company_data"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:elevation="8dp"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardCornerRadius="25dp">
+
+                <RelativeLayout
+                    android:id="@+id/Company_goToApp_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Go To App "
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/colorAccent"
+    app:cardCornerRadius="10dp"
+    app:contentPadding="8dp">
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Job Details"
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </TableRow>
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Salary"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/job_salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="3,500 - 4,500"
+                android:textColor="@color/colorBlack" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Category"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/job_desc_cat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Programming"
+                android:textColor="@color/colorBlack" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Vacancies Number"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/job_desc_vanc_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="5"
+                android:textColor="@color/colorBlack" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Year Of Expereience"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/jb_desc_exp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="0-3"
+                android:textColor="@color/colorBlack" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Degree Level"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/job_desc_degree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Bachelor"
+                android:textColor="@color/colorBlack" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Nationality"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/job_desc_national"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Egyption"
+                android:textColor="@color/colorBlack" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Gender"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/job_desc_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Male"
+                android:textColor="@color/colorBlack" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Employment Type"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/job_desc_empl_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="FullTime"
+                android:textColor="@color/colorBlack" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Age"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/job_desc_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="22-35"
+                android:textColor="@color/colorBlack" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Expiry Date"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/job_desc_expiryDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="11-6-2019"
+                android:textColor="@color/colorBlack" />
+        </TableRow>
+
+
+    </TableLayout>
+</android.support.v7.widget.CardView>

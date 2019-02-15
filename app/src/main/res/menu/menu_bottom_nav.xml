@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/nav_home" />
+        <item
+            android:id="@+id/nav_saved_job"
+            android:icon="@drawable/ic_bookmark_black_24dp"
+            android:title="@string/nav_saved_job" />
+        <item
+            android:id="@+id/nav_applied_job"
+            android:icon="@drawable/ic_apply_app_black_24dp"
+            android:title="@string/nav_applied_job" />
+
+    </group>
+</menu>

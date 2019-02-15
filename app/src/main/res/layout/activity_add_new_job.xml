@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:padding="8dp"
+    android:fillViewport="true"
+    tools:context=".Activities.AddNewJobActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <EditText
+                android:id="@+id/job_title"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/ic_title_black_24dp"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Position Title"
+                android:inputType="text" />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/jobSpinner"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/job_title"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="4dp"
+                app:ms_arrowColor="@color/colorBlack"
+                app:ms_arrowSize="16dp"
+                app:ms_floatingLabelColor="@color/colorBlack"
+                app:ms_floatingLabelText="Category:"
+                app:ms_hint="Chosee Only One Category..."
+                app:ms_hintColor="#A9A9A9"
+                app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+
+            <EditText
+                android:id="@+id/job_vacancies_num"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jobSpinner"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/ic_filter_num_black_24dp"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Vacancies Number"
+                android:inputType="number" />
+            <LinearLayout
+                android:id="@+id/yearExpLayout"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/job_vacancies_num"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_year_black_24dp"
+                    android:text="Years of Experience"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/min"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="30dp"
+                        android:ems="10"
+                        android:hint="Min"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/max"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="Max"
+                        android:inputType="number" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/salary"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yearExpLayout"
+                android:layout_marginBottom="10dp"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Job Salary"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/degree_level"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/salary"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/ic_layers_black_24dp"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Degree(Education) Level"
+                android:inputType="text" />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/jobTypeSpinner"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="4dp"
+                android:layout_below="@+id/degree_level"
+                app:ms_arrowColor="@color/colorBlack"
+                app:ms_arrowSize="16dp"
+                app:ms_floatingLabelColor="@color/colorBlack"
+                app:ms_floatingLabelText="JobType:"
+                app:ms_hint="Choose JobType ..."
+                app:ms_hintColor="#A9A9A9"
+                app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+
+            <LinearLayout
+                android:id="@+id/applied_gender_layout"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/jobTypeSpinner"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:drawableLeft="@drawable/ic_wc_black_24dp"
+                    android:text="Apply Gender"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/job_gender_radio_group"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/male_radioBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@drawable/radio_btn_background"
+                        android:paddingLeft="10dp"
+                        android:text="Male"
+                        android:textColor="@drawable/radio_btn_colortext_2"
+                        android:textSize="14dp" />
+
+                    <RadioButton
+                        android:id="@+id/female_radioBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@drawable/radio_btn_background"
+                        android:paddingLeft="10dp"
+                        android:text="Female"
+                        android:textColor="@drawable/radio_btn_colortext_2"
+                        android:textSize="14dp" />
+                    <RadioButton
+                        android:id="@+id/both_radioBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@drawable/radio_btn_background"
+                        android:paddingLeft="10dp"
+                        android:text="Both"
+                        android:textColor="@drawable/radio_btn_colortext_2"
+                        android:textSize="14dp" />
+                </RadioGroup>
+            </LinearLayout>
+            <EditText
+                android:id="@+id/nationality"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/applied_gender_layout"
+                android:layout_marginBottom="10dp"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Apply Nationality"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/applied_age"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/nationality"
+                android:layout_marginBottom="10dp"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Apply Age Ex.22 - 30"
+                android:inputType="text" />
+
+            <LinearLayout
+                android:id="@+id/job_location_layout"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/applied_age"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                    android:text="Location"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/jobCountry"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="30dp"
+                        android:ems="10"
+                        android:hint="Country"
+                        android:inputType="text" />
+
+                    <EditText
+                        android:id="@+id/jobCity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="City"
+                        android:inputType="text" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/expiry_date"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/job_location_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="4dp"
+                android:drawableRight="@drawable/ic_date_range_black_24dp"
+                android:ems="10"
+                android:hint="Expiry Date"
+                android:inputType="date" />
+
+            <LinearLayout
+                android:id="@+id/job_desc_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/expiry_date"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_sum_linear_black_24dp"
+                    android:text="Job Description"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/job_description"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|left"
+                    android:hint="Summery About The Job Description.."
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:lines="4"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/job_req_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/job_desc_layout"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_format_list_black_24dp"
+                    android:text="Job Requirement"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/job_requirement"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|left"
+                    android:hint="Summery About The Job Requirement.."
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:lines="4"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:elevation="8dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/job_req_layout"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardCornerRadius="25dp">
+
+                <RelativeLayout
+                    android:id="@+id/post_job_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Post New Job "
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
