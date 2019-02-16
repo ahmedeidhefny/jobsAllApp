@@ -3,11 +3,15 @@ package com.udacity.ahmed_eid.jobsallapp.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
 import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
@@ -15,6 +19,7 @@ import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class JobDetailsActivity extends AppCompatActivity {
 
@@ -53,6 +58,8 @@ public class JobDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.apply_btn)
     RelativeLayout applyBtn;
+    @BindView(R.id.job_details_compLogo)
+    CircleImageView jobDetailsCompLogo;
 
     private Job job;
 
@@ -76,12 +83,39 @@ public class JobDetailsActivity extends AppCompatActivity {
         } else {
             showErrorMassage();
         }
-        if (intent.hasExtra(AppConstants.INTENT_JobAdapterCompNameKey)) {
+        if (intent.hasExtra(AppConstants.INTENT_JobAdapterCompNameKey)
+                && intent.hasExtra(AppConstants.INTENT_JobAdapterCompLogoKey)) {
             String comName = intent.getStringExtra(AppConstants.INTENT_JobAdapterCompNameKey);
             jobDetailsCompName.setText(comName);
-        }else{
-            Log.e(TAG,"Error:companyName is empty");
+            String compLogo = intent.getStringExtra(AppConstants.INTENT_JobAdapterCompLogoKey);
+            if (!TextUtils.isEmpty(compLogo)) {
+                Glide.with(this)
+                        .load(compLogo)
+                        .error(R.drawable.default_logo)
+                        .into(jobDetailsCompLogo);
+            }else {
+                jobDetailsCompLogo.setImageResource(R.drawable.default_logo);
+            }
+        } else {
+            Log.e(TAG, "Error:companyName and logo is empty");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_details_activity, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.detail_edit) {
+            return true;
+        } else if (item.getItemId() == R.id.detail_delete) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showErrorMassage() {

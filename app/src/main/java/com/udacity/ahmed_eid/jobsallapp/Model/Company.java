@@ -17,7 +17,11 @@ public class Company {
 
     public Company(){}
 
-    public Company(String userId,String compName,String userType, String compWebsite, String compCategory, String compFounderDate, String compCity, String compCountry, String compProfile) {
+    public Company(String compLogo) {
+        this.compLogo = compLogo;
+    }
+
+    public Company(String userId, String compName, String userType, String compWebsite, String compCategory, String compFounderDate, String compCity, String compCountry, String compProfile) {
         this.userId = userId ;
         this.compName = compName;
         this.compWebsite = compWebsite;
@@ -28,6 +32,9 @@ public class Company {
         this.compCategory = compCategory;
         this.userType = userType;
     }
+
+
+
 
     public String getUserId() {
         return userId;

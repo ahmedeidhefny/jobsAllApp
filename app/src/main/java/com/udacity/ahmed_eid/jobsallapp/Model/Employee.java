@@ -40,6 +40,8 @@ public class Employee {
         this.userType = userType;
     }
 
+
+
     public String getMilitaryStatus() {
         return militaryStatus;
     }

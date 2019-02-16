@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,7 +60,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
         readCompanyData(job, holder.compName, holder.image, holder.viewBtn);
     }
 
-    private void readCompanyData(final Job job, final TextView compName, CircleImageView image, final RelativeLayout viewBtn) {
+    private void readCompanyData(final Job job, final TextView compName, final CircleImageView image, final RelativeLayout viewBtn) {
         String companyId = job.getCompanyId();
         Query query = mDatabase.orderByChild("userId").equalTo(companyId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -69,7 +71,16 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
                         Company company = snapshot.getValue(Company.class);
                         String comName = company.getCompName();
                         compName.setText(comName);
-                        goToDetailsActivity(job, viewBtn, comName);
+                        String logo = company.getCompLogo();
+                        if (!TextUtils.isEmpty(logo)) {
+                            Glide.with(mContext)
+                                    .load(logo)
+                                    .error(R.drawable.default_logo)
+                                    .into(image);
+                        }else {
+                            image.setImageResource(R.drawable.default_logo);
+                        }
+                        goToDetailsActivity(job, viewBtn, comName, logo);
                     }
                 } else {
                     Log.e(TAG, "data of company is empty");
@@ -85,14 +96,15 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
         });
     }
 
-    private void goToDetailsActivity(final Job job, RelativeLayout viewBtn, final String comName) {
+    private void goToDetailsActivity(final Job job, RelativeLayout viewBtn, final String comName, final String logo) {
         viewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent detailJobIntent = new Intent(mContext, JobDetailsActivity.class);
                 detailJobIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 detailJobIntent.putExtra(AppConstants.INTENT_JobAdapterKey, job);
-                detailJobIntent.putExtra(AppConstants.INTENT_JobAdapterCompNameKey,comName);
+                detailJobIntent.putExtra(AppConstants.INTENT_JobAdapterCompNameKey, comName);
+                detailJobIntent.putExtra(AppConstants.INTENT_JobAdapterCompLogoKey, logo);
                 mContext.startActivity(detailJobIntent);
             }
         });

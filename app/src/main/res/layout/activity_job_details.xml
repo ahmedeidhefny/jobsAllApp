@@ -30,7 +30,25 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp">
+                    android:gravity="start"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_bookmark_black_24dp"
+                        android:tint="@color/colorWhite"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_bookmark_black_24dp"
+                        android:tint="@color/colorAccent"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -89,7 +107,7 @@
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginTop="20dp"
                                     android:elevation="4dp"
-                                    app:cardBackgroundColor="@color/colorPrimaryDark"
+                                    app:cardBackgroundColor="@color/colorApplyBtn"
                                     app:cardCornerRadius="8dp">
 
                                     <RelativeLayout
@@ -204,11 +222,12 @@
                     </LinearLayout>
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/job_details_compLogo"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_centerHorizontal="true"
+                        android:scaleType="centerCrop"
                         android:elevation="1dp"
-                        android:src="@drawable/logo"
                         app:civ_border_color="@color/colorPrimary"
                         app:civ_border_width="2dp" />
                 </RelativeLayout>
