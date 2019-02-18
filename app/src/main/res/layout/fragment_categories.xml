@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="4dp"
     tools:context=".Fragments.CategoriesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/category_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="categories fragment" />
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

@@ -12,17 +12,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.udacity.ahmed_eid.jobsallapp.Fragments.CategoriesFragment;
 import com.udacity.ahmed_eid.jobsallapp.Fragments.HomeFragment;
@@ -31,11 +36,14 @@ import com.udacity.ahmed_eid.jobsallapp.Fragments.MyAppliedJobsFragment;
 import com.udacity.ahmed_eid.jobsallapp.Fragments.MyCompanyProfileFragment;
 import com.udacity.ahmed_eid.jobsallapp.Fragments.MyEmployeeProfileFragment;
 import com.udacity.ahmed_eid.jobsallapp.Fragments.MySavedJobsFragment;
+import com.udacity.ahmed_eid.jobsallapp.Model.Company;
+import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainScreenWithNavigation extends AppCompatActivity {
 
@@ -50,6 +58,8 @@ public class MainScreenWithNavigation extends AppCompatActivity {
     NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    private CircleImageView navImageView;
+    private TextView navName, navJob;
 
     private ActionBarDrawerToggle mToggle;
     private String userType;
@@ -75,27 +85,33 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         mToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.nav_open, R.string.nav_close);
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-        navigationBottom.setVisibility(View.GONE);
+        //navigationBottom.setVisibility(View.GONE);
         fabAddJob.setVisibility(View.GONE);
+        View header = navigationView.inflateHeaderView(R.layout.nav_header);
+        navImageView = header.findViewById(R.id.nav_header_user_image);
+        navName = header.findViewById(R.id.nav_header_user_name);
+        navJob = header.findViewById(R.id.nav_header_user_job);
         getUserType();
         setupNavigationContent();
-        selectItemDrawer(navigationView.getMenu().getItem(0));
+        setupBottomNav();
+        //selectItemDrawer(navigationView.getMenu().getItem(0));
     }
 
 
-
     private void handleMenuVisibleByUserType() {
-        Menu menu = navigationView.getMenu();
+        Menu menuView = navigationView.getMenu();
+        Menu menuBottom = navigationBottom.getMenu();
         if (userType != null && !userType.isEmpty()) {
             if (userType.equals("Employee")) {
-                menu.findItem(R.id.nav_my_job).setVisible(false);
+                //menuBottom.findItem(R.id.nav_my_job).setVisible(true);
+                menuBottom.removeItem(R.id.nav_my_job);
                 fabAddJob.setVisibility(View.GONE);
-                navigationBottom.setVisibility(View.VISIBLE);
-                setupBottomNav();
+                readEmployeeDataHandleNavHeader();
             } else if (userType.equals("Company")) {
-                navigationBottom.setVisibility(View.GONE);
+                menuBottom.removeItem(R.id.nav_applied_job);
                 fabAddJob.setVisibility(View.VISIBLE);
-            }else {
+                readCompanyDataHandleNavHeader();
+            } else {
                 Log.e(TAG, "UserType Another Type about Employee/Company");
                 handleNoUserType();
             }
@@ -105,11 +121,88 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         }
     }
 
+    private void readCompanyDataHandleNavHeader() {
+        String id = mAuth.getCurrentUser().getUid();
+        Query query = mDatabase.child("Users").orderByChild("userId").equalTo(id);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Company company = snapshot.getValue(Company.class);
 
-    private void handleNoUserType(){
-        Menu menu = navigationView.getMenu();
-        menu.findItem(R.id.nav_my_job).setVisible(false);
-        menu.findItem(R.id.nav_profile).setVisible(false);
+                        String image = company.getCompLogo();
+                        if (!TextUtils.isEmpty(image)) {
+                            Glide.with(MainScreenWithNavigation.this)
+                                    .load(image)
+                                    .error(R.drawable.default_logo)
+                                    .into(navImageView);
+                        } else {
+                            navImageView.setImageResource(R.drawable.default_logo);
+                        }
+                        navName.setText(company.getCompName());
+                        navJob.setText(company.getCompCategory());
+                    }
+                } else {
+                    Log.e(TAG, "company data is empty");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                String massage = error.getMessage();
+                Toast.makeText(MainScreenWithNavigation.this, "Error: " + massage, Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    private void readEmployeeDataHandleNavHeader() {
+        String id = mAuth.getCurrentUser().getUid();
+        Query query = mDatabase.child("Users").orderByChild("userId").equalTo(id);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Employee employee = snapshot.getValue(Employee.class);
+
+                        String sex = employee.getGender();
+                        String image = employee.getEmployeeImage();
+                        if (!TextUtils.isEmpty(image)) {
+                            Glide.with(MainScreenWithNavigation.this)
+                                    .load(image)
+                                    .error(R.drawable.male)
+                                    .into(navImageView);
+                        } else {
+                            if (sex.equals("Male")) {
+                                navImageView.setImageResource(R.drawable.male);
+                            } else if (sex.equals("Female")) {
+                                navImageView.setImageResource(R.drawable.female);
+                            }
+                        }
+                        navName.setText(employee.getEmployeeName());
+                        navJob.setText(employee.getJobTitle());
+                    }
+                } else {
+                    Log.e(TAG, "employee data is empty");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                String massage = error.getMessage();
+                Toast.makeText(MainScreenWithNavigation.this, "Error: " + massage, Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    private void handleNoUserType() {
+        Menu menuBottom = navigationBottom.getMenu();
+        menuBottom.removeItem(R.id.nav_profile);
+        menuBottom.removeItem(R.id.nav_my_job);
+        menuBottom.removeItem(R.id.nav_saved_job);
     }
 
     private void getUserType() {
@@ -177,6 +270,24 @@ public class MainScreenWithNavigation extends AppCompatActivity {
                 fragmentClass = new MyAppliedJobsFragment();
                 loadFragment(fragmentClass);
                 break;
+            case R.id.nav_my_job:
+                String id = mAuth.getCurrentUser().getUid();
+                MyAddedJobsFragment fragment = new MyAddedJobsFragment();
+                fragment.setCompanyId(id);
+                loadFragment(fragment);
+                break;
+            case R.id.nav_profile:
+                if (userType.equals("Employee")) {
+                    fragmentClass = new MyEmployeeProfileFragment();
+                    loadFragment(fragmentClass);
+                } else if (userType.equals("Company")) {
+                    fragmentClass = new MyCompanyProfileFragment();
+                    loadFragment(fragmentClass);
+                }
+                break;
+            default:
+                fragmentClass = new HomeFragment();
+                loadFragment(fragmentClass);
         }
         setTitle(item.getTitle());
         item.setChecked(true);
@@ -189,24 +300,9 @@ public class MainScreenWithNavigation extends AppCompatActivity {
                 myFragment = new HomeFragment();
                 loadFragment(myFragment);
                 break;
-            case R.id.nav_profile:
-                if (userType.equals("Employee")) {
-                    myFragment = new MyEmployeeProfileFragment();
-                    loadFragment(myFragment);
-                } else if (userType.equals("Company")) {
-                    myFragment = new MyCompanyProfileFragment();
-                    loadFragment(myFragment);
-                }
-                break;
             case R.id.nav_categories:
                 myFragment = new CategoriesFragment();
                 loadFragment(myFragment);
-                break;
-            case R.id.nav_my_job:
-                String id = mAuth.getCurrentUser().getUid();
-                MyAddedJobsFragment fragment = new MyAddedJobsFragment();
-                fragment.setCompanyId(id);
-                loadFragment(fragment);
                 break;
             case R.id.nav_logout:
                 mAuth.signOut();
@@ -235,7 +331,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         });
     }
 
-    public void setupBottomNav(){
+    public void setupBottomNav() {
         navigationBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

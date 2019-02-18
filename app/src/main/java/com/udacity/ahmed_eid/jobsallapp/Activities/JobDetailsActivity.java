@@ -1,28 +1,50 @@
 package com.udacity.ahmed_eid.jobsallapp.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.udacity.ahmed_eid.jobsallapp.Model.AppliedJob;
+import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
+import com.udacity.ahmed_eid.jobsallapp.Model.SavedJob;
 import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class JobDetailsActivity extends AppCompatActivity {
 
+
+    private Boolean mApplyJob = false;
+    private Boolean mSaveJob = false;
+    private String companyId = null;
 
     private static final String TAG = "JobDetailsActivity";
     @BindView(R.id.job_details_title)
@@ -58,18 +80,35 @@ public class JobDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.apply_btn)
     RelativeLayout applyBtn;
+    @BindView(R.id.text_applyBtn)
+    TextView textApplyBtn;
     @BindView(R.id.job_details_compLogo)
     CircleImageView jobDetailsCompLogo;
+    @BindView(R.id.layout_saveJob_btn)
+    RelativeLayout layoutSaveJobBtn;
+    @BindView(R.id.white_saveJob_btn)
+    ImageView whiteSaveJobBtn;
+    @BindView(R.id.yellow_saveJob_btn)
+    ImageView yellowSaveJobBtn;
 
     private Job job;
+    private String userType = null;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_details);
         ButterKnife.bind(this);
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        getUserType();
         receiveJobFromAdapter();
+
     }
+
 
     private void receiveJobFromAdapter() {
         Intent intent = getIntent();
@@ -93,7 +132,7 @@ public class JobDetailsActivity extends AppCompatActivity {
                         .load(compLogo)
                         .error(R.drawable.default_logo)
                         .into(jobDetailsCompLogo);
-            }else {
+            } else {
                 jobDetailsCompLogo.setImageResource(R.drawable.default_logo);
             }
         } else {
@@ -107,6 +146,16 @@ public class JobDetailsActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (!mAuth.getCurrentUser().getUid().equals(companyId)) {
+            //Log.e("jobDetaild", "menu"+companyId);
+            menu.findItem(R.id.detail_edit).setVisible(false);
+            menu.findItem(R.id.detail_delete).setVisible(false);
+            return true;
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -117,6 +166,7 @@ public class JobDetailsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void showErrorMassage() {
         Toast.makeText(this, R.string.massage_user_error, Toast.LENGTH_SHORT).show();
@@ -140,9 +190,190 @@ public class JobDetailsActivity extends AppCompatActivity {
         jobDescAge.setText(job.getAge());
         jobDescGender.setText(job.getGender());
 
+        final String jobId = job.getJobId();
+        setApplyToJobBtn(jobId);
+        setSaveJobBtn(jobId);
+        applyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (userType.equals("Employee")) {
+                    handleApplyToJob(jobId);
+                } else {
+                    Toast.makeText(JobDetailsActivity.this, "You Are Company, Not Available", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        layoutSaveJobBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleSaveJobBtn(jobId);
+            }
+        });
+//        companyId = job.getCompanyId();
+//        if (mAuth.getCurrentUser().getUid().equals(companyId)) {
+//            Log.e("jobDetaild", "menu"+companyId);
+//            showOverflowMenu(false);
+//        }
     }
 
-    @OnClick(R.id.apply_btn)
-    public void onViewClicked() {
+//    private void showOverflowMenu(boolean showMenu){
+//        if(menu == null) {
+//            Log.e("jobDetaild", "menu is null");
+//            return;
+//        }
+//        menu.setGroupVisible(R.id.job_details_group, showMenu);
+//    }
+
+    private void getUserType() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            mDatabase.child("Users").child(userId).child("userType").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    userType = dataSnapshot.getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e(TAG, "getUserType:onCancelled " + databaseError.toException());
+                }
+            });
+        }
     }
+
+    private void setSaveJobBtn(String jobId) {
+        String userId = mAuth.getCurrentUser().getUid();
+        mDatabase.child("SavedJobs").child(userId).child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    yellowSaveJobBtn.setVisibility(View.VISIBLE);
+                    whiteSaveJobBtn.setVisibility(View.GONE);
+                } else {
+                    yellowSaveJobBtn.setVisibility(View.GONE);
+                    whiteSaveJobBtn.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                String massage = error.getMessage();
+                Toast.makeText(JobDetailsActivity.this, "Error: " + massage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void handleSaveJobBtn(final String jobId) {
+        mSaveJob = true;
+        final String userId = mAuth.getCurrentUser().getUid();
+        mDatabase.child("SavedJobs").child(userId).child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (mSaveJob) {
+                    if (dataSnapshot.exists()) {
+                        mDatabase.child("SavedJobs").child(userId).child(jobId).removeValue();
+                        yellowSaveJobBtn.setVisibility(View.GONE);
+                        whiteSaveJobBtn.setVisibility(View.VISIBLE);
+                        mSaveJob = false;
+                    } else {
+                        SavedJob savedJob = new SavedJob(jobId, userId);
+                        mDatabase.child("SavedJobs").child(userId).child(jobId).setValue(savedJob);
+                        yellowSaveJobBtn.setVisibility(View.VISIBLE);
+                        whiteSaveJobBtn.setVisibility(View.GONE);
+                        mSaveJob = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                String massage = error.getMessage();
+                Toast.makeText(JobDetailsActivity.this, "Error: " + massage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setApplyToJobBtn(String jobId) {
+        mDatabase.child("ApplyJobs").child(mAuth.getCurrentUser().getUid()).child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    backgroundApplyBtnExistsToggle();
+                } else {
+                    backgroundApplyBtnNOTExistsToggle();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                String massage = error.getMessage();
+                Toast.makeText(getApplicationContext(), "Error: " + massage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void handleApplyToJob(final String jobId) {
+        mApplyJob = true;
+        final String userId = mAuth.getCurrentUser().getUid();
+        mDatabase.child("ApplyJobs").child(userId).child(jobId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (mApplyJob) {
+                    if (dataSnapshot.exists()) {
+                        mDatabase.child("ApplyJobs").child(userId).child(jobId).removeValue();
+                        backgroundApplyBtnNOTExistsToggle();
+                        mApplyJob = false;
+                    } else {
+                        readUserData(jobId, userId);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                String massage = error.getMessage();
+                Toast.makeText(JobDetailsActivity.this, "Error: " + massage, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private void readUserData(final String jobId, final String userId) {
+        Query query = mDatabase.child("Users").orderByChild("userId").equalTo(mAuth.getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Employee employee = snapshot.getValue(Employee.class);
+                        String name = employee.getEmployeeName();
+                        String job = employee.getJobTitle();
+                        String image = employee.getEmployeeImage();
+                        AppliedJob appliedJob = new AppliedJob(jobId, userId, name, image, job);
+                        mDatabase.child("ApplyJobs").child(userId).child(jobId).setValue(appliedJob);
+                        backgroundApplyBtnExistsToggle();
+                        mApplyJob = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void backgroundApplyBtnExistsToggle() {
+        textApplyBtn.setText("Already, Applied To This Job");
+        applyBtn.setBackgroundColor(Color.parseColor("#dc1125"));
+    }
+
+    private void backgroundApplyBtnNOTExistsToggle() {
+        textApplyBtn.setText("Apply To This Job");
+        applyBtn.setBackgroundColor(Color.parseColor("#6AB819"));
+    }
+
+
 }

@@ -158,6 +158,23 @@ public class MyEmployeeProfileFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.portofilo_btn:
+                String userId = mAuth.getCurrentUser().getUid();
+               // mDatabase.child(userId).child("maritalStatus").removeValue();
+                mDatabase.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                Toast.makeText(getActivity(),""+snapshot, Toast.LENGTH_SHORT).show();;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 break;
             case R.id.contactMe_btn:
                 break;
