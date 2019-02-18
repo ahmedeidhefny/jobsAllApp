@@ -1,23 +1,22 @@
 package com.udacity.ahmed_eid.jobsallapp.Activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.udacity.ahmed_eid.jobsallapp.Adapters.AppliedPersonJobAdapter;
 import com.udacity.ahmed_eid.jobsallapp.Model.AppliedJob;
 import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
@@ -35,12 +35,15 @@ import com.udacity.ahmed_eid.jobsallapp.Model.SavedJob;
 import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class JobDetailsActivity extends AppCompatActivity {
-
 
     private Boolean mApplyJob = false;
     private Boolean mSaveJob = false;
@@ -90,11 +93,16 @@ public class JobDetailsActivity extends AppCompatActivity {
     ImageView whiteSaveJobBtn;
     @BindView(R.id.yellow_saveJob_btn)
     ImageView yellowSaveJobBtn;
+    @BindView(R.id.jobDetails_applied_recycler)
+    RecyclerView jobDetailsAppliedRecycler;
+    @BindView(R.id.appliedPersons_Layout)
+    LinearLayout appliedPersonsLayout;
 
     private Job job;
     private String userType = null;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private Menu menu = null;
 
 
     @Override
@@ -106,7 +114,6 @@ public class JobDetailsActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         getUserType();
         receiveJobFromAdapter();
-
     }
 
 
@@ -143,13 +150,14 @@ public class JobDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_details_activity, menu);
+        this.menu = menu;
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!mAuth.getCurrentUser().getUid().equals(companyId)) {
-            //Log.e("jobDetaild", "menu"+companyId);
+        String userId = mAuth.getCurrentUser().getUid();
+        if (!userId.equals(companyId)) {
             menu.findItem(R.id.detail_edit).setVisible(false);
             menu.findItem(R.id.detail_delete).setVisible(false);
             return true;
@@ -167,12 +175,10 @@ public class JobDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     private void showErrorMassage() {
         Toast.makeText(this, R.string.massage_user_error, Toast.LENGTH_SHORT).show();
         finish();
     }
-
 
     private void populateUI(Job job) {
         jobDetailsDes.setText(job.getJobDescription());
@@ -190,9 +196,12 @@ public class JobDetailsActivity extends AppCompatActivity {
         jobDescAge.setText(job.getAge());
         jobDescGender.setText(job.getGender());
 
+        companyId = job.getCompanyId();
+
         final String jobId = job.getJobId();
         setApplyToJobBtn(jobId);
         setSaveJobBtn(jobId);
+        readAppliedUsersInThisJobInRecycler(jobId);
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,13 +220,51 @@ public class JobDetailsActivity extends AppCompatActivity {
         });
 //        companyId = job.getCompanyId();
 //        if (mAuth.getCurrentUser().getUid().equals(companyId)) {
-//            Log.e("jobDetaild", "menu"+companyId);
+//            Log.e("jobDetaild", "menu" + companyId);
 //            showOverflowMenu(false);
 //        }
     }
 
-//    private void showOverflowMenu(boolean showMenu){
-//        if(menu == null) {
+    private void readAppliedUsersInThisJobInRecycler(final String jobId) {
+        final ArrayList<AppliedJob> appliedJobsArr = new ArrayList<>();
+        final ArrayList<String> strings = new ArrayList<>();
+        mDatabase.child("ApplyJobs").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot appliedJobs : snapshot.getChildren()) {
+                        if (appliedJobs.getKey().equals(jobId)) {
+                            AppliedJob appliedJob = appliedJobs.getValue(AppliedJob.class);
+                           // Log.e(TAG, "" + appliedJob.getEmpImage());
+                            appliedJobsArr.add(appliedJob);
+                        }
+                    }
+                }
+                setRecyclerView(appliedJobsArr);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                String massage = error.getMessage();
+                Toast.makeText(JobDetailsActivity.this, "Error: " + massage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setRecyclerView(ArrayList<AppliedJob> appliedJobsArr){
+        if (appliedJobsArr.size() != 0 && !appliedJobsArr.isEmpty()){
+            LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+            jobDetailsAppliedRecycler.setLayoutManager(manager);
+            AppliedPersonJobAdapter adapter = new AppliedPersonJobAdapter(getApplicationContext(),appliedJobsArr);
+            jobDetailsAppliedRecycler.setAdapter(adapter);
+        }else {
+
+        }
+
+    }
+
+//    private void showOverflowMenu(boolean showMenu) {
+//        if (menu == null) {
 //            Log.e("jobDetaild", "menu is null");
 //            return;
 //        }
@@ -323,6 +370,7 @@ public class JobDetailsActivity extends AppCompatActivity {
                     if (dataSnapshot.exists()) {
                         mDatabase.child("ApplyJobs").child(userId).child(jobId).removeValue();
                         backgroundApplyBtnNOTExistsToggle();
+                        readAppliedUsersInThisJobInRecycler(jobId);
                         mApplyJob = false;
                     } else {
                         readUserData(jobId, userId);
@@ -353,6 +401,7 @@ public class JobDetailsActivity extends AppCompatActivity {
                         AppliedJob appliedJob = new AppliedJob(jobId, userId, name, image, job);
                         mDatabase.child("ApplyJobs").child(userId).child(jobId).setValue(appliedJob);
                         backgroundApplyBtnExistsToggle();
+                        readAppliedUsersInThisJobInRecycler(jobId);
                         mApplyJob = false;
                     }
                 }

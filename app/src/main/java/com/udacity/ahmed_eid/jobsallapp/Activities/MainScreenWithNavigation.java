@@ -172,7 +172,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
                         if (!TextUtils.isEmpty(image)) {
                             Glide.with(MainScreenWithNavigation.this)
                                     .load(image)
-                                    .error(R.drawable.male)
+                                    .error(R.drawable.user_profile_default)
                                     .into(navImageView);
                         } else {
                             if (sex.equals("Male")) {

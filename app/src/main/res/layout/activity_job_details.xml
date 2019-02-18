@@ -243,11 +243,12 @@
                                 android:textColor="@color/colorBlack"
                                 android:textSize="18dp"
                                 android:textStyle="bold" />
-                            <FrameLayout
-                                android:id="@+id/appliedPersons_containerLayout"
+                            <android.support.v7.widget.RecyclerView
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/jobDetails_applied_recycler"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
-                            </FrameLayout>
+                            </android.support.v7.widget.RecyclerView>
                         </LinearLayout>
 
 

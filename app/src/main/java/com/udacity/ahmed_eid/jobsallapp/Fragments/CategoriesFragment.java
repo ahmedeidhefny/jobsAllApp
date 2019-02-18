@@ -34,9 +34,9 @@ public class CategoriesFragment extends Fragment {
         unbinder = ButterKnife.bind(this, myView);
         ArrayList<Category> categories = new ArrayList<>();
         categories.add(new Category(R.drawable.p1, "Programming"));
-        categories.add(new Category(R.drawable.p2, "Real State"));
-        categories.add(new Category(R.drawable.p7,"Real State"));
-        categories.add(new Category(R.drawable.p4,"Machine Learning"));
+        //categories.add(new Category(R.drawable.p2, "Real State"));
+        //categories.add(new Category(R.drawable.p7,"Real State"));
+        //categories.add(new Category(R.drawable.p4,"Machine Learning"));
         categories.add(new Category(R.drawable.p8,"Real State"));
         categories.add(new Category(R.drawable.p6,"UI/UX Designer"));
 

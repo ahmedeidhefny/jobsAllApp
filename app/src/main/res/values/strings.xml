@@ -2,10 +2,10 @@
     <string name="app_name">JobsAll</string>
     <string name="nav_home">Home</string>
     <string name="nav_profile">My Profile</string>
-    <string name="nav_categories">All Job Categories</string>
+    <string name="nav_categories">Job Categories</string>
     <string name="nav_saved_job">Saved Jobs</string>
     <string name="nav_applied_job">Applied Jobs</string>
-    <string name="nav_my_job">My Jobs</string>
+    <string name="nav_my_job">Added Jobs</string>
     <string name="nav_logout">Log Out</string>
 
     <string name="nav_open">Open</string>

@@ -137,7 +137,7 @@ public class MyEmployeeProfileFragment extends Fragment {
         if (!TextUtils.isEmpty(image)){
             Glide.with(getActivity())
                     .load(image)
-                    .error(R.drawable.male)
+                    .error(R.drawable.user_profile_default)
                     .into(empImage);
         }else {
             if (sex.equals("Male")) {
