@@ -1,10 +1,14 @@
 package com.udacity.ahmed_eid.jobsallapp.Activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -15,6 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
 import com.udacity.ahmed_eid.jobsallapp.R;
+
+import java.text.DateFormat;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,26 +65,14 @@ public class AddNewJobActivity extends AppCompatActivity {
     @BindView(R.id.job_gender_radio_group)
     RadioGroup jobGenderRadioGroup;
 
-    private ArrayAdapter<String> categoryAdapter;
-    private ArrayAdapter<String> jobTypeAdapter;
-    private String categories[] = {
-            "programming", "IT jobs", "engineering", "econimic", "IS programing"
-    };
-
-    private String jobTypeArr[] = {
-            "FullTime", "PartTime", "Freelance"
-    };
+    private String[] categories;
+    private String[] jobTypes;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private String category = "programming";
-    private String jobType = "FullTime";
+    private String category = null;
+    private String jobType = null;
     private String gender = null;
-
-    @OnClick(R.id.post_job_btn)
-    public void onViewClicked() {
-        addNewJob();
-    }
 
 
     @Override
@@ -117,9 +112,10 @@ public class AddNewJobActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
         }
 
+
         String userId = mAuth.getCurrentUser().getUid();
 
-        if (!TextUtils.isEmpty(userId)) {
+        if (category != null && jobType != null && !TextUtils.isEmpty(userId)) {
             Job job = new Job(mDatabase.getKey(), userId, title, category, gender, age, sal, exDate, vanNum, jMin, jMax, level, jobType, nat, country, city, des, req);
             mDatabase.setValue(job);
             goToMainActivity();
@@ -128,13 +124,39 @@ public class AddNewJobActivity extends AppCompatActivity {
     }
 
     public void setSpinnerAdapter() {
-        categoryAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.item_spinner, categories);
+        categories = getResources().getStringArray(R.array.categories);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.item_spinner, categories);
         categoryAdapter.setDropDownViewResource(R.layout.item_spinner);
         jobSpinner.setAdapter(categoryAdapter);
+        jobSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                jobSpinner.setError(null);
+                category = (String) jobSpinner.getSelectedItem();
+                Toast.makeText(AddNewJobActivity.this, "" + category, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                jobSpinner.setError("Error");
+            }
+        });
         //----------------------------------------
-        jobTypeAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.item_spinner, jobTypeArr);
+        jobTypes = getResources().getStringArray(R.array.jobTypes);
+        ArrayAdapter<String> jobTypeAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.item_spinner, jobTypes);
         jobTypeAdapter.setDropDownViewResource(R.layout.item_spinner);
         jobTypeSpinner.setAdapter(jobTypeAdapter);
+
+        jobTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                jobType = (String) jobTypeSpinner.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
     }
 
     private void goToMainActivity() {
@@ -144,4 +166,30 @@ public class AddNewJobActivity extends AppCompatActivity {
     }
 
 
+    @OnClick({R.id.expiry_date, R.id.post_job_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.expiry_date:
+                showCalenderAndGetDate();
+                break;
+            case R.id.post_job_btn:
+                addNewJob();
+                break;
+        }
+    }
+
+    private void showCalenderAndGetDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month++;
+               expiryDate.setText(year+"/"+month+"/"+day);
+            }
+        }, year, month, day);
+        pickerDialog.show();
+    }
 }

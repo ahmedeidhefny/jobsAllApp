@@ -36,6 +36,7 @@
         </activity>
         <activity android:name=".Activities.AddNewJobActivity" />
         <activity android:name=".Activities.JobDetailsActivity"></activity>
+        <activity android:name=".Activities.EditJobActivity"></activity>
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
     </application>

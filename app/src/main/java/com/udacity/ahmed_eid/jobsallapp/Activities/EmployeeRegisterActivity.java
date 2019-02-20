@@ -1,5 +1,6 @@
 package com.udacity.ahmed_eid.jobsallapp.Activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -17,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.R;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +57,6 @@ public class EmployeeRegisterActivity extends AppCompatActivity {
     @BindView(R.id.miritary_status)
     EditText miritaryStatus;
 
-
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private static final String userType = "Employee";
@@ -61,9 +64,7 @@ public class EmployeeRegisterActivity extends AppCompatActivity {
     private String gender = null;
     private String empCategory = null;
     private ArrayAdapter<String> adapter;
-    String[] categories = {
-            "programming", "IT jobs", "engineering", "econimic", "IS programing"
-    };//= getResources().getStringArray(R.array.categories);
+    private String[] categories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +73,14 @@ public class EmployeeRegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-
+        categories = getResources().getStringArray(R.array.categories);
         adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.item_spinner, categories);
         adapter.setDropDownViewResource(R.layout.item_spinner);
         empSpinner.setAdapter(adapter);
         empSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // empCategory = (String) empSpinner.getItemAtPosition(i);
-                //Toast.makeText(EmployeeRegisterActivity.this, empCategory, Toast.LENGTH_LONG).show();
+                empCategory = (String) empSpinner.getSelectedItem();
             }
 
             @Override
@@ -112,12 +112,29 @@ public class EmployeeRegisterActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.birthOfDate:
+                showCalenderAndGetDate();
                 break;
             case R.id.employee_goToApp_btn:
                 registerEmployee();
                 break;
         }
     }
+
+    private void showCalenderAndGetDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month++;
+                birthOfDate.setText(year + "/" + month + "/" + day);
+            }
+        }, year, month, day);
+        pickerDialog.show();
+    }
+
 
     private void registerEmployee() {
         String jobTile = jobTitle.getText().toString();
@@ -139,11 +156,10 @@ public class EmployeeRegisterActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
         }
-
         String userId = mAuth.getCurrentUser().getUid();
-
-        if (!TextUtils.isEmpty(jobTile) && !TextUtils.isEmpty(empSummery) && !TextUtils.isEmpty(empCountry) && !TextUtils.isEmpty(empCity) && !TextUtils.isEmpty(birthDate) && !TextUtils.isEmpty(empPhone)) {
-            Employee employee = new Employee(userId, empyName, userType, jobTile, empPhone,nat, gender, empCountry, empCity, birthDate, empSummery, "programming",miritary,marital);
+        Toast.makeText(this, "" + empCategory, Toast.LENGTH_SHORT).show();
+        if (empCategory != null && !TextUtils.isEmpty(jobTile) && !TextUtils.isEmpty(empSummery) && !TextUtils.isEmpty(empCountry) && !TextUtils.isEmpty(empCity) && !TextUtils.isEmpty(birthDate) && !TextUtils.isEmpty(empPhone)) {
+            Employee employee = new Employee(userId, empyName, userType, jobTile, empPhone, gender, nat, empCountry, empCity, birthDate, empSummery, empCategory, miritary, marital);
             mDatabase.child(userId).setValue(employee);
             goToMainActivity();
             Toast.makeText(getApplicationContext(), "YourDataSaved:Successfully..", Toast.LENGTH_LONG).show();
@@ -155,5 +171,6 @@ public class EmployeeRegisterActivity extends AppCompatActivity {
         startActivity(mainIntent);
         finish();
     }
+
 
 }

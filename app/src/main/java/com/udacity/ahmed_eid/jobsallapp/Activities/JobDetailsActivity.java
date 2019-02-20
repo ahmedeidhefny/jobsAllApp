@@ -1,9 +1,11 @@
 package com.udacity.ahmed_eid.jobsallapp.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +50,7 @@ public class JobDetailsActivity extends AppCompatActivity {
     private Boolean mApplyJob = false;
     private Boolean mSaveJob = false;
     private String companyId = null;
+    private String jobId = null;
 
     private static final String TAG = "JobDetailsActivity";
     @BindView(R.id.job_details_title)
@@ -168,15 +171,73 @@ public class JobDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.detail_edit) {
+            editJob(jobId);
             return true;
         } else if (item.getItemId() == R.id.detail_delete) {
+            final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setTitle("Delete Job !");
+            alertBuilder.setIcon(R.drawable.delete);
+            alertBuilder.setMessage("Are You Sure You Want To Delete This Job ?");
+            alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    deleteJob(jobId);
+                }
+            });
+            alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            alertBuilder.show();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void deleteJob(String jobId) {
+        if (jobId != null) {
+            Query query = mDatabase.child("Jobs").orderByChild("jobId").equalTo(jobId);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            snapshot.getRef().removeValue();
+                            goToMainActivity();
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    String massage = databaseError.getMessage();
+                    Toast.makeText(JobDetailsActivity.this, "Error: " + massage, Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            Log.e(TAG, "DeleteJob: " + "jobId is null");
+        }
+
+    }
+
+    private void goToMainActivity() {
+        Intent mainIntent = new Intent(getApplicationContext(), MainScreenWithNavigation.class);
+        startActivity(mainIntent);
+        finish();
+    }
+
+    private void editJob(String jobId) {
+        Intent editIntent = new Intent(getApplicationContext(), EditJobActivity.class);
+        editIntent.putExtra(AppConstants.INTENT_JobDetailsKey, job);
+        startActivity(editIntent);
+        finish();
+    }
+
     private void showErrorMassage() {
-        Toast.makeText(this, R.string.massage_user_error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.massage_job_error, Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -197,8 +258,7 @@ public class JobDetailsActivity extends AppCompatActivity {
         jobDescGender.setText(job.getGender());
 
         companyId = job.getCompanyId();
-
-        final String jobId = job.getJobId();
+        jobId = job.getJobId();
         setApplyToJobBtn(jobId);
         setSaveJobBtn(jobId);
         readAppliedUsersInThisJobInRecycler(jobId);
@@ -235,7 +295,7 @@ public class JobDetailsActivity extends AppCompatActivity {
                     for (DataSnapshot appliedJobs : snapshot.getChildren()) {
                         if (appliedJobs.getKey().equals(jobId)) {
                             AppliedJob appliedJob = appliedJobs.getValue(AppliedJob.class);
-                           // Log.e(TAG, "" + appliedJob.getEmpImage());
+                            // Log.e(TAG, "" + appliedJob.getEmpImage());
                             appliedJobsArr.add(appliedJob);
                         }
                     }
@@ -251,13 +311,13 @@ public class JobDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void setRecyclerView(ArrayList<AppliedJob> appliedJobsArr){
-        if (appliedJobsArr.size() != 0 && !appliedJobsArr.isEmpty()){
-            LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+    private void setRecyclerView(ArrayList<AppliedJob> appliedJobsArr) {
+        if (appliedJobsArr.size() != 0 && !appliedJobsArr.isEmpty()) {
+            LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
             jobDetailsAppliedRecycler.setLayoutManager(manager);
-            AppliedPersonJobAdapter adapter = new AppliedPersonJobAdapter(getApplicationContext(),appliedJobsArr);
+            AppliedPersonJobAdapter adapter = new AppliedPersonJobAdapter(getApplicationContext(), appliedJobsArr);
             jobDetailsAppliedRecycler.setAdapter(adapter);
-        }else {
+        } else {
 
         }
 

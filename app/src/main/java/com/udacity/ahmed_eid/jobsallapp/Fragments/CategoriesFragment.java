@@ -24,6 +24,19 @@ public class CategoriesFragment extends Fragment {
 
     @BindView(R.id.category_recycler)
     RecyclerView categoryRecycler;
+    private ArrayList<Category> categories;
+    private String[] categoryNames;
+    private int[] categoryImages = {
+            R.drawable.p1,
+            R.drawable.p2,
+            R.drawable.p3,
+            R.drawable.p4,
+            R.drawable.p5,
+            R.drawable.p6,
+            R.drawable.p7,
+            R.drawable.p8,
+            R.drawable.p1
+    };
     Unbinder unbinder;
 
     @Override
@@ -32,19 +45,23 @@ public class CategoriesFragment extends Fragment {
         View myView;
         myView = inflater.inflate(R.layout.fragment_categories, container, false);
         unbinder = ButterKnife.bind(this, myView);
-        ArrayList<Category> categories = new ArrayList<>();
-        categories.add(new Category(R.drawable.p1, "Programming"));
-        //categories.add(new Category(R.drawable.p2, "Real State"));
-        //categories.add(new Category(R.drawable.p7,"Real State"));
-        //categories.add(new Category(R.drawable.p4,"Machine Learning"));
-        categories.add(new Category(R.drawable.p8,"Real State"));
-        categories.add(new Category(R.drawable.p6,"UI/UX Designer"));
-
+        categories = new ArrayList<>();
+        categoryNames = getResources().getStringArray(R.array.categories);
+        setDataToCategories();
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         categoryRecycler.setLayoutManager(manager);
+
+
         CategoryAdapter adapter = new CategoryAdapter(getActivity(), categories);
         categoryRecycler.setAdapter(adapter);
         return myView;
+    }
+
+    private void setDataToCategories() {
+        for (int i = 0; i < categoryNames.length; i++) {
+            Category category = new Category(categoryImages[i], categoryNames[i]+" Jobs");
+            categories.add(i, category);
+        }
     }
 
 

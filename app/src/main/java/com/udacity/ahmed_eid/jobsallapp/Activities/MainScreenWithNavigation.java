@@ -81,11 +81,9 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         setSupportActionBar(toolBar);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
         mToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.nav_open, R.string.nav_close);
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-        //navigationBottom.setVisibility(View.GONE);
         fabAddJob.setVisibility(View.GONE);
         View header = navigationView.inflateHeaderView(R.layout.nav_header);
         navImageView = header.findViewById(R.id.nav_header_user_image);
@@ -98,8 +96,28 @@ public class MainScreenWithNavigation extends AppCompatActivity {
     }
 
 
+    private void getUserType() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            mDatabase.child("Users").child(userId).child("userType").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    userType = dataSnapshot.getValue(String.class);
+                    Log.e(TAG, "getUserType: " + userType);
+                    handleMenuVisibleByUserType();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e(TAG, "getUserType:onCancelled " + databaseError.toException());
+                }
+            });
+        }
+    }
+
     private void handleMenuVisibleByUserType() {
-        Menu menuView = navigationView.getMenu();
+        //Menu menuView = navigationView.getMenu();
         Menu menuBottom = navigationBottom.getMenu();
         if (userType != null && !userType.isEmpty()) {
             if (userType.equals("Employee")) {
@@ -122,6 +140,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
     }
 
     private void readCompanyDataHandleNavHeader() {
+
         String id = mAuth.getCurrentUser().getUid();
         Query query = mDatabase.child("Users").orderByChild("userId").equalTo(id);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -203,26 +222,6 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         menuBottom.removeItem(R.id.nav_profile);
         menuBottom.removeItem(R.id.nav_my_job);
         menuBottom.removeItem(R.id.nav_saved_job);
-    }
-
-    private void getUserType() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            mDatabase.child("Users").child(userId).child("userType").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    userType = dataSnapshot.getValue(String.class);
-                    Log.e(TAG, "getUserType: " + userType);
-                    handleMenuVisibleByUserType();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e(TAG, "getUserType:onCancelled " + databaseError.toException());
-                }
-            });
-        }
     }
 
     @Override

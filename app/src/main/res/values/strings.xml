@@ -15,6 +15,7 @@
     <string name="massage_notSeclect_userType">Please, Select UserType?</string>
     <string name="massage_notSeclect_gender">Please, Select GenderType?</string>
     <string name="massage_user_error">Not Have User Data</string>
+    <string name="massage_job_error">Not Have Job Data</string>
 
     <string-array name="subCategories">
         <item>Android Developer</item>
@@ -33,10 +34,21 @@
     </string-array>
 
     <string-array name="categories">
-        <item>Programming Jobs</item>
-        <item>IT Jobs</item>
-        <item>Engineering Jobs</item>
-        <item>Other Jobs</item>
+        <item>Programming</item>
+        <item>IT</item>
+        <item>Engineering</item>
+        <item>Real State</item>
+        <item>Sales</item>
+        <item>Art and Design</item>
+        <item>Accounting and Finance</item>
+        <item>Marketing</item>
+        <item>Other </item>
+    </string-array>
+
+    <string-array name="jobTypes">
+        <item>FullTime</item>
+        <item>PartTime</item>
+        <item>Freelance</item>
     </string-array>
 
 </resources>
