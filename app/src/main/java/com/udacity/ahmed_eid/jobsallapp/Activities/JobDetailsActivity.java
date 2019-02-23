@@ -117,6 +117,7 @@ public class JobDetailsActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         getUserType();
         receiveJobFromAdapter();
+        //startActivity(getIntent());
     }
 
 
@@ -236,10 +237,6 @@ public class JobDetailsActivity extends AppCompatActivity {
         finish();
     }
 
-    private void showErrorMassage() {
-        Toast.makeText(this, R.string.massage_job_error, Toast.LENGTH_SHORT).show();
-        finish();
-    }
 
     private void populateUI(Job job) {
         jobDetailsDes.setText(job.getJobDescription());
@@ -482,6 +479,11 @@ public class JobDetailsActivity extends AppCompatActivity {
     private void backgroundApplyBtnNOTExistsToggle() {
         textApplyBtn.setText("Apply To This Job");
         applyBtn.setBackgroundColor(Color.parseColor("#6AB819"));
+    }
+
+    private void showErrorMassage() {
+        Toast.makeText(this, R.string.massage_job_error, Toast.LENGTH_SHORT).show();
+        finish();
     }
 
 

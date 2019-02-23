@@ -21,7 +21,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.EmployeeRegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.CompanyRegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -35,10 +35,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.AddNewJobActivity" />
-        <activity android:name=".Activities.JobDetailsActivity"></activity>
-        <activity android:name=".Activities.EditJobActivity"></activity>
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+        <activity android:name=".Activities.JobDetailsActivity" />
+        <activity android:name=".Activities.EditJobActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".Activities.CategoryActivity"></activity>
     </application>
 
 </manifest>

@@ -37,7 +37,7 @@ public class AppliedPersonJobAdapter extends RecyclerView.Adapter<AppliedPersonJ
     public void onBindViewHolder(@NonNull AppliedPersonViewHolder holder, int position) {
         AppliedJob appliedJob = appliedJobs.get(position);
         holder.empName.setText(appliedJob.getEmpName());
-        holder.empTitle.setText(appliedJob.getEmpJobTitle());
+        //holder.empTitle.setText(appliedJob.getEmpJobTitle());
         Glide.with(mContext)
                 .load(appliedJob.getEmpImage())
                 .error(R.drawable.user_profile_default)

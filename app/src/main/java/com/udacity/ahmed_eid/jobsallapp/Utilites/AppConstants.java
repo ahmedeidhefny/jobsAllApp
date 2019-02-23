@@ -8,4 +8,5 @@ public class AppConstants {
     public static final String SaveInstance_MyJobs_UserKey = "CompanyUser";
 
     public static final String INTENT_JobDetailsKey = "JobDetails";
+    public static final String INTENT_CategoryAdapterKey = "CategoryAdapter";
 }

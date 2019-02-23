@@ -27,15 +27,15 @@ public class CategoriesFragment extends Fragment {
     private ArrayList<Category> categories;
     private String[] categoryNames;
     private int[] categoryImages = {
-            R.drawable.p1,
-            R.drawable.p2,
-            R.drawable.p3,
-            R.drawable.p4,
-            R.drawable.p5,
-            R.drawable.p6,
-            R.drawable.p7,
-            R.drawable.p8,
-            R.drawable.p1
+            R.drawable.programming,
+            R.drawable.it,
+            R.drawable.enginnering,
+            R.drawable.realstate,
+            R.drawable.sales,
+            R.drawable.artdesign,
+            R.drawable.accounting,
+            R.drawable.marketing,
+            R.drawable.other
     };
     Unbinder unbinder;
 
@@ -50,16 +50,13 @@ public class CategoriesFragment extends Fragment {
         setDataToCategories();
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         categoryRecycler.setLayoutManager(manager);
-
-
         CategoryAdapter adapter = new CategoryAdapter(getActivity(), categories);
         categoryRecycler.setAdapter(adapter);
         return myView;
     }
-
     private void setDataToCategories() {
         for (int i = 0; i < categoryNames.length; i++) {
-            Category category = new Category(categoryImages[i], categoryNames[i]+" Jobs");
+            Category category = new Category(categoryImages[i], categoryNames[i]);
             categories.add(i, category);
         }
     }

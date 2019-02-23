@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    android:padding="8dp"
     android:fillViewport="true"
+    android:padding="8dp"
     tools:context=".Activities.AddNewJobActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -31,32 +31,50 @@
                 android:hint="Position Title"
                 android:inputType="text" />
 
-            <fr.ganfra.materialspinner.MaterialSpinner
-                android:id="@+id/jobSpinner"
-                android:layout_width="350dp"
+
+            <RelativeLayout
+                android:id="@+id/jobSpinnerLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/job_title"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
-                app:ms_arrowColor="@color/colorBlack"
-                app:ms_arrowSize="16dp"
-                app:ms_floatingLabelColor="@color/colorBlack"
-                app:ms_floatingLabelText="Category:"
-                app:ms_hint="Chosee Only One Category..."
-                app:ms_hintColor="#A9A9A9"
-                app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+                android:layout_marginRight="4dp">
+
+                <TextView
+                    android:id="@+id/categoryName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/jobSpinner"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    app:ms_arrowColor="@color/colorBlack"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/colorBlack"
+                    app:ms_floatingLabelText="Category:"
+                    app:ms_hint="Choose Only One Category..."
+                    app:ms_hintColor="#A9A9A9"
+                    app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+
+            </RelativeLayout>
 
             <EditText
                 android:id="@+id/job_vacancies_num"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/jobSpinner"
+                android:layout_below="@+id/jobSpinnerLayout"
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_filter_num_black_24dp"
                 android:drawablePadding="10dp"
                 android:ems="10"
                 android:hint="Vacancies Number"
                 android:inputType="number" />
+
             <LinearLayout
                 android:id="@+id/yearExpLayout"
                 android:layout_width="350dp"
@@ -83,8 +101,8 @@
                         android:id="@+id/min"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginRight="30dp"
+                        android:layout_weight="1"
                         android:ems="10"
                         android:hint="Min"
                         android:inputType="number" />
@@ -123,26 +141,42 @@
                 android:hint="Degree(Education) Level"
                 android:inputType="text" />
 
-            <fr.ganfra.materialspinner.MaterialSpinner
-                android:id="@+id/jobTypeSpinner"
-                android:layout_width="350dp"
+            <RelativeLayout
+                android:id="@+id/job_type_layout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
                 android:layout_below="@+id/degree_level"
-                app:ms_arrowColor="@color/colorBlack"
-                app:ms_arrowSize="16dp"
-                app:ms_floatingLabelColor="@color/colorBlack"
-                app:ms_floatingLabelText="JobType:"
-                app:ms_hint="Choose JobType ..."
-                app:ms_hintColor="#A9A9A9"
-                app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="4dp">
+
+                <TextView
+                    android:id="@+id/job_type_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/jobTypeSpinner"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    app:ms_arrowColor="@color/colorBlack"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/colorBlack"
+                    app:ms_floatingLabelText="JobType:"
+                    app:ms_hint="Choose JobType ..."
+                    app:ms_hintColor="#A9A9A9"
+                    app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/applied_gender_layout"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/jobTypeSpinner"
+                android:layout_below="@+id/job_type_layout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical">
@@ -184,6 +218,7 @@
                         android:text="Female"
                         android:textColor="@drawable/radio_btn_colortext_2"
                         android:textSize="14dp" />
+
                     <RadioButton
                         android:id="@+id/both_radioBtn"
                         android:layout_width="0dp"
@@ -196,12 +231,13 @@
                         android:textSize="14dp" />
                 </RadioGroup>
             </LinearLayout>
+
             <EditText
                 android:id="@+id/nationality"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_below="@+id/applied_gender_layout"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dp"
                 android:drawablePadding="10dp"
                 android:ems="10"
@@ -212,8 +248,8 @@
                 android:id="@+id/applied_age"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_below="@+id/nationality"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dp"
                 android:drawablePadding="10dp"
                 android:ems="10"
@@ -247,8 +283,8 @@
                         android:id="@+id/jobCountry"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginRight="30dp"
+                        android:layout_weight="1"
                         android:ems="10"
                         android:hint="Country"
                         android:inputType="text" />
@@ -281,9 +317,9 @@
                 android:id="@+id/job_desc_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_below="@+id/expiry_date"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -310,8 +346,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/job_desc_layout"
-                android:orientation="vertical"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -336,10 +372,10 @@
             <android.support.v7.widget.CardView
                 android:layout_width="200dp"
                 android:layout_height="50dp"
+                android:layout_below="@+id/job_req_layout"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:elevation="8dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/job_req_layout"
                 app:cardBackgroundColor="@color/colorPrimaryDark"
                 app:cardCornerRadius="25dp">
 

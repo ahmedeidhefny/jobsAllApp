@@ -16,7 +16,7 @@
     <string name="massage_notSeclect_gender">Please, Select GenderType?</string>
     <string name="massage_user_error">Not Have User Data</string>
     <string name="massage_job_error">Not Have Job Data</string>
-
+    <string name="massage_category_error">Not Category Data</string>
     <string-array name="subCategories">
         <item>Android Developer</item>
         <item>IOS Developer</item>
@@ -34,7 +34,7 @@
     </string-array>
 
     <string-array name="categories">
-        <item>Programming</item>
+        <item>Program Development</item>
         <item>IT</item>
         <item>Engineering</item>
         <item>Real State</item>
@@ -49,6 +49,9 @@
         <item>FullTime</item>
         <item>PartTime</item>
         <item>Freelance</item>
+        <item>Internship</item>
+        <item>Volunteer</item>
+        <item>Temporary</item>
     </string-array>
 
 </resources>

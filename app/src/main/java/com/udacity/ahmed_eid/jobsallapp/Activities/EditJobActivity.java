@@ -1,13 +1,14 @@
 package com.udacity.ahmed_eid.jobsallapp.Activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -15,10 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.udacity.ahmed_eid.jobsallapp.Model.Category;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
 import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
+
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,19 +75,32 @@ public class EditJobActivity extends AppCompatActivity {
     RadioButton femaleRadioBtn;
     @BindView(R.id.both_radioBtn)
     RadioButton bothRadioBtn;
+    @BindView(R.id.categoryName)
+    TextView categoryNameText;
+    @BindView(R.id.job_type_text)
+    TextView jobTypeText;
     private Job job = null;
-    private String[] categories ;
-    private String[] jobTypes ;
+    private String[] categories;
+    private String[] jobTypes;
     private String category = null;
     private String jobType = null;
     private String gender = null;
+    private String companyId = null;
+    private String jobId = null;
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_job);
         ButterKnife.bind(this);
+        categoryNameText.setVisibility(View.VISIBLE);
+        jobTypeText.setVisibility(View.VISIBLE);
         textEditBtn.setText("Edit Job");
+        jobSpinner.setHint("Change Category...");
+        jobTypeSpinner.setHint("Change Job Type...");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         setSpinnersWithAdapters();
         receiveJobFromJobDetails();
         populateUI(job);
@@ -90,14 +108,42 @@ public class EditJobActivity extends AppCompatActivity {
 
     private void setSpinnersWithAdapters() {
         categories = getResources().getStringArray(R.array.categories);
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this,R.layout.item_spinner,categories);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, R.layout.item_spinner, categories);
         categoryAdapter.setDropDownViewResource(R.layout.item_spinner);
         jobSpinner.setAdapter(categoryAdapter);
+        jobSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                jobSpinner.setError(null);
+                if (jobSpinner.getSelectedItem() != null) {
+                    category = (String) jobSpinner.getSelectedItem();
+                    categoryNameText.setText(category);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                jobSpinner.setError("Error");
+            }
+        });
         //---------------------------------------------------------------------
         jobTypes = getResources().getStringArray(R.array.jobTypes);
-        ArrayAdapter<String> jobTypeAdapter = new ArrayAdapter<>(this,R.layout.item_spinner,jobTypes);
+        ArrayAdapter<String> jobTypeAdapter = new ArrayAdapter<>(this, R.layout.item_spinner, jobTypes);
         jobTypeAdapter.setDropDownViewResource(R.layout.item_spinner);
         jobTypeSpinner.setAdapter(jobTypeAdapter);
+        jobTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (jobTypeSpinner.getSelectedItem() != null){
+                    jobType = (String) jobTypeSpinner.getSelectedItem();
+                    jobTypeText.setText(jobType);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
     }
 
@@ -139,14 +185,12 @@ public class EditJobActivity extends AppCompatActivity {
                 bothRadioBtn.setChecked(true);
             }
             this.category = job.getCategory();
-//            jobSpinner.setPrompt(category);
-//            for (int i=0 ; i<categories.length ; i++){
-//                if (category.equals(categories[i])){
-//                    jobSpinner.setId(i);
-//                    jobSpinner.setPromptId(i);
-//                }
-//            }
+            categoryNameText.setText("Category:   "+category);
+            //Toast.makeText(EditJobActivity.this, "" + category, Toast.LENGTH_SHORT).show();
             this.jobType = job.getJobType();
+            jobTypeText.setText("Job Type:   "+jobType);
+            companyId = job.getCompanyId();
+            jobId = job.getJobId();
         }
     }
 
@@ -155,10 +199,6 @@ public class EditJobActivity extends AppCompatActivity {
         finish();
     }
 
-    @OnClick(R.id.post_job_btn)
-    public void onViewClicked() {
-        writeNewJobData();
-    }
 
     private void writeNewJobData() {
         String title = jobTitle.getText().toString();
@@ -185,31 +225,37 @@ public class EditJobActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
         }
-        jobSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                jobSpinner.setError(null);
-                category = (String) jobSpinner.getSelectedItem();
-                Toast.makeText(EditJobActivity.this, ""+category, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                jobSpinner.setError("Error");
-            }
-        });
-        jobTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                jobType = (String) jobTypeSpinner.getSelectedItem();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
+        Job job = new Job(jobId, companyId, title, category, gender, age, sal, exDate, vanNum, jMin, jMax, level, jobType, nat, country, city, des, req);
+        mDatabase.child("Jobs").child(jobId).setValue(job);
+        finish();
 
     }
 
 
+    @OnClick({R.id.expiry_date, R.id.post_job_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.expiry_date:
+                showCalendarAndGetDate();
+                break;
+            case R.id.post_job_btn:
+                writeNewJobData();
+                break;
+        }
+    }
+
+    private void showCalendarAndGetDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month++;
+                expiryDate.setText(year + "/" + month + "/" + day);
+            }
+        }, year, month, day);
+        pickerDialog.show();
+    }
 }

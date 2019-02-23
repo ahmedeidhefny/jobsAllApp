@@ -187,7 +187,7 @@ public class AddNewJobActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month++;
-               expiryDate.setText(year+"/"+month+"/"+day);
+                expiryDate.setText(year + "/" + month + "/" + day);
             }
         }, year, month, day);
         pickerDialog.show();
