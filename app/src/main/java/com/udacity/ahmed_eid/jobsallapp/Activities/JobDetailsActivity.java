@@ -106,6 +106,7 @@ public class JobDetailsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private Menu menu = null;
+    private AlertDialog.Builder alertBuilder ;
 
 
     @Override
@@ -115,6 +116,7 @@ public class JobDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        alertBuilder = new AlertDialog.Builder(this);
         getUserType();
         receiveJobFromAdapter();
         //startActivity(getIntent());
@@ -175,7 +177,6 @@ public class JobDetailsActivity extends AppCompatActivity {
             editJob(jobId);
             return true;
         } else if (item.getItemId() == R.id.detail_delete) {
-            final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
             alertBuilder.setTitle("Delete Job !");
             alertBuilder.setIcon(R.drawable.delete);
             alertBuilder.setMessage("Are You Sure You Want To Delete This Job ?");

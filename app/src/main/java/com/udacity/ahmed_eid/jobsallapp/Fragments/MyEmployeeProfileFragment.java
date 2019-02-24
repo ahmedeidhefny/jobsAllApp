@@ -1,6 +1,7 @@
 package com.udacity.ahmed_eid.jobsallapp.Fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.udacity.ahmed_eid.jobsallapp.Activities.MyResumeActivity;
 import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.R;
 
@@ -48,6 +51,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class MyEmployeeProfileFragment extends Fragment {
 
+    private static final String TAG = "MyEmployeeProfileFragment";
+
     @BindView(R.id.profile_emp_name)
     TextView profileEmpName;
     @BindView(R.id.profile_emp_jobTitle)
@@ -56,8 +61,8 @@ public class MyEmployeeProfileFragment extends Fragment {
     TextView profileEmpSumm;
     @BindView(R.id.profile_emp_address)
     TextView profileEmpAddress;
-    @BindView(R.id.portofilo_btn)
-    Button portofiloBtn;
+    @BindView(R.id.myResume_btn)
+    Button myResumeBtn;
     @BindView(R.id.contactMe_btn)
     Button contactMeBtn;
     Unbinder unbinder;
@@ -154,31 +159,14 @@ public class MyEmployeeProfileFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.portofilo_btn, R.id.contactMe_btn, R.id.emp_image, R.id.emp_add_icon})
+    @OnClick({R.id.myResume_btn, R.id.contactMe_btn, R.id.emp_image, R.id.emp_add_icon})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.portofilo_btn:
-                String userId = mAuth.getCurrentUser().getUid();
-               // mDatabase.child(userId).child("maritalStatus").removeValue();
-                mDatabase.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()){
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                Toast.makeText(getActivity(),""+snapshot, Toast.LENGTH_SHORT).show();;
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+            case R.id.myResume_btn:
+                Intent myResumeIntent = new Intent(getActivity(), MyResumeActivity.class);
+                startActivity(myResumeIntent);
                 break;
             case R.id.contactMe_btn:
-                break;
-            case R.id.emp_image:
                 break;
             case R.id.emp_add_icon:
                 pickImage();
@@ -235,15 +223,18 @@ public class MyEmployeeProfileFragment extends Fragment {
                 return image_pathRef.getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    Toast.makeText(getActivity(), "downloadUri: " + downloadUri, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Uploaded The Image Successfully.. ", Toast.LENGTH_SHORT).show();
                     writeImageRefInRealtimeDatabase(downloadUri.toString());
                 } else {
                     String error = task.getException().getMessage();
-                    Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                    Log.e(TAG,"Error: "+error);
+                    Toast.makeText(getActivity(), "Filed to Uploaded The Image..", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

@@ -8,7 +8,7 @@ public class Employee {
     private String userType;
     private String employeeName;
     private String jobTitle;
-    private String employeeImage;
+    private String employeeImage,employeeResumeFile;
     private String phone;
     private String gender,nationality;
     private String empCountry;
@@ -41,6 +41,9 @@ public class Employee {
     }
 
 
+    public String getEmployeeResumeFile() {
+        return employeeResumeFile;
+    }
 
     public String getMilitaryStatus() {
         return militaryStatus;

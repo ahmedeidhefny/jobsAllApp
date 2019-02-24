@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.MyResumeActivity">
+
+
+    <!--<WebView-->
+        <!--android:id="@+id/showFile_webView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+    <Button
+        android:id="@+id/add_file_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add file"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdf_viewer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.github.barteksc.pdfviewer.PDFView>
+
+
+
+
+</RelativeLayout>
