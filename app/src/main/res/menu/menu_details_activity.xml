@@ -5,11 +5,11 @@
     <group android:id="@+id/job_details_group">
         <item
             android:id="@+id/detail_edit"
-            android:title="Edit"
+            android:title="Edit Job"
             app:showAsAction="never"></item>
         <item
             android:id="@+id/detail_delete"
-            android:title="Delete"
+            android:title="Delete Job"
             app:showAsAction="never"></item>
     </group>
 </menu>

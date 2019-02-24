@@ -59,7 +59,7 @@ public class MyResumeActivity extends AppCompatActivity {
     private static final String TAG = "MyResumeActivity";
     private Uri fileUri;
     private String url;
-    private String pdf ;
+    private String pdf;
 
     //@BindView(R.id.showFile_webView)
     //WebView showFileWebView;
@@ -72,21 +72,21 @@ public class MyResumeActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
-    private DownloadManager downloadManager ;
-    private AlertDialog.Builder alertBuilder ;
+    private DownloadManager downloadManager;
+    private AlertDialog.Builder alertBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_resume);
         ButterKnife.bind(this);
-        setTitle("MyResume File..");
+        setTitle("CV File..");
         storageRef = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        alertBuilder  = new AlertDialog.Builder(this);
+        alertBuilder = new AlertDialog.Builder(this);
         checkResumeFileFoundedInDB();
     }
 
@@ -98,7 +98,7 @@ public class MyResumeActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     AddFileBtn.setVisibility(View.GONE);
                     pdfViewer.setVisibility(View.VISIBLE);
-                   pdf = dataSnapshot.getValue(String.class);
+                    pdf = dataSnapshot.getValue(String.class);
 //                    try {
 //                        url = URLEncoder.encode(pdf, "UTF-8");
 //                    } catch (UnsupportedEncodingException e) {
@@ -123,15 +123,15 @@ public class MyResumeActivity extends AppCompatActivity {
         });
     }
 
-    public class RetrivePdfStreame extends AsyncTask<String,Void,InputStream>{
+    public class RetrivePdfStreame extends AsyncTask<String, Void, InputStream> {
 
         @Override
         protected InputStream doInBackground(String... strings) {
-            InputStream inputStream = null ;
+            InputStream inputStream = null;
             try {
                 URL url = new URL(strings[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection)  url.openConnection();
-                if (urlConnection.getResponseCode() == 200){
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                if (urlConnection.getResponseCode() == 200) {
                     inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 }
 
@@ -164,19 +164,19 @@ public class MyResumeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_myresume,menu);
+        getMenuInflater().inflate(R.menu.menu_myresume, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.app_bar_change:
                 selectAndUploadFile();
                 break;
             case R.id.app_bar_download:
-                alertBuilder.setTitle("Download File !");
-                alertBuilder.setMessage("Are You Sure You Want To Download This Resume File ?");
+                alertBuilder.setTitle("Download CV File !");
+                alertBuilder.setMessage("Are You Sure You Want To Download This CV File ?");
                 alertBuilder.setIcon(R.drawable.ic_file_download_black_24dp);
                 alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -192,18 +192,71 @@ public class MyResumeActivity extends AppCompatActivity {
                 });
                 alertBuilder.show();
                 break;
+            case R.id.app_bar_delete:
+                alertBuilder.setTitle("Delete CV File !");
+                alertBuilder.setIcon(R.drawable.delete);
+                alertBuilder.setMessage("Are You Sure You Want To Delete This CV File ?");
+                alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteCV();
+                    }
+                });
+                alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                alertBuilder.show();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteCV() {
+        String employeeId = mAuth.getCurrentUser().getUid();
+        storageRef.child("EmployeesResumesFiles").child(employeeId + ".pdf").delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    deleteRefFromRealTimeDB();
+                }else {
+                    String error = task.getException().getMessage();
+                    Log.e(TAG, "Error: " + error);
+                    Toast.makeText(getApplicationContext(), "Filed to Delete The CV File..", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+    }
+
+    private void deleteRefFromRealTimeDB() {
+        String employeeId = mAuth.getCurrentUser().getUid();
+        mDatabase.child("Users").child(employeeId).child("employeeResumeFile").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "The CV File Successfully Deleted.. ", Toast.LENGTH_SHORT).show();
+                    startActivity(getIntent());
+                } else {
+                    String error = task.getException().getMessage();
+                    Log.e(TAG, "Error: " + error);
+                    Toast.makeText(getApplicationContext(), "Filed to Delete The CV File..", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void downloadFile() {
         Uri uri = Uri.parse(pdf);
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        long reference  = downloadManager.enqueue(request);
+        long reference = downloadManager.enqueue(request);
     }
 
-    private void selectAndUploadFile(){
+    private void selectAndUploadFile() {
         if (ContextCompat.checkSelfPermission(MyResumeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             selectFile();
         } else {
