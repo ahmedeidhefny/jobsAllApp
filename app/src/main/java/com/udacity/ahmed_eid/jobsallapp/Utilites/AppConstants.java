@@ -9,4 +9,7 @@ public class AppConstants {
 
     public static final String INTENT_JobDetailsKey = "JobDetails";
     public static final String INTENT_CategoryAdapterKey = "CategoryAdapter";
+
+    public static final String INTENT_employeeIdKey = "employeeId";
+    public static final String INTENT_empPhoneKey = "empPhone";
 }

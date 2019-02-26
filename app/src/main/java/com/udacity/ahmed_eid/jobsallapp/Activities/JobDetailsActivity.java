@@ -242,7 +242,11 @@ public class JobDetailsActivity extends AppCompatActivity {
     private void populateUI(Job job) {
         jobDetailsDes.setText(job.getJobDescription());
         jobDetailsReq.setText(job.getJobRequirement());
-        jobDetailsTitle.setText(job.getTitle());
+        //------
+        String jobName = job.getTitle();
+        String jobNameUpper = jobName.substring(0, 1).toUpperCase() + jobName.substring(1);
+        jobDetailsTitle.setText(jobNameUpper);
+        //-----
         jobDescCat.setText(job.getCategory());
         jobDescDegree.setText(job.getDegreeLevel());
         jobDescEmplType.setText(job.getJobType());

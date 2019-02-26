@@ -87,7 +87,8 @@ public class AddNewJobActivity extends AppCompatActivity {
     }
 
     private void addNewJob() {
-        String title = jobTitle.getText().toString();
+        String title= jobTitle.getText().toString();
+        String titleLowerCase = title.toLowerCase() ;
         String city = jobCity.getText().toString();
         String country = jobCountry.getText().toString();
         String des = jobDescription.getText().toString();
@@ -116,7 +117,7 @@ public class AddNewJobActivity extends AppCompatActivity {
         String userId = mAuth.getCurrentUser().getUid();
 
         if (category != null && jobType != null && !TextUtils.isEmpty(userId)) {
-            Job job = new Job(mDatabase.getKey(), userId, title, category, gender, age, sal, exDate, vanNum, jMin, jMax, level, jobType, nat, country, city, des, req);
+            Job job = new Job(mDatabase.getKey(), userId, titleLowerCase, category, gender, age, sal, exDate, vanNum, jMin, jMax, level, jobType, nat, country, city, des, req);
             mDatabase.setValue(job);
             goToMainActivity();
             Toast.makeText(getApplicationContext(), "Post New Job: Successfully..", Toast.LENGTH_LONG).show();

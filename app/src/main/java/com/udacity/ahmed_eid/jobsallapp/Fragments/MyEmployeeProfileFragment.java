@@ -2,21 +2,30 @@ package com.udacity.ahmed_eid.jobsallapp.Fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,9 +45,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.udacity.ahmed_eid.jobsallapp.Activities.ContactMeActivity;
 import com.udacity.ahmed_eid.jobsallapp.Activities.MyResumeActivity;
 import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.R;
+import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,6 +101,15 @@ public class MyEmployeeProfileFragment extends Fragment {
     private StorageReference mStorageRef;
     private Uri imageUri = null;
 
+    private String employeeId;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,15 +117,21 @@ public class MyEmployeeProfileFragment extends Fragment {
         myView = inflater.inflate(R.layout.fragment_my_employee_profile, container, false);
         unbinder = ButterKnife.bind(this, myView);
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        employeeId = mAuth.getCurrentUser().getUid();
         readUserData();
         return myView;
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.app_bar_search);
+        item.setVisible(false);
+    }
+
     private void readUserData() {
-        String userId = mAuth.getCurrentUser().getUid();
-        Query query = mDatabase.orderByChild("userId").equalTo(userId);
+        Query query = mDatabase.child("Users").orderByChild("userId").equalTo(employeeId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -138,16 +164,16 @@ public class MyEmployeeProfileFragment extends Fragment {
         profileEmpNational.setText(employee.getNationality());
         String sex = employee.getGender();
         profileEmpGender.setText(sex);
-        String image = employee.getEmployeeImage() ;
-        if (!TextUtils.isEmpty(image)){
+        String image = employee.getEmployeeImage();
+        if (!TextUtils.isEmpty(image)) {
             Glide.with(getActivity())
                     .load(image)
                     .error(R.drawable.user_profile_default)
                     .into(empImage);
-        }else {
+        } else {
             if (sex.equals("Male")) {
                 empImage.setImageResource(R.drawable.male);
-            }else if(sex.equals("Female")){
+            } else if (sex.equals("Female")) {
                 empImage.setImageResource(R.drawable.female);
             }
         }
@@ -167,12 +193,16 @@ public class MyEmployeeProfileFragment extends Fragment {
                 startActivity(myResumeIntent);
                 break;
             case R.id.contactMe_btn:
+                Intent contactMeIntent = new Intent(getActivity(), ContactMeActivity.class);
+                contactMeIntent.putExtra(AppConstants.INTENT_employeeIdKey, employeeId);
+                startActivity(contactMeIntent);
                 break;
             case R.id.emp_add_icon:
                 pickImage();
                 break;
         }
     }
+
 
     private void pickImage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -232,7 +262,7 @@ public class MyEmployeeProfileFragment extends Fragment {
                     writeImageRefInRealtimeDatabase(downloadUri.toString());
                 } else {
                     String error = task.getException().getMessage();
-                    Log.e(TAG,"Error: "+error);
+                    Log.e(TAG, "Error: " + error);
                     Toast.makeText(getActivity(), "Filed to Uploaded The Image..", Toast.LENGTH_SHORT).show();
 
                 }
@@ -243,7 +273,7 @@ public class MyEmployeeProfileFragment extends Fragment {
 
     private void writeImageRefInRealtimeDatabase(String downloadUrl) {
         String employee_id = mAuth.getCurrentUser().getUid();
-        mDatabase.child(employee_id).child("employeeImage").setValue(downloadUrl);
+        mDatabase.child("Users").child(employee_id).child("employeeImage").setValue(downloadUrl);
     }
 
 

@@ -16,7 +16,25 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:elevation="0dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <EditText
+                android:id="@+id/search_EText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
+                android:drawableTint="@color/colorBlackLight"
+                android:drawablePadding="10dp"
+                android:background="@drawable/background_search_item"
+                android:hint="Search About Job"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:textColorHint="@color/colorBlackLight"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </android.support.v7.widget.Toolbar>
+        
+
     </android.support.design.widget.AppBarLayout>
 
     <include

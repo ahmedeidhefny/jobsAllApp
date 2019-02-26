@@ -55,7 +55,9 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
         final Job job = jobs.get(position);
-        holder.jobTitle.setText(job.getTitle());
+        String jobName = job.getTitle();
+        String jobNameUpper = jobName.substring(0, 1).toUpperCase() + jobName.substring(1);
+        holder.jobTitle.setText(jobNameUpper);
         holder.location.setText(job.getCountry() + " - " + job.getCity());
         readCompanyData(job, holder.compName, holder.image, holder.viewBtn);
     }

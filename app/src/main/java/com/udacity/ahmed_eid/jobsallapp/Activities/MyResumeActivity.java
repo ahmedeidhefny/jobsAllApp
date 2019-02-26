@@ -61,8 +61,6 @@ public class MyResumeActivity extends AppCompatActivity {
     private String url;
     private String pdf;
 
-    //@BindView(R.id.showFile_webView)
-    //WebView showFileWebView;
     @BindView(R.id.pdf_viewer)
     PDFView pdfViewer;
     @BindView(R.id.add_file_btn)

@@ -11,8 +11,7 @@
     <item
         android:id="@+id/app_bar_change"
         app:showAsAction="never"
-        android:title="Change CV"
-        android:iconTint="@color/colorWhite"/>
+        android:title="Change CV" />
     <item
         android:id="@+id/app_bar_delete"
         app:showAsAction="never"

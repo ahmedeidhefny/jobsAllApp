@@ -1,6 +1,7 @@
 package com.udacity.ahmed_eid.jobsallapp.Activities;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +63,14 @@ public class MainScreenWithNavigation extends AppCompatActivity {
     NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @BindView(R.id.noInternet_layout)
+    LinearLayout noInternetLayout;
+    @BindView(R.id.progress_bar)
+    ContentLoadingProgressBar progressBar;
+    @BindView(R.id.progress_layout)
+    RelativeLayout progressLayout;
+    @BindView(R.id.container_layout)
+    FrameLayout containerLayout;
     private CircleImageView navImageView;
     private TextView navName, navJob;
 
@@ -65,13 +78,19 @@ public class MainScreenWithNavigation extends AppCompatActivity {
     private String userType;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private ConnectivityManager conMgr;
 
 
-    @OnClick(R.id.fab_add_job)
-    public void onViewClicked() {
-        Intent addIntent = new Intent(getApplicationContext(), AddNewJobActivity.class);
-        startActivity(addIntent);
+    @OnClick({R.id.fab_add_job, R.id.retry_btn})
+    public void onViewClicked(View view) {
+        if (view.getId() == R.id.fab_add_job) {
+            Intent addIntent = new Intent(getApplicationContext(), AddNewJobActivity.class);
+            startActivity(addIntent);
+        } else if (view.getId() == R.id.retry_btn) {
+            startActivity(getIntent());
+        }
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,22 +98,48 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen_with_navigation);
         ButterKnife.bind(this);
         setSupportActionBar(toolBar);
+        initializeUI();
+        if (conMgr.getActiveNetworkInfo() == null
+                || !conMgr.getActiveNetworkInfo().isAvailable()
+                || !conMgr.getActiveNetworkInfo().isConnected()) {
+            toggleError();
+        } else {
+            toggleShowData();
+            mToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.nav_open, R.string.nav_close);
+            drawerLayout.addDrawerListener(mToggle);
+            mToggle.syncState();
+            getUserType();
+            setupNavigationContent();
+            setupBottomNav();
+        }
+    }
+
+    private void initializeUI() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.nav_open, R.string.nav_close);
-        drawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
+        conMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         fabAddJob.setVisibility(View.GONE);
         View header = navigationView.inflateHeaderView(R.layout.nav_header);
         navImageView = header.findViewById(R.id.nav_header_user_image);
         navName = header.findViewById(R.id.nav_header_user_name);
         navJob = header.findViewById(R.id.nav_header_user_job);
-        getUserType();
-        setupNavigationContent();
-        setupBottomNav();
-        //selectItemDrawer(navigationView.getMenu().getItem(0));
+        progressLayout.setVisibility(View.VISIBLE);
+        progressBar.show();
     }
 
+    private void toggleShowData() {
+        progressLayout.setVisibility(View.GONE);
+        progressBar.hide();
+        noInternetLayout.setVisibility(View.GONE);
+        containerLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void toggleError() {
+        progressLayout.setVisibility(View.GONE);
+        progressBar.hide();
+        noInternetLayout.setVisibility(View.VISIBLE);
+        containerLayout.setVisibility(View.GONE);
+    }
 
     private void getUserType() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -241,17 +286,8 @@ public class MainScreenWithNavigation extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_overflow, menu);
+       getMenuInflater().inflate(R.menu.menu_overflow, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.app_bar_search) {
-
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void selectItemBottomNav(MenuItem item) {
@@ -339,4 +375,5 @@ public class MainScreenWithNavigation extends AppCompatActivity {
             }
         });
     }
+
 }

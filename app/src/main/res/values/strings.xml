@@ -53,5 +53,7 @@
         <item>Volunteer</item>
         <item>Temporary</item>
     </string-array>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
