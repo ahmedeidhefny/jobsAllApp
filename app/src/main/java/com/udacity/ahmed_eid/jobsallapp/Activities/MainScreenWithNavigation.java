@@ -108,11 +108,14 @@ public class MainScreenWithNavigation extends AppCompatActivity {
             mToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.nav_open, R.string.nav_close);
             drawerLayout.addDrawerListener(mToggle);
             mToggle.syncState();
+            setTitle("Home");
+            loadFragment(new HomeFragment());
             getUserType();
             setupNavigationContent();
             setupBottomNav();
         }
     }
+
 
     private void initializeUI() {
         mAuth = FirebaseAuth.getInstance();
@@ -286,7 +289,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       getMenuInflater().inflate(R.menu.menu_overflow, menu);
+        getMenuInflater().inflate(R.menu.menu_overflow, menu);
         return true;
     }
 
@@ -313,11 +316,13 @@ public class MainScreenWithNavigation extends AppCompatActivity {
                 break;
             case R.id.nav_profile:
                 if (userType.equals("Employee")) {
-                    fragmentClass = new MyEmployeeProfileFragment();
-                    loadFragment(fragmentClass);
+                    MyEmployeeProfileFragment empProFrg = new MyEmployeeProfileFragment();
+                    empProFrg.setEmployeeId(mAuth.getCurrentUser().getUid());
+                    loadFragment(empProFrg);
                 } else if (userType.equals("Company")) {
-                    fragmentClass = new MyCompanyProfileFragment();
-                    loadFragment(fragmentClass);
+                    MyCompanyProfileFragment compProFrg = new MyCompanyProfileFragment();
+                    compProFrg.setCompanyId(mAuth.getCurrentUser().getUid());
+                    loadFragment(compProFrg);
                 }
                 break;
             default:

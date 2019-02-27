@@ -138,7 +138,17 @@ public class JobDetailsActivity extends AppCompatActivity {
         if (intent.hasExtra(AppConstants.INTENT_JobAdapterCompNameKey)
                 && intent.hasExtra(AppConstants.INTENT_JobAdapterCompLogoKey)) {
             String comName = intent.getStringExtra(AppConstants.INTENT_JobAdapterCompNameKey);
-            jobDetailsCompName.setText(comName);
+            if (!TextUtils.isEmpty(comName)){
+                jobDetailsCompName.setText(comName);
+                jobDetailsCompName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), CompanyProfileActivity.class);
+                        intent.putExtra(AppConstants.INTENT_CompanyIdKey,companyId);
+                        startActivity(intent);
+                    }
+                });
+            }
             String compLogo = intent.getStringExtra(AppConstants.INTENT_JobAdapterCompLogoKey);
             if (!TextUtils.isEmpty(compLogo)) {
                 Glide.with(this)

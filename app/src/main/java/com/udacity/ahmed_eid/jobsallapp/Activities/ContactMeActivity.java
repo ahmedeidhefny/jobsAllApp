@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +51,7 @@ public class ContactMeActivity extends AppCompatActivity {
     Button btnClose;
     private String employeeId;
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth ;
     private SocialMedia socialMedia = null;
 
     @Override
@@ -57,7 +59,9 @@ public class ContactMeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_me);
         ButterKnife.bind(this);
+        setTitle("Communication..!");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("SocialMedia");
+        mAuth = FirebaseAuth.getInstance();
         receiveDataFromEmpProfile();
 
     }
@@ -94,6 +98,15 @@ public class ContactMeActivity extends AppCompatActivity {
             showPopupEditContact();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (!mAuth.getCurrentUser().getUid().equals(employeeId)) {
+            menu.findItem(R.id.app_contact_edit).setVisible(false);
+            return true;
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private void showPopupEditContact() {
@@ -168,12 +181,19 @@ public class ContactMeActivity extends AppCompatActivity {
     }
 
     private void populateUI(SocialMedia socialMedia) {
-        phoneNumber.setText(socialMedia.getPhoneNumber());
-        mail.setText(socialMedia.getMail());
-        whatsApp.setText(socialMedia.getWhatsApp());
-        facebokLink.setText(socialMedia.getFacebook());
-        twitterLink.setText(socialMedia.getTwitter());
-        linkedinLink.setText(socialMedia.getLinkedIn());
+        checkIsEmpty(socialMedia.getPhoneNumber(),  phoneNumber);
+        checkIsEmpty(socialMedia.getMail(),  mail);
+        checkIsEmpty(socialMedia.getWhatsApp(), whatsApp);
+        checkIsEmpty(socialMedia.getFacebook(), facebokLink);
+        checkIsEmpty(socialMedia.getTwitter(), twitterLink);
+        checkIsEmpty(socialMedia.getLinkedIn(), linkedinLink);
+    }
+    private void checkIsEmpty(String text,TextView textView){
+        if (TextUtils.isEmpty(text)){
+            textView.setText("Unspicified");
+        }else {
+            textView.setText(text);
+        }
     }
 
     @OnClick(R.id.btn_close)

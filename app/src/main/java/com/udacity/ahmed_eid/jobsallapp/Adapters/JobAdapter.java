@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.udacity.ahmed_eid.jobsallapp.Activities.AddNewJobActivity;
+import com.udacity.ahmed_eid.jobsallapp.Activities.CompanyProfileActivity;
 import com.udacity.ahmed_eid.jobsallapp.Activities.JobDetailsActivity;
 import com.udacity.ahmed_eid.jobsallapp.Model.Company;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
@@ -63,7 +64,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
     }
 
     private void readCompanyData(final Job job, final TextView compName, final CircleImageView image, final RelativeLayout viewBtn) {
-        String companyId = job.getCompanyId();
+        final String companyId = job.getCompanyId();
         Query query = mDatabase.orderByChild("userId").equalTo(companyId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -73,6 +74,15 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
                         Company company = snapshot.getValue(Company.class);
                         String comName = company.getCompName();
                         compName.setText(comName);
+                        compName.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(mContext, CompanyProfileActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra(AppConstants.INTENT_CompanyIdKey,companyId);
+                                mContext.startActivity(intent);
+                            }
+                        });
                         String logo = company.getCompLogo();
                         if (!TextUtils.isEmpty(logo)) {
                             Glide.with(mContext)

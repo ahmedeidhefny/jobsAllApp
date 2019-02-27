@@ -103,11 +103,15 @@ public class MyEmployeeProfileFragment extends Fragment {
 
     private String employeeId;
 
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+        //setHasOptionsMenu(true);
+        //getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
     }
 
     @Override
@@ -115,13 +119,24 @@ public class MyEmployeeProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myView;
         myView = inflater.inflate(R.layout.fragment_my_employee_profile, container, false);
+        if (savedInstanceState != null) {
+            employeeId = savedInstanceState.getString(AppConstants.SaveInstance_MyEmpProf_EmpId);
+        }
         unbinder = ButterKnife.bind(this, myView);
-        mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        employeeId = mAuth.getCurrentUser().getUid();
+        mAuth = FirebaseAuth.getInstance();
+        if (!mAuth.getCurrentUser().getUid().equals(employeeId)) {
+          empAddIcon.setVisibility(View.GONE);
+        }
         readUserData();
         return myView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(AppConstants.SaveInstance_MyEmpProf_EmpId, employeeId);
     }
 
     @Override
@@ -190,6 +205,7 @@ public class MyEmployeeProfileFragment extends Fragment {
         switch (view.getId()) {
             case R.id.myResume_btn:
                 Intent myResumeIntent = new Intent(getActivity(), MyResumeActivity.class);
+                myResumeIntent.putExtra(AppConstants.INTENT_employeeIdKey, employeeId);
                 startActivity(myResumeIntent);
                 break;
             case R.id.contactMe_btn:
@@ -242,8 +258,7 @@ public class MyEmployeeProfileFragment extends Fragment {
 
 
     private void uploadImage() {
-        String employee_id = mAuth.getCurrentUser().getUid();
-        final StorageReference image_pathRef = mStorageRef.child("UsersProfileImages").child("EmployeeImages").child(employee_id + ".jpg");
+        final StorageReference image_pathRef = mStorageRef.child("UsersProfileImages").child("EmployeeImages").child(employeeId + ".jpg");
         image_pathRef.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -258,22 +273,31 @@ public class MyEmployeeProfileFragment extends Fragment {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    Toast.makeText(getActivity(), "Uploaded The Image Successfully.. ", Toast.LENGTH_SHORT).show();
-                    writeImageRefInRealtimeDatabase(downloadUri.toString());
+                    writeImageRefInRealTimeDatabase(downloadUri.toString());
                 } else {
                     String error = task.getException().getMessage();
                     Log.e(TAG, "Error: " + error);
                     Toast.makeText(getActivity(), "Filed to Uploaded The Image..", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
     }
 
 
-    private void writeImageRefInRealtimeDatabase(String downloadUrl) {
-        String employee_id = mAuth.getCurrentUser().getUid();
-        mDatabase.child("Users").child(employee_id).child("employeeImage").setValue(downloadUrl);
+    private void writeImageRefInRealTimeDatabase(String downloadUrl) {
+        mDatabase.child("Users").child(employeeId).child("employeeImage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Uploaded The Image Successfully.. ", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Filed to Uploaded The Image..", Toast.LENGTH_SHORT).show();
+                    String error = task.getException().getMessage();
+                    Log.e(TAG, "writeImageInRealTime:" + error);
+                }
+            }
+        });
     }
 
 

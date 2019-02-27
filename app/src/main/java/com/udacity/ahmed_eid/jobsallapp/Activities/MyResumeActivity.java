@@ -37,6 +37,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.udacity.ahmed_eid.jobsallapp.R;
+import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -58,8 +59,7 @@ public class MyResumeActivity extends AppCompatActivity {
     private static final int INTENT_REQUEST_CODE = 1;
     private static final String TAG = "MyResumeActivity";
     private Uri fileUri;
-    private String url;
-    private String pdf;
+    private String pdf = null;
 
     @BindView(R.id.pdf_viewer)
     PDFView pdfViewer;
@@ -72,6 +72,7 @@ public class MyResumeActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private DownloadManager downloadManager;
     private AlertDialog.Builder alertBuilder;
+    private String employeeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +86,30 @@ public class MyResumeActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         alertBuilder = new AlertDialog.Builder(this);
+        receiveDataFromEmpProfile();
         checkResumeFileFoundedInDB();
     }
 
+    private void receiveDataFromEmpProfile() {
+        Intent intent = getIntent();
+        if (intent == null) {
+            showErrorMassage();
+            return;
+        }
+        if (intent.hasExtra(AppConstants.INTENT_employeeIdKey)) {
+            employeeId = intent.getStringExtra(AppConstants.INTENT_employeeIdKey);
+
+        } else {
+            showErrorMassage();
+        }
+    }
+
+    private void showErrorMassage() {
+        Toast.makeText(this, "Not Found Data", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
     private void checkResumeFileFoundedInDB() {
-        String employeeId = mAuth.getCurrentUser().getUid();
         mDatabase.child("Users").child(employeeId).child("employeeResumeFile").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -106,9 +126,10 @@ public class MyResumeActivity extends AppCompatActivity {
 //                    //showFileWebView.getSettings().setJavaScriptEnabled(true);
 //                    //showFileWebView.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + url);
                     new RetrivePdfStreame().execute(pdf);
-
                 } else {
-                    AddFileBtn.setVisibility(View.VISIBLE);
+                    if (mAuth.getCurrentUser().getUid().equals(employeeId)) {
+                        AddFileBtn.setVisibility(View.VISIBLE);
+                    }
                     pdfViewer.setVisibility(View.GONE);
                 }
             }
@@ -212,14 +233,23 @@ public class MyResumeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (!mAuth.getCurrentUser().getUid().equals(employeeId)) {
+            menu.findItem(R.id.app_bar_change).setVisible(false);
+            menu.findItem(R.id.app_bar_delete).setVisible(false);
+            return true;
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     private void deleteCV() {
-        String employeeId = mAuth.getCurrentUser().getUid();
         storageRef.child("EmployeesResumesFiles").child(employeeId + ".pdf").delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     deleteRefFromRealTimeDB();
-                }else {
+                } else {
                     String error = task.getException().getMessage();
                     Log.e(TAG, "Error: " + error);
                     Toast.makeText(getApplicationContext(), "Filed to Delete The CV File..", Toast.LENGTH_SHORT).show();
@@ -231,7 +261,6 @@ public class MyResumeActivity extends AppCompatActivity {
     }
 
     private void deleteRefFromRealTimeDB() {
-        String employeeId = mAuth.getCurrentUser().getUid();
         mDatabase.child("Users").child(employeeId).child("employeeResumeFile").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -248,10 +277,14 @@ public class MyResumeActivity extends AppCompatActivity {
     }
 
     private void downloadFile() {
-        Uri uri = Uri.parse(pdf);
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        long reference = downloadManager.enqueue(request);
+        if (pdf != null) {
+            Uri uri = Uri.parse(pdf);
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            long reference = downloadManager.enqueue(request);
+        } else {
+            Toast.makeText(this, "Not Found CV File", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void selectAndUploadFile() {
@@ -296,7 +329,6 @@ public class MyResumeActivity extends AppCompatActivity {
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setProgress(0);
             progressDialog.show();
-            String employeeId = mAuth.getCurrentUser().getUid();
             final StorageReference filePath = storageRef.child("EmployeesResumesFiles").child(employeeId + ".pdf");
             filePath.putFile(fileUri).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -332,7 +364,6 @@ public class MyResumeActivity extends AppCompatActivity {
     }
 
     private void writeFilePathToRealTimeDB(String downloadFileUri) {
-        String employeeId = mAuth.getCurrentUser().getUid();
         mDatabase.child("Users").child(employeeId).child("employeeResumeFile").setValue(downloadFileUri).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

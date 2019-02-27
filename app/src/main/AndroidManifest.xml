@@ -54,7 +54,9 @@
                 android:resource="@xml/job_widget_provider_info" />
         </receiver>
 
-        <activity android:name=".Activities.ContactMeActivity"></activity>
+        <activity android:name=".Activities.ContactMeActivity" />
+        <activity android:name=".Activities.EmployeeProfileActivity" />
+        <activity android:name=".Activities.CompanyProfileActivity"></activity>
     </application>
 
 </manifest>

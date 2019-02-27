@@ -1,6 +1,7 @@
 package com.udacity.ahmed_eid.jobsallapp.Fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -43,6 +44,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.udacity.ahmed_eid.jobsallapp.Model.Company;
 import com.udacity.ahmed_eid.jobsallapp.R;
+import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,16 +78,23 @@ public class MyCompanyProfileFragment extends Fragment {
     CircleImageView compAddImageIcon;
 
     Unbinder unbinder;
-    private FirebaseAuth mAuth;
+    //private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private StorageReference mStorageRef;
     private Uri imageUri = null;
+    private static final String TAG = "MyCompanyProfileFragment";
+
+    private String companyId;
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+        //setHasOptionsMenu(true);
+        //getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
     }
 
     @Override
@@ -93,11 +102,20 @@ public class MyCompanyProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_company_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
-        mAuth = FirebaseAuth.getInstance();
+        if (savedInstanceState != null) {
+            companyId = savedInstanceState.getString(AppConstants.SaveInstance_MyCompProf_CompId);
+        }
+        //mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-        readCmpanyData();
+        readCompanyData();
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(AppConstants.SaveInstance_MyCompProf_CompId, companyId);
     }
 
     @Override
@@ -106,9 +124,8 @@ public class MyCompanyProfileFragment extends Fragment {
         item.setVisible(false);
     }
 
-    private void readCmpanyData() {
-        String compId = mAuth.getCurrentUser().getUid();
-        Query query = mDatabase.orderByChild("userId").equalTo(compId);
+    private void readCompanyData() {
+        Query query = mDatabase.orderByChild("userId").equalTo(companyId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -120,9 +137,12 @@ public class MyCompanyProfileFragment extends Fragment {
                 }
             }
 
+            @SuppressLint("LongLogTag")
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                String error = databaseError.getMessage();
+                Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "readCompanyData:" + error);
             }
         });
     }
@@ -140,7 +160,7 @@ public class MyCompanyProfileFragment extends Fragment {
                     .load(logo)
                     .error(R.drawable.default_logo)
                     .into(compLogo);
-        }else {
+        } else {
             compLogo.setImageResource(R.drawable.default_logo);
         }
         String compId = company.getUserId();
@@ -199,8 +219,7 @@ public class MyCompanyProfileFragment extends Fragment {
     }
 
     private void uploadImage() {
-        String company_id = mAuth.getCurrentUser().getUid();
-        final StorageReference image_pathRef = mStorageRef.child("UsersProfileImages").child("CompanyImages").child(company_id + ".jpg");
+        final StorageReference image_pathRef = mStorageRef.child("UsersProfileImages").child("CompanyImages").child(companyId + ".jpg");
         image_pathRef.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -210,38 +229,35 @@ public class MyCompanyProfileFragment extends Fragment {
                 return image_pathRef.getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    Toast.makeText(getActivity(), "downloadUri: " + downloadUri, Toast.LENGTH_SHORT).show();
-                    writeImageRefInRealtimeDatabase(downloadUri.toString());
+                    writeImageRefInRealTimeDatabase(downloadUri.toString());
                 } else {
                     String error = task.getException().getMessage();
+                    Log.e(TAG, "uploadImageToStorage:" + error);
                     Toast.makeText(getActivity(), "Error: " + error, Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-
-//                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    Uri downloadUrl = task.getResult().getUploadSessionUri();
-//                    Toast.makeText(getActivity(), "downloadUri: " + downloadUrl, Toast.LENGTH_SHORT).show();
-//                    writeImageRefInRealtimeDatabase(downloadUrl.toString());
-//
-//                } else {
-//
-//                }
-//            }
-//        });
-
-    private void writeImageRefInRealtimeDatabase(String downloadUrl) {
-        String company_id = mAuth.getCurrentUser().getUid();
-        mDatabase.child(company_id).child("compLogo").setValue(downloadUrl);
+    private void writeImageRefInRealTimeDatabase(String downloadUrl) {
+        mDatabase.child(companyId).child("compLogo").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Uploaded The Image Successfully.. ", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Filed to Uploaded The Image..", Toast.LENGTH_SHORT).show();
+                    String error = task.getException().getMessage();
+                    Log.e(TAG, "writeImageInRealTime:" + error);
+                }
+            }
+        });
     }
 
 }
