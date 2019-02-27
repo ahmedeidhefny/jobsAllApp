@@ -41,8 +41,8 @@ public class MySavedJobsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+        //setHasOptionsMenu(true);
+        //getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
     }
 
     @Override
