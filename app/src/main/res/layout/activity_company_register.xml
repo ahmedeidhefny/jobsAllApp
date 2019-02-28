@@ -43,36 +43,52 @@
                     android:id="@+id/websiteLink"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/company_name"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
                     android:layout_marginRight="4dp"
-                    android:layout_below="@+id/company_name"
                     android:drawableLeft="@drawable/ic_web_black_24dp"
                     android:drawablePadding="10dp"
                     android:ems="10"
                     android:hint="Website Link"
                     android:inputType="text" />
 
-                <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/compSpinner"
-                    android:layout_width="350dp"
+                <RelativeLayout
+                    android:id="@+id/compSpinnerLayout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/websiteLink"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="4dp"
-                    app:ms_arrowColor="@color/colorBlack"
-                    app:ms_arrowSize="16dp"
-                    app:ms_floatingLabelColor="@color/colorBlack"
-                    app:ms_floatingLabelText="Category:"
-                    app:ms_hint="Chosee Only One Category..."
-                    app:ms_hintColor="#A9A9A9"
-                    app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+                    android:layout_marginRight="4dp">
+
+                    <TextView
+                        android:id="@+id/categoryName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                    <fr.ganfra.materialspinner.MaterialSpinner
+                        android:id="@+id/compSpinner"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        app:ms_arrowColor="@color/colorBlack"
+                        app:ms_arrowSize="16dp"
+                        app:ms_floatingLabelColor="@color/colorBlack"
+                        app:ms_floatingLabelText="Category:"
+                        app:ms_hint="Choose Only One Category..."
+                        app:ms_hintColor="#A9A9A9"
+                        app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+
+                </RelativeLayout>
 
                 <EditText
                     android:id="@+id/foundedDate"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/compSpinner"
+                    android:layout_below="@+id/compSpinnerLayout"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
                     android:layout_marginRight="4dp"
@@ -111,8 +127,8 @@
                             android:id="@+id/compCountry"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginRight="30dp"
+                            android:layout_weight="1"
                             android:ems="10"
                             android:hint="Country"
                             android:inputType="text" />
@@ -175,6 +191,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/edit_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"

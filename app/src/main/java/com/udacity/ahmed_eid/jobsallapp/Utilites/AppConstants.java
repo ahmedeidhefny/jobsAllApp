@@ -12,7 +12,9 @@ public class AppConstants {
 
     public static final String INTENT_employeeIdKey = "employeeId";
     public static final String INTENT_CompanyIdKey = "companyId";
-    public static final String INTENT_empPhoneKey = "empPhone";
+    public static final String INTENT_ActivityNameKey = "ActivityName";
+
+    public static final String MainActivityScreen= "MainScreenActivity";
 
     public static final String SaveInstance_MyEmpProf_EmpId = "employeeId";
     public static final String SaveInstance_MyCompProf_CompId = "companyId";

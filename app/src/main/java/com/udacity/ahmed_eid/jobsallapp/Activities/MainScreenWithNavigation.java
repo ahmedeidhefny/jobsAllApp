@@ -44,6 +44,7 @@ import com.udacity.ahmed_eid.jobsallapp.Fragments.MySavedJobsFragment;
 import com.udacity.ahmed_eid.jobsallapp.Model.Company;
 import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.R;
+import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,15 +105,14 @@ public class MainScreenWithNavigation extends AppCompatActivity {
                 || !conMgr.getActiveNetworkInfo().isConnected()) {
             toggleError();
         } else {
-            toggleShowData();
             mToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.nav_open, R.string.nav_close);
             drawerLayout.addDrawerListener(mToggle);
             mToggle.syncState();
-            setTitle("Home");
-            loadFragment(new HomeFragment());
             getUserType();
             setupNavigationContent();
             setupBottomNav();
+            setTitle("Home");
+            loadFragment(new HomeFragment());
         }
     }
 
@@ -152,6 +152,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     userType = dataSnapshot.getValue(String.class);
+                    toggleShowData();
                     Log.e(TAG, "getUserType: " + userType);
                     handleMenuVisibleByUserType();
                 }
@@ -167,13 +168,15 @@ public class MainScreenWithNavigation extends AppCompatActivity {
     private void handleMenuVisibleByUserType() {
         //Menu menuView = navigationView.getMenu();
         Menu menuBottom = navigationBottom.getMenu();
-        if (userType != null && !userType.isEmpty()) {
+        if (!TextUtils.isEmpty(userType)) {
             if (userType.equals("Employee")) {
-                //menuBottom.findItem(R.id.nav_my_job).setVisible(true);
+                //menuView.findItem(R.id.nav_my_job).setVisible(true);
+                Log.i("MainScreen", "emp");
                 menuBottom.removeItem(R.id.nav_my_job);
                 fabAddJob.setVisibility(View.GONE);
                 readEmployeeDataHandleNavHeader();
             } else if (userType.equals("Company")) {
+                Log.i("MainScreen", "comp");
                 menuBottom.removeItem(R.id.nav_applied_job);
                 fabAddJob.setVisibility(View.VISIBLE);
                 readCompanyDataHandleNavHeader();
@@ -236,6 +239,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
 
                         String sex = employee.getGender();
                         String image = employee.getEmployeeImage();
+                        Log.i("MainScreen", "image");
                         if (!TextUtils.isEmpty(image)) {
                             Glide.with(MainScreenWithNavigation.this)
                                     .load(image)
@@ -270,6 +274,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         menuBottom.removeItem(R.id.nav_profile);
         menuBottom.removeItem(R.id.nav_my_job);
         menuBottom.removeItem(R.id.nav_saved_job);
+        menuBottom.removeItem(R.id.nav_applied_job);
     }
 
     @Override
@@ -318,10 +323,12 @@ public class MainScreenWithNavigation extends AppCompatActivity {
                 if (userType.equals("Employee")) {
                     MyEmployeeProfileFragment empProFrg = new MyEmployeeProfileFragment();
                     empProFrg.setEmployeeId(mAuth.getCurrentUser().getUid());
+                    empProFrg.setActivityName(AppConstants.MainActivityScreen);
                     loadFragment(empProFrg);
                 } else if (userType.equals("Company")) {
                     MyCompanyProfileFragment compProFrg = new MyCompanyProfileFragment();
                     compProFrg.setCompanyId(mAuth.getCurrentUser().getUid());
+                    compProFrg.setActivityName(AppConstants.MainActivityScreen);
                     loadFragment(compProFrg);
                 }
                 break;

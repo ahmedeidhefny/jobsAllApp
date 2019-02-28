@@ -8,10 +8,10 @@
     tools:context=".Activities.MyResumeActivity">
 
 
-    <!--<WebView-->
-        <!--android:id="@+id/showFile_webView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
+   <include
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       layout="@layout/partial_progress_bar_loading"></include>
 
     <Button
         android:id="@+id/add_file_btn"

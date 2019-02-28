@@ -27,7 +27,7 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="8dp">
+                android:padding="16dp">
 
                 <TableRow
                     android:layout_height="match_parent"

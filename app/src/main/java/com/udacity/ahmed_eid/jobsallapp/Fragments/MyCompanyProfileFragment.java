@@ -21,16 +21,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +40,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.udacity.ahmed_eid.jobsallapp.Activities.EditCompanyProfileActivity;
+import com.udacity.ahmed_eid.jobsallapp.Activities.EditEmployeeProfileActivity;
 import com.udacity.ahmed_eid.jobsallapp.Model.Company;
 import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
@@ -78,6 +78,8 @@ public class MyCompanyProfileFragment extends Fragment {
     CircleImageView compAddImageIcon;
 
     Unbinder unbinder;
+    @BindView(R.id.edit_comp_profile_btn)
+    ImageView editCompProfileBtn;
     //private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private StorageReference mStorageRef;
@@ -85,6 +87,11 @@ public class MyCompanyProfileFragment extends Fragment {
     private static final String TAG = "MyCompanyProfileFragment";
 
     private String companyId;
+    private Company company;
+    private String activityName;
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
 
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
@@ -93,8 +100,10 @@ public class MyCompanyProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
-        //getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+        if (activityName.equals(AppConstants.MainActivityScreen)) {
+            setHasOptionsMenu(true);
+            getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -104,6 +113,7 @@ public class MyCompanyProfileFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         if (savedInstanceState != null) {
             companyId = savedInstanceState.getString(AppConstants.SaveInstance_MyCompProf_CompId);
+            activityName = savedInstanceState.getString(AppConstants.INTENT_ActivityNameKey);
         }
         //mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -116,6 +126,7 @@ public class MyCompanyProfileFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(AppConstants.SaveInstance_MyCompProf_CompId, companyId);
+        outState.putString(AppConstants.INTENT_ActivityNameKey, activityName);
     }
 
     @Override
@@ -131,7 +142,7 @@ public class MyCompanyProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Company company = snapshot.getValue(Company.class);
+                        company = snapshot.getValue(Company.class);
                         populateUI(company);
                     }
                 }
@@ -177,9 +188,18 @@ public class MyCompanyProfileFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.comp_add_image_icon)
-    public void onViewClicked() {
-        pickImage();
+    @OnClick({R.id.comp_add_image_icon, R.id.edit_comp_profile_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.comp_add_image_icon:
+                pickImage();
+                break;
+            case R.id.edit_comp_profile_btn:
+                Intent editIntent = new Intent(getActivity(), EditCompanyProfileActivity.class);
+                editIntent.putExtra(AppConstants.INTENT_EmployeeOrCompanyUserKey, company);
+                startActivity(editIntent);
+                break;
+        }
     }
 
     private void pickImage() {

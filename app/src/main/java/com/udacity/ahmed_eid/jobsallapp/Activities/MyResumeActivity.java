@@ -14,12 +14,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -42,12 +44,9 @@ import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +57,10 @@ public class MyResumeActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 55;
     private static final int INTENT_REQUEST_CODE = 1;
     private static final String TAG = "MyResumeActivity";
+    @BindView(R.id.progress_bar)
+    ContentLoadingProgressBar progressBar;
+    @BindView(R.id.progress_layout)
+    RelativeLayout progressLayout;
     private Uri fileUri;
     private String pdf = null;
 
@@ -86,6 +89,8 @@ public class MyResumeActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         alertBuilder = new AlertDialog.Builder(this);
+        progressLayout.setVisibility(View.VISIBLE);
+        progressBar.show();
         receiveDataFromEmpProfile();
         checkResumeFileFoundedInDB();
     }
@@ -166,6 +171,8 @@ public class MyResumeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(InputStream inputStream) {
             super.onPostExecute(inputStream);
+            progressLayout.setVisibility(View.GONE);
+            progressBar.hide();
             pdfViewer.fromStream(inputStream).load();
         }
     }

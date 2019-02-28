@@ -3,6 +3,7 @@ package com.udacity.ahmed_eid.jobsallapp.Activities;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
@@ -134,7 +137,7 @@ public class EditJobActivity extends AppCompatActivity {
         jobTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (jobTypeSpinner.getSelectedItem() != null){
+                if (jobTypeSpinner.getSelectedItem() != null) {
                     jobType = (String) jobTypeSpinner.getSelectedItem();
                     jobTypeText.setText(jobType);
                 }
@@ -185,10 +188,10 @@ public class EditJobActivity extends AppCompatActivity {
                 bothRadioBtn.setChecked(true);
             }
             this.category = job.getCategory();
-            categoryNameText.setText("Category:   "+category);
+            categoryNameText.setText("Category:   " + category);
             //Toast.makeText(EditJobActivity.this, "" + category, Toast.LENGTH_SHORT).show();
             this.jobType = job.getJobType();
-            jobTypeText.setText("Job Type:   "+jobType);
+            jobTypeText.setText("Job Type:   " + jobType);
             companyId = job.getCompanyId();
             jobId = job.getJobId();
         }
@@ -226,8 +229,19 @@ public class EditJobActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
         }
         Job job = new Job(jobId, companyId, title, category, gender, age, sal, exDate, vanNum, jMin, jMax, level, jobType, nat, country, city, des, req);
-        mDatabase.child("Jobs").child(jobId).setValue(job);
-        finish();
+        mDatabase.child("Jobs").child(jobId).setValue(job).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(EditJobActivity.this, "Job Edit Successfully..!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditJobActivity.this, "Please, Load Your Page To Update Data..!", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(EditJobActivity.this, "Filed To Edit Job ..!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        });
 
     }
 

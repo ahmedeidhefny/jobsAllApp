@@ -49,26 +49,42 @@
                 android:hint="Job Title.. ex.Android Developer"
                 android:inputType="text" />
 
-            <fr.ganfra.materialspinner.MaterialSpinner
-                android:id="@+id/empSpinner"
-                android:layout_width="350dp"
+            <RelativeLayout
+                android:id="@+id/empSpinnerLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/job_title"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
-                app:ms_arrowColor="@color/colorBlack"
-                app:ms_arrowSize="16dp"
-                app:ms_floatingLabelColor="@color/colorBlack"
-                app:ms_floatingLabelText="Category:"
-                app:ms_hint="Chosee Only One Category..."
-                app:ms_hintColor="#A9A9A9"
-                app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+                android:layout_marginRight="4dp">
+
+                <TextView
+                    android:id="@+id/categoryName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/empSpinner"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    app:ms_arrowColor="@color/colorBlack"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/colorBlack"
+                    app:ms_floatingLabelText="Category:"
+                    app:ms_hint="Choose Only One Category..."
+                    app:ms_hintColor="#A9A9A9"
+                    app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/gender_layout"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/empSpinner"
+                android:layout_below="@+id/empSpinnerLayout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical">
@@ -266,6 +282,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/editText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"

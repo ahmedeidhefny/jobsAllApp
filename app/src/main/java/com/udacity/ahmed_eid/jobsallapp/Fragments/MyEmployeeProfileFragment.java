@@ -2,11 +2,8 @@ package com.udacity.ahmed_eid.jobsallapp.Fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,8 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +41,7 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.udacity.ahmed_eid.jobsallapp.Activities.ContactMeActivity;
+import com.udacity.ahmed_eid.jobsallapp.Activities.EditEmployeeProfileActivity;
 import com.udacity.ahmed_eid.jobsallapp.Activities.MyResumeActivity;
 import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.R;
@@ -102,6 +98,12 @@ public class MyEmployeeProfileFragment extends Fragment {
     private Uri imageUri = null;
 
     private String employeeId;
+    private String activityName;
+    private Employee employee = null;
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
 
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
@@ -110,8 +112,10 @@ public class MyEmployeeProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
-        //getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+        if (activityName.equals(AppConstants.MainActivityScreen)) {
+            setHasOptionsMenu(true);
+            getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -121,13 +125,14 @@ public class MyEmployeeProfileFragment extends Fragment {
         myView = inflater.inflate(R.layout.fragment_my_employee_profile, container, false);
         if (savedInstanceState != null) {
             employeeId = savedInstanceState.getString(AppConstants.SaveInstance_MyEmpProf_EmpId);
+            activityName = savedInstanceState.getString(AppConstants.INTENT_ActivityNameKey);
         }
         unbinder = ButterKnife.bind(this, myView);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         if (!mAuth.getCurrentUser().getUid().equals(employeeId)) {
-          empAddIcon.setVisibility(View.GONE);
+            empAddIcon.setVisibility(View.GONE);
         }
         readUserData();
         return myView;
@@ -137,6 +142,7 @@ public class MyEmployeeProfileFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(AppConstants.SaveInstance_MyEmpProf_EmpId, employeeId);
+        outState.putString(AppConstants.INTENT_ActivityNameKey, activityName);
     }
 
     @Override
@@ -152,7 +158,7 @@ public class MyEmployeeProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Employee employee = snapshot.getValue(Employee.class);
+                        employee = snapshot.getValue(Employee.class);
                         populateUI(employee);
                     }
                 }
@@ -200,7 +206,7 @@ public class MyEmployeeProfileFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.myResume_btn, R.id.contactMe_btn, R.id.emp_image, R.id.emp_add_icon})
+    @OnClick({R.id.myResume_btn, R.id.contactMe_btn, R.id.emp_image, R.id.emp_add_icon, R.id.edit_emp_profile_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.myResume_btn:
@@ -215,6 +221,11 @@ public class MyEmployeeProfileFragment extends Fragment {
                 break;
             case R.id.emp_add_icon:
                 pickImage();
+                break;
+            case R.id.edit_emp_profile_btn:
+                Intent editIntent = new Intent(getActivity(), EditEmployeeProfileActivity.class);
+                editIntent.putExtra(AppConstants.INTENT_EmployeeOrCompanyUserKey, employee);
+                startActivity(editIntent);
                 break;
         }
     }

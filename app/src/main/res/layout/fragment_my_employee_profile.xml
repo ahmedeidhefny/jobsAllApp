@@ -20,6 +20,7 @@
                 android:layout_height="210dp"
                 android:background="@color/colorPrimary" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,10 +28,19 @@
                 android:layout_marginRight="20dp"
                 android:orientation="vertical">
 
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp">
+
+                    <ImageView
+                        android:id="@+id/edit_emp_profile_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_edit_black_24dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -122,11 +132,11 @@
                         </LinearLayout>
 
                         <include
+                            layout="@layout/partial_profile_table_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
-                            layout="@layout/partial_profile_table_layout"></include>
+                            android:layout_marginTop="20dp"></include>
 
                     </LinearLayout>
 
@@ -141,8 +151,8 @@
                             android:layout_height="150dp"
                             android:layout_centerHorizontal="true"
                             android:elevation="1dp"
-                            android:src="@drawable/user_profile_default"
                             android:scaleType="centerCrop"
+                            android:src="@drawable/user_profile_default"
                             app:civ_border_color="@color/colorPrimary"
                             app:civ_border_width="2dp" />
 
