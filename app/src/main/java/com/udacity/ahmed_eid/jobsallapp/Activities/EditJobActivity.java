@@ -204,7 +204,7 @@ public class EditJobActivity extends AppCompatActivity {
 
 
     private void writeNewJobData() {
-        String title = jobTitle.getText().toString();
+        String title = jobTitle.getText().toString().toLowerCase();
         String city = jobCity.getText().toString();
         String country = jobCountry.getText().toString();
         String des = jobDescription.getText().toString();

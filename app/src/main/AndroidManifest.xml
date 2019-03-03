@@ -56,6 +56,11 @@
                 android:resource="@xml/job_widget_provider_info" />
         </receiver>
 
+        <service
+            android:name=".WidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"></service>
+
         <activity android:name=".Activities.ContactMeActivity" />
         <activity android:name=".Activities.EmployeeProfileActivity" />
         <activity android:name=".Activities.CompanyProfileActivity"></activity>

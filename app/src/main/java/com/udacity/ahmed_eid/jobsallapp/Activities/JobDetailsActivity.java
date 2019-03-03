@@ -284,17 +284,13 @@ public class JobDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
         layoutSaveJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handleSaveJobBtn(jobId);
             }
         });
-//        companyId = job.getCompanyId();
-//        if (mAuth.getCurrentUser().getUid().equals(companyId)) {
-//            Log.e("jobDetaild", "menu" + companyId);
-//            showOverflowMenu(false);
-//        }
     }
 
     private void readAppliedUsersInThisJobInRecycler(final String jobId) {
@@ -335,14 +331,6 @@ public class JobDetailsActivity extends AppCompatActivity {
 
     }
 
-//    private void showOverflowMenu(boolean showMenu) {
-//        if (menu == null) {
-//            Log.e("jobDetaild", "menu is null");
-//            return;
-//        }
-//        menu.setGroupVisible(R.id.job_details_group, showMenu);
-//    }
-
     private void getUserType() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -351,6 +339,9 @@ public class JobDetailsActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     userType = dataSnapshot.getValue(String.class);
+//                    if (userType.equals("Company")){
+//                        applyBtn.setVisibility(View.INVISIBLE);
+//                    }
                 }
 
                 @Override

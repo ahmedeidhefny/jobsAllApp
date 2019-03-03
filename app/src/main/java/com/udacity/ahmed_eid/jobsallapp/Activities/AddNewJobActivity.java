@@ -87,7 +87,7 @@ public class AddNewJobActivity extends AppCompatActivity {
     }
 
     private void addNewJob() {
-        String title= jobTitle.getText().toString();
+        String title= jobTitle.getText().toString().toLowerCase();
         String titleLowerCase = title.toLowerCase() ;
         String city = jobCity.getText().toString();
         String country = jobCountry.getText().toString();

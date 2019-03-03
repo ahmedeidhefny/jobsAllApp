@@ -27,8 +27,10 @@ import com.udacity.ahmed_eid.jobsallapp.Adapters.JobAdapter;
 import com.udacity.ahmed_eid.jobsallapp.Model.Company;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
 import com.udacity.ahmed_eid.jobsallapp.R;
+import com.udacity.ahmed_eid.jobsallapp.Widget_MangeDataHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -128,9 +130,16 @@ public class HomeFragment extends Fragment {
 
 
     public void setRecyclerAdapter(ArrayList<Job> jobs) {
+        Collections.reverse(jobs);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         JobAdapter jobAdapter = new JobAdapter(getActivity(), jobs);
         recyclerView.setAdapter(jobAdapter);
+        saveDataToShardPreferenceByWidget(jobs);
+    }
+
+    private void saveDataToShardPreferenceByWidget(ArrayList<Job> jobs) {
+        Widget_MangeDataHelper mangeDataHelper = new Widget_MangeDataHelper(getActivity());
+        mangeDataHelper.setDataWidget(jobs);
     }
 }
