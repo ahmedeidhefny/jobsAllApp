@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,6 +91,8 @@ public class MyEmployeeProfileFragment extends Fragment {
     CircleImageView empImage;
     @BindView(R.id.emp_add_icon)
     CircleImageView empAddIcon;
+    @BindView(R.id.edit_emp_profile_btn)
+    ImageView editEmpProfileBtn;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -112,10 +114,10 @@ public class MyEmployeeProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (activityName.equals(AppConstants.MainActivityScreen)) {
-            setHasOptionsMenu(true);
-            getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
-        }
+        //if (activityName.equals(AppConstants.MainActivityScreen)) {
+        //setHasOptionsMenu(true);
+        //getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+        //}
     }
 
     @Override
@@ -197,6 +199,9 @@ public class MyEmployeeProfileFragment extends Fragment {
             } else if (sex.equals("Female")) {
                 empImage.setImageResource(R.drawable.female);
             }
+        }
+        if (!mAuth.getCurrentUser().getUid().equals(employeeId)) {
+            editEmpProfileBtn.setVisibility(View.GONE);
         }
     }
 

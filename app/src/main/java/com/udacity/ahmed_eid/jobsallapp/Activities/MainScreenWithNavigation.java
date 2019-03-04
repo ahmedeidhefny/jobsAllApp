@@ -87,7 +87,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         if (view.getId() == R.id.fab_add_job) {
             Intent addIntent = new Intent(getApplicationContext(), AddNewJobActivity.class);
             startActivity(addIntent);
-        } else if (view.getId() == R.id.retry_btn) {
+        } else if (view.getId()==R.id.retry_btn) {
             startActivity(getIntent());
         }
     }
@@ -323,12 +323,12 @@ public class MainScreenWithNavigation extends AppCompatActivity {
                 if (userType.equals("Employee")) {
                     MyEmployeeProfileFragment empProFrg = new MyEmployeeProfileFragment();
                     empProFrg.setEmployeeId(mAuth.getCurrentUser().getUid());
-                    empProFrg.setActivityName(AppConstants.MainActivityScreen);
+                    //empProFrg.setActivityName(AppConstants.MainActivityScreen);
                     loadFragment(empProFrg);
                 } else if (userType.equals("Company")) {
                     MyCompanyProfileFragment compProFrg = new MyCompanyProfileFragment();
                     compProFrg.setCompanyId(mAuth.getCurrentUser().getUid());
-                    compProFrg.setActivityName(AppConstants.MainActivityScreen);
+                    //compProFrg.setActivityName(AppConstants.MainActivityScreen);
                     loadFragment(compProFrg);
                 }
                 break;

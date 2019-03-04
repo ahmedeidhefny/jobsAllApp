@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -80,7 +81,7 @@ public class MyCompanyProfileFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.edit_comp_profile_btn)
     ImageView editCompProfileBtn;
-    //private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private StorageReference mStorageRef;
     private Uri imageUri = null;
@@ -89,6 +90,7 @@ public class MyCompanyProfileFragment extends Fragment {
     private String companyId;
     private Company company;
     private String activityName;
+
     public void setActivityName(String activityName) {
         this.activityName = activityName;
     }
@@ -100,10 +102,10 @@ public class MyCompanyProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (activityName.equals(AppConstants.MainActivityScreen)) {
-            setHasOptionsMenu(true);
-            getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
-        }
+        // if (activityName.equals(AppConstants.MainActivityScreen)) {
+        // setHasOptionsMenu(true);
+        // getActivity().findViewById(R.id.search_EText).setVisibility(View.GONE);
+        // }
     }
 
     @Override
@@ -115,7 +117,7 @@ public class MyCompanyProfileFragment extends Fragment {
             companyId = savedInstanceState.getString(AppConstants.SaveInstance_MyCompProf_CompId);
             activityName = savedInstanceState.getString(AppConstants.INTENT_ActivityNameKey);
         }
-        //mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         readCompanyData();
@@ -175,6 +177,9 @@ public class MyCompanyProfileFragment extends Fragment {
             compLogo.setImageResource(R.drawable.default_logo);
         }
         String compId = company.getUserId();
+        if (!mAuth.getCurrentUser().getUid().equals(compId)) {
+            editCompProfileBtn.setVisibility(View.GONE);
+        }
         MyAddedJobsFragment fragment = new MyAddedJobsFragment();
         fragment.setCompanyId(compId);
         FragmentManager manager = getFragmentManager();

@@ -43,7 +43,7 @@ public class WidgetService extends RemoteViewsService {
         @Override
         public void onCreate() {
             Widget_MangeDataHelper mangeDataHelper = new Widget_MangeDataHelper(getApplicationContext());
-            tenJobs = mangeDataHelper.getDataWidget();
+            //tenJobs = mangeDataHelper.getDataWidget();
             SystemClock.sleep(3000);
 //            try {
 //                Thread.sleep(3000);

@@ -48,6 +48,7 @@ public class AppliedPersonJobAdapter extends RecyclerView.Adapter<AppliedPersonJ
                 .load(appliedJob.getEmpImage())
                 .error(R.drawable.user_profile_default)
                 .into(holder.empImage);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

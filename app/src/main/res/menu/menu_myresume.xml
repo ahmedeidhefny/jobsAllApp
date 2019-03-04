@@ -18,4 +18,10 @@
         android:title="Delete CV"
         android:iconTint="@color/colorWhite"/>
 
+    <item
+        android:id="@+id/app_bar_close"
+        app:showAsAction="never"
+        android:title="Close"
+        android:iconTint="@color/colorWhite"/>
+
 </menu>

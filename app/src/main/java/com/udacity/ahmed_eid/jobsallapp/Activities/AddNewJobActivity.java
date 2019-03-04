@@ -116,7 +116,7 @@ public class AddNewJobActivity extends AppCompatActivity {
 
         String userId = mAuth.getCurrentUser().getUid();
 
-        if (category != null && jobType != null && !TextUtils.isEmpty(userId)) {
+        if (category != null && jobType != null && !TextUtils.isEmpty(userId)&& !TextUtils.isEmpty(age)&& !TextUtils.isEmpty(sal)&& !TextUtils.isEmpty(exDate)&& !TextUtils.isEmpty(level)&& !TextUtils.isEmpty(des)&& !TextUtils.isEmpty(req)&& !TextUtils.isEmpty(country)&& !TextUtils.isEmpty(city)) {
             Job job = new Job(mDatabase.getKey(), userId, titleLowerCase, category, gender, age, sal, exDate, vanNum, jMin, jMax, level, jobType, nat, country, city, des, req);
             mDatabase.setValue(job);
             goToMainActivity();

@@ -2,6 +2,7 @@ package com.udacity.ahmed_eid.jobsallapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -30,12 +31,23 @@ public class Widget_MangeDataHelper {
     }
 
     public void setDataWidget(ArrayList<Job> jobs){
+        String gsonJobsString = sharedPreferences.getString(SHARED_PREFERENCES_Key,"");
+        if (TextUtils.isEmpty(gsonJobsString)) {
+            addInShared(jobs);
+        }else {
+            editor.remove(SHARED_PREFERENCES_Key).commit();
+            addInShared(jobs);
+        }
+    }
+
+    private void addInShared(ArrayList<Job> jobs) {
         String gsonJobsString = gson.toJson(jobs);
-        Log.e(TAG,gsonJobsString);
-        editor.putString(SHARED_PREFERENCES_Key,gsonJobsString);
+        Log.e(TAG, gsonJobsString);
+        editor.putString(SHARED_PREFERENCES_Key, gsonJobsString);
         editor.commit();
         Log.e(TAG, "Added Recipe Object In SharedPref Successfully..!");
     }
+
     public ArrayList<Job> getDataWidget(){
         String gsonJobsString = sharedPreferences.getString(SHARED_PREFERENCES_Key,"");
         Log.e(TAG,gsonJobsString);

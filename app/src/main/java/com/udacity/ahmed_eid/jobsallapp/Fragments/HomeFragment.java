@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         JobAdapter jobAdapter = new JobAdapter(getActivity(), jobs);
         recyclerView.setAdapter(jobAdapter);
-        saveDataToShardPreferenceByWidget(jobs);
+        //saveDataToShardPreferenceByWidget(jobs);
     }
 
     private void saveDataToShardPreferenceByWidget(ArrayList<Job> jobs) {

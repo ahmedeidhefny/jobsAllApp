@@ -236,6 +236,9 @@ public class MyResumeActivity extends AppCompatActivity {
                 });
                 alertBuilder.show();
                 break;
+            case R.id.app_bar_close:
+                finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
