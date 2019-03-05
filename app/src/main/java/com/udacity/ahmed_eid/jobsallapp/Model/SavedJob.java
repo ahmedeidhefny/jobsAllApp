@@ -18,7 +18,5 @@ public class SavedJob {
         return jobId;
     }
 
-    public String getUserId() {
-        return userId;
-    }
+
 }

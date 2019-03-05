@@ -51,7 +51,7 @@ public class ContactMeActivity extends AppCompatActivity {
     Button btnClose;
     private String employeeId;
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth ;
+    private FirebaseAuth mAuth;
     private SocialMedia socialMedia = null;
 
     @Override
@@ -82,7 +82,7 @@ public class ContactMeActivity extends AppCompatActivity {
     }
 
     private void showErrorMassage() {
-        Toast.makeText(this, "Not Found Data", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.massage_data_error, Toast.LENGTH_LONG).show();
         finish();
     }
 
@@ -143,11 +143,11 @@ public class ContactMeActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(ContactMeActivity.this, "Edit Your Data Successfully..!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ContactMeActivity.this, R.string.massage_edit, Toast.LENGTH_SHORT).show();
                             mDialog.dismiss();
                             startActivity(getIntent());
                         } else {
-                            Toast.makeText(ContactMeActivity.this, "Filed To Edit Your Data!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ContactMeActivity.this, R.string.massage_edit_error, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -181,17 +181,18 @@ public class ContactMeActivity extends AppCompatActivity {
     }
 
     private void populateUI(SocialMedia socialMedia) {
-        checkIsEmpty(socialMedia.getPhoneNumber(),  phoneNumber);
-        checkIsEmpty(socialMedia.getMail(),  mail);
+        checkIsEmpty(socialMedia.getPhoneNumber(), phoneNumber);
+        checkIsEmpty(socialMedia.getMail(), mail);
         checkIsEmpty(socialMedia.getWhatsApp(), whatsApp);
         checkIsEmpty(socialMedia.getFacebook(), facebokLink);
         checkIsEmpty(socialMedia.getTwitter(), twitterLink);
         checkIsEmpty(socialMedia.getLinkedIn(), linkedinLink);
     }
-    private void checkIsEmpty(String text,TextView textView){
-        if (TextUtils.isEmpty(text)){
-            textView.setText("Unspicified");
-        }else {
+
+    private void checkIsEmpty(String text, TextView textView) {
+        if (TextUtils.isEmpty(text)) {
+            textView.setText(getString(R.string.unspecified_label));
+        } else {
             textView.setText(text);
         }
     }

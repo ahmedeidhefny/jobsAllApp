@@ -1,7 +1,5 @@
 package com.udacity.ahmed_eid.jobsallapp.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,17 +21,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.udacity.ahmed_eid.jobsallapp.Activities.JobDetailsActivity;
 import com.udacity.ahmed_eid.jobsallapp.Adapters.JobAdapter;
 import com.udacity.ahmed_eid.jobsallapp.Model.AppliedJob;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
-import com.udacity.ahmed_eid.jobsallapp.Model.SavedJob;
 import com.udacity.ahmed_eid.jobsallapp.R;
 
 import java.util.ArrayList;
 
 
 public class MyAppliedJobsFragment extends Fragment {
+    private static final String TAG = "MyAppliedJobsFragment";
     private RecyclerView appliedJobRecycler;
     private FirebaseAuth mAuth ;
     private DatabaseReference mDatabase ;
@@ -46,7 +43,7 @@ public class MyAppliedJobsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView;
         myView = inflater.inflate(R.layout.fragment_my_applied_jobs, container, false);
@@ -77,8 +74,7 @@ public class MyAppliedJobsFragment extends Fragment {
                        appliedJobs.add(appliedJob);
                     }
                    readJobsThisUser(appliedJobs);
-                }else {
-                    Toast.makeText(getActivity(), "Not Found Applied Jobs", Toast.LENGTH_SHORT).show();
+                }else { Toast.makeText(getActivity(), R.string.massage_not_found_job, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -109,8 +105,8 @@ public class MyAppliedJobsFragment extends Fragment {
                             setDataToRecyclerAdapter(jobs);
                         }
                     }else {
-                        Toast.makeText(getActivity(), "Not Found a Jobs", Toast.LENGTH_SHORT).show();
-                        Log.e("applayed Frag","Not Found a Jobs");
+                        Toast.makeText(getActivity(), R.string.massage_not_found_job, Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,"Not Found a Jobs");
                     }
                 }
 
@@ -124,7 +120,7 @@ public class MyAppliedJobsFragment extends Fragment {
         }
     }
 
-    public void setDataToRecyclerAdapter(ArrayList<Job> jobs) {
+    private void setDataToRecyclerAdapter(ArrayList<Job> jobs) {
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         appliedJobRecycler.setLayoutManager(manager);
         JobAdapter jobAdapter = new JobAdapter(getActivity(), jobs);

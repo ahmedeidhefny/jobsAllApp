@@ -73,7 +73,7 @@ public class EditEmployeeProfileActivity extends AppCompatActivity {
     private String gender;
     private String[] categories;
     private String employeeId;
-    private String userType = "Employee";
+    private final String userType = "Employee";
     private String empImage, employeeCV;
 
     private DatabaseReference mDatabase;
@@ -84,8 +84,8 @@ public class EditEmployeeProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_register);
         ButterKnife.bind(this);
-        editText.setText("Edit Profile");
-        empSpinner.setHint("Change Category...");
+        editText.setText(getString(R.string.edit_profile_label));
+        empSpinner.setHint(getString(R.string.change_category_label));
         categoryName.setVisibility(View.VISIBLE);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         receiveDataFromEmployeeProfile();
@@ -201,25 +201,29 @@ public class EditEmployeeProfileActivity extends AppCompatActivity {
         String title = jobTitle.getText().toString();
 
         int checkedRadioButtonId = genderRadioGroup.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.male_radioBtn) {
-            this.gender = "Male";
-        } else if (checkedRadioButtonId == R.id.female_radioBtn) {
-            this.gender = "Female";
-        } else {
-            Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
+        switch (checkedRadioButtonId) {
+            case R.id.male_radioBtn:
+                this.gender = "Male";
+                break;
+            case R.id.female_radioBtn:
+                this.gender = "Female";
+                break;
+            default:
+                Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
+                break;
         }
 
-        Employee employee = new Employee(employeeId,empImage, employeeCV, name, userType, title, phoneNum, gender, nat, con, cit, date, sum, category, miritary, marital);
+        Employee employee = new Employee(employeeId, empImage, employeeCV, name, userType, title, phoneNum, gender, nat, con, cit, date, sum, category, miritary, marital);
 
         mDatabase.child("Users").child(employeeId).setValue(employee).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(EditEmployeeProfileActivity.this, "Edit Your Profile Successfully..!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(EditEmployeeProfileActivity.this, "Please, Load Your Page To Update Data..!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditEmployeeProfileActivity.this, R.string.massage_edit, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditEmployeeProfileActivity.this, R.string.massage_loadPage, Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(EditEmployeeProfileActivity.this, "Filed To Edit Your Profile..!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditEmployeeProfileActivity.this, R.string.massage_edit_error, Toast.LENGTH_SHORT).show();
                     finish();
                 }
 

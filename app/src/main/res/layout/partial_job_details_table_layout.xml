@@ -21,9 +21,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Job Details"
+                android:text="@string/job_details_label"
                 android:textColor="@color/colorBlack"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </TableRow>
 
@@ -37,12 +37,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Salary"
+                android:text="@string/salary_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -66,12 +66,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Category"
+                android:text="@string/category_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -94,12 +94,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Vacancies Number"
+                android:text="@string/vacancies_num_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -123,12 +123,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Year Of Expereience"
+                android:text="@string/year_experience_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -152,12 +152,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Employment Type"
+                android:text="@string/employment_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -180,12 +180,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Degree Level"
+                android:text="@string/degree_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -208,12 +208,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Expiry Date"
+                android:text="@string/expiry_date_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -236,12 +236,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Nationality"
+                android:text="@string/nationality_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -265,12 +265,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Gender"
+                android:text="@string/gender_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -295,12 +295,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Age"
+                android:text="@string/age_label"
                 android:textColor="@color/colorWhite" />
 
             <TextView

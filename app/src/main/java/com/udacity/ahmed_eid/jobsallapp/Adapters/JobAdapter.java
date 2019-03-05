@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.udacity.ahmed_eid.jobsallapp.Activities.AddNewJobActivity;
 import com.udacity.ahmed_eid.jobsallapp.Activities.CompanyProfileActivity;
 import com.udacity.ahmed_eid.jobsallapp.Activities.JobDetailsActivity;
 import com.udacity.ahmed_eid.jobsallapp.Model.Company;
@@ -34,8 +33,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
-    private Context mContext;
-    private ArrayList<Job> jobs;
+    private final Context mContext;
+    private final ArrayList<Job> jobs;
     private DatabaseReference mDatabase;
     private static final String TAG = "Job Adapter";
 
@@ -128,9 +127,9 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
     }
 
     public class JobViewHolder extends RecyclerView.ViewHolder {
-        TextView compName, jobTitle, location;
-        RelativeLayout viewBtn;
-        CircleImageView image;
+        final TextView compName, jobTitle, location;
+        final RelativeLayout viewBtn;
+        final CircleImageView image;
 
         public JobViewHolder(View itemView) {
             super(itemView);

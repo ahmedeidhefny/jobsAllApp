@@ -2,8 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,16 +21,17 @@
                 android:id="@+id/search_EText"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:drawableLeft="@drawable/ic_search_black_24dp"
+                android:drawableStart="@drawable/ic_search_black_24dp"
                 android:drawableTint="@color/colorBlackLight"
                 android:drawablePadding="10dp"
                 android:background="@drawable/background_search_item"
-                android:hint="Search About Job"
+                android:hint="@string/search_hint"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:textColorHint="@color/colorBlackLight"
                 android:layout_gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:inputType="text"/>
         </android.support.v7.widget.Toolbar>
         
 
@@ -41,13 +41,13 @@
         layout="@layout/nav_content_main_screen"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></include>
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_job"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:elevation="8dp"
         android:src="@drawable/ic_add_black_24dp"/>

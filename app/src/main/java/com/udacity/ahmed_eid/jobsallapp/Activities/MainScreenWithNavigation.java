@@ -44,7 +44,6 @@ import com.udacity.ahmed_eid.jobsallapp.Fragments.MySavedJobsFragment;
 import com.udacity.ahmed_eid.jobsallapp.Model.Company;
 import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.R;
-import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +74,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
     private CircleImageView navImageView;
     private TextView navName, navJob;
 
-    private ActionBarDrawerToggle mToggle;
+    ActionBarDrawerToggle mToggle;
     private String userType;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -87,7 +86,7 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         if (view.getId() == R.id.fab_add_job) {
             Intent addIntent = new Intent(getApplicationContext(), AddNewJobActivity.class);
             startActivity(addIntent);
-        } else if (view.getId()==R.id.retry_btn) {
+        } else if (view.getId() == R.id.retry_btn) {
             startActivity(getIntent());
         }
     }
@@ -169,20 +168,24 @@ public class MainScreenWithNavigation extends AppCompatActivity {
         //Menu menuView = navigationView.getMenu();
         Menu menuBottom = navigationBottom.getMenu();
         if (!TextUtils.isEmpty(userType)) {
-            if (userType.equals("Employee")) {
-                //menuView.findItem(R.id.nav_my_job).setVisible(true);
-                Log.i("MainScreen", "emp");
-                menuBottom.removeItem(R.id.nav_my_job);
-                fabAddJob.setVisibility(View.GONE);
-                readEmployeeDataHandleNavHeader();
-            } else if (userType.equals("Company")) {
-                Log.i("MainScreen", "comp");
-                menuBottom.removeItem(R.id.nav_applied_job);
-                fabAddJob.setVisibility(View.VISIBLE);
-                readCompanyDataHandleNavHeader();
-            } else {
-                Log.e(TAG, "UserType Another Type about Employee/Company");
-                handleNoUserType();
+            switch (userType) {
+                case "Employee":
+                    //menuView.findItem(R.id.nav_my_job).setVisible(true);
+                    Log.i("MainScreen", "emp");
+                    menuBottom.removeItem(R.id.nav_my_job);
+                    fabAddJob.setVisibility(View.GONE);
+                    readEmployeeDataHandleNavHeader();
+                    break;
+                case "Company":
+                    Log.i("MainScreen", "comp");
+                    menuBottom.removeItem(R.id.nav_applied_job);
+                    fabAddJob.setVisibility(View.VISIBLE);
+                    readCompanyDataHandleNavHeader();
+                    break;
+                default:
+                    Log.e(TAG, "UserType Another Type about Employee/Company");
+                    handleNoUserType();
+                    break;
             }
         } else {
             Log.e(TAG, "UserType No found: Null");

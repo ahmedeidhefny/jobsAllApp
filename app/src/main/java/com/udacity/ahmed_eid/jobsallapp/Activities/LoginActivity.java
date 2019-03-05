@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "SignIn Success..",
+                        Toast.makeText(getApplicationContext(), R.string.massage_signIn,
                                 Toast.LENGTH_LONG).show();
                         goToMainActivity();
                     } else {

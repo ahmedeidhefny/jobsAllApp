@@ -15,7 +15,7 @@
         android:type="linear"
         android:useLevel="false" />
 
-    //comment
+    <!--//comment-->
     <!--android:endColor="#164FD5"-->
     <!--android:startColor="#081E98"-->
     <!--android:startColor="#3000"-->

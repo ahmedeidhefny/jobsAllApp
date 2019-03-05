@@ -34,7 +34,4 @@ public class AppliedJob {
         return empImage;
     }
 
-    public String getEmpJobTitle() {
-        return empJobTitle;
-    }
 }

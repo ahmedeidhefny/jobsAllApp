@@ -20,7 +20,7 @@
             android:id="@+id/employee_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true">
+            android:layout_gravity="center_horizontal">
 
             <EditText
                 android:id="@+id/emp_name"
@@ -28,11 +28,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
-                android:drawableLeft="@drawable/ic_person_identity_black_24dp"
+                android:layout_marginEnd="4dp"
+                android:drawableStart="@drawable/ic_person_identity_black_24dp"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="FullName"
+                android:hint="@string/full_name_hint"
                 android:inputType="text" />
 
             <EditText
@@ -41,12 +41,12 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
                 android:layout_below="@+id/emp_name"
-                android:drawableLeft="@drawable/ic_title_black_24dp"
+                android:drawableStart="@drawable/ic_title_black_24dp"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Job Title.. ex.Android Developer"
+                android:hint="@string/job_title_hint"
                 android:inputType="text" />
 
             <RelativeLayout
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/job_title"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp">
+                android:layout_marginEnd="4dp">
 
                 <TextView
                     android:id="@+id/categoryName"
@@ -76,7 +76,7 @@
                     app:ms_floatingLabelText="Category:"
                     app:ms_hint="Choose Only One Category..."
                     app:ms_hintColor="#A9A9A9"
-                    app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+                    app:ms_multiline="true" />
 
             </RelativeLayout>
 
@@ -94,8 +94,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:drawableLeft="@drawable/ic_wc_black_24dp"
-                    android:text="Gender"
+                    android:drawableStart="@drawable/ic_wc_black_24dp"
+                    android:text="@string/gender_label"
                     android:textColor="@color/colorBlack"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -112,10 +112,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@drawable/radio_btn_background"
-                        android:paddingLeft="10dp"
-                        android:text="Male"
+                        android:paddingStart="10dp"
+                        android:text="@string/male_label"
                         android:textColor="@drawable/radio_btn_colortext_2"
-                        android:textSize="14dp" />
+                        android:textSize="14sp" />
 
                     <RadioButton
                         android:id="@+id/female_radioBtn"
@@ -123,10 +123,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.4"
                         android:button="@drawable/radio_btn_background"
-                        android:paddingLeft="10dp"
-                        android:text="Female"
+                        android:paddingStart="10dp"
+                        android:text="@string/female_label"
                         android:textColor="@drawable/radio_btn_colortext_2"
-                        android:textSize="14dp" />
+                        android:textSize="14sp" />
                 </RadioGroup>
             </LinearLayout>
 
@@ -137,10 +137,10 @@
                 android:layout_below="@+id/gender_layout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
-                android:drawableRight="@drawable/ic_phone_in_talk_black_24dp"
+                android:layout_marginEnd="4dp"
+                android:drawableEnd="@drawable/ic_phone_in_talk_black_24dp"
                 android:ems="10"
-                android:hint="Phone Number"
+                android:hint="@string/phone_number_label"
                 android:inputType="phone" />
 
             <EditText
@@ -150,9 +150,9 @@
                 android:layout_below="@+id/phone"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
                 android:ems="10"
-                android:hint="Nationality"
+                android:hint="@string/nationality_label"
                 android:inputType="text" />
 
             <LinearLayout
@@ -167,8 +167,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
-                    android:text="Location"
+                    android:drawableStart="@drawable/ic_location_on_black_24dp"
+                    android:text="@string/location_label"
                     android:textColor="@color/colorBlack"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -176,8 +176,8 @@
                 <LinearLayout
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginRight="4dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="4dp"
                     android:orientation="horizontal">
 
                     <EditText
@@ -185,9 +185,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginEnd="30dp"
                         android:ems="10"
-                        android:hint="Country"
+                        android:hint="@string/country_label"
                         android:inputType="text" />
 
                     <EditText
@@ -196,7 +196,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="City"
+                        android:hint="@string/city_label"
                         android:inputType="text" />
                 </LinearLayout>
             </LinearLayout>
@@ -207,9 +207,9 @@
                 android:layout_below="@+id/location_layout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
                 android:ems="10"
-                android:hint="Marital Status"
+                android:hint="@string/marital_status_label"
                 android:inputType="text" />
             <EditText
                 android:id="@+id/birthOfDate"
@@ -218,10 +218,10 @@
                 android:layout_below="@+id/marital_status"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
-                android:drawableRight="@drawable/ic_date_range_black_24dp"
+                android:layout_marginEnd="4dp"
+                android:drawableEnd="@drawable/ic_date_range_black_24dp"
                 android:ems="10"
-                android:hint="Birth Of Date"
+                android:hint="@string/birth_date_label"
                 android:inputType="date" />
             <EditText
                 android:id="@+id/miritary_status"
@@ -230,9 +230,9 @@
                 android:layout_below="@+id/birthOfDate"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
                 android:ems="10"
-                android:hint="Military Status"
+                android:hint="@string/military_status_label"
                 android:inputType="text" />
 
             <LinearLayout
@@ -245,8 +245,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_sum_linear_black_24dp"
-                    android:text="Summery"
+                    android:drawableStart="@drawable/ic_sum_linear_black_24dp"
+                    android:text="@string/summery_label"
                     android:textColor="@color/colorBlack"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -255,10 +255,9 @@
                     android:id="@+id/summery"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginRight="4dp"
-                    android:gravity="top|left"
-                    android:hint="Summery about you. Only in 3 lines"
+                    android:layout_marginEnd="4dp"
+                    android:gravity="top|start"
+                    android:hint="@string/summery_hint"
                     android:inputType="textCapSentences|textMultiLine"
                     android:lines="3"
                     android:maxLines="3"
@@ -286,7 +285,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Go To App "
+                        android:text="@string/goToApp_btn_text"
                         android:textColor="@color/colorWhite"
                         android:textSize="18sp" />
                 </RelativeLayout>

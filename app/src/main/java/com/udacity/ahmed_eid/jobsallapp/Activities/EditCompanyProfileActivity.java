@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.udacity.ahmed_eid.jobsallapp.Model.Company;
-import com.udacity.ahmed_eid.jobsallapp.Model.Employee;
 import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
@@ -54,11 +53,11 @@ public class EditCompanyProfileActivity extends AppCompatActivity {
     @BindView(R.id.Company_goToApp_btn)
     RelativeLayout CompanyGoToAppBtn;
 
-    DatabaseReference mDatabase;
+    private DatabaseReference mDatabase;
     private String category;
     private String[] categories;
     private String companyId;
-    private String userType = "Company";
+    private final String userType = "Company";
     private String compImage;
 
     @Override
@@ -66,8 +65,8 @@ public class EditCompanyProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_register);
         ButterKnife.bind(this);
-        editText.setText("Edit Profile");
-        compSpinner.setHint("Change Category...");
+        editText.setText(getString(R.string.edit_profile_label));
+        compSpinner.setHint(getString(R.string.change_category_label));
         categoryName.setVisibility(View.VISIBLE);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         receiveDataFromCompanyProfileActivity();
@@ -168,11 +167,11 @@ public class EditCompanyProfileActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(EditCompanyProfileActivity.this, "Edit Your Profile Successfully..!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(EditCompanyProfileActivity.this, "Please, Load Your Page To Update Data..!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditCompanyProfileActivity.this, R.string.massage_edit, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditCompanyProfileActivity.this, R.string.massage_loadPage, Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(EditCompanyProfileActivity.this, "Filed To Edit Your Profile..!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditCompanyProfileActivity.this, R.string.massage_edit_error, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

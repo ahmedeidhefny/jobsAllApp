@@ -124,7 +124,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
             Company company = new Company(userId, compName, userType, website, category, cFounderDate, city, country, profile);
             mDatabase.child(userId).setValue(company);
             goToMainActivity();
-            Toast.makeText(getApplicationContext(), "YourDataSaved:Successfully..", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.massage_savedData, Toast.LENGTH_LONG).show();
         }
 
     }

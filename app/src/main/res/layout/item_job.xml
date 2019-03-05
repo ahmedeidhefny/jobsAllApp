@@ -20,6 +20,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
+            android:src="@drawable/default_logo"
             android:layout_margin="8dp"
             app:civ_border_width="2dp"
             app:civ_border_color="@color/colorBlue" />
@@ -35,7 +36,6 @@
                 android:id="@+id/item_job_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Android developer"
                 android:textColor="@color/colorBlue"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -43,7 +43,6 @@
                 android:id="@+id/item_company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Provision"
                 android:textColor="@color/colorBlue"
                 android:background="@drawable/text_line_graphic"
                 android:textSize="14sp"/>
@@ -53,7 +52,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                tools:text="EGYPT - Cairo"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"/>
 
@@ -76,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="View Job"
+                        android:text="@string/view_job_btn_text"
                         android:textColor="@color/colorWhite"
                         android:textSize="14sp" />
                 </RelativeLayout>

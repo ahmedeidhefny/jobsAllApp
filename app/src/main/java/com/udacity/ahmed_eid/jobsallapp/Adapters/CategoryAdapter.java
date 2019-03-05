@@ -7,9 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.udacity.ahmed_eid.jobsallapp.Activities.CategoryActivity;
@@ -19,12 +17,11 @@ import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    Context mContext;
-    ArrayList<Category> categories;
+    private final Context mContext;
+    private final ArrayList<Category> categories;
 
 
     public CategoryAdapter(Context mContext, ArrayList<Category> categories) {
@@ -61,9 +58,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
-        TextView categoryName;
-        ImageView categoryIcon;
-        View itemView;
+        final TextView categoryName;
+        final ImageView categoryIcon;
+        final View itemView;
 
         public CategoryViewHolder(View itemView) {
             super(itemView);

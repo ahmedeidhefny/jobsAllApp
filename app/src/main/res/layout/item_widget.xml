@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widget_item_Text"
-    android:layout_width="200dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="180dp"
     android:layout_height="100dp"
+    android:id="@+id/item_layout"
+    android:padding="8dp"
+    android:orientation="vertical"
     android:background="@drawable/gradient_btn"
-    android:gravity="center"
-    android:text="Text"
-    android:textColor="@color/colorWhite"
-    android:textSize="20dp"
-    android:textStyle="bold" />
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/widget_job_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="Android developer" />
+
+    <TextView
+        android:id="@+id/widget_job_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:textSize="12sp"
+        tools:text="EGYPT - Cairo" />
+
+</LinearLayout>
+
 
 
 

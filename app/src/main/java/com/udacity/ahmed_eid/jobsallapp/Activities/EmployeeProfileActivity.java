@@ -17,10 +17,10 @@ public class EmployeeProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_profile);
         setTitle("Profile");
-        receiveEmpolyeeIdFromAdapter();
+        receiveEmployeeIdFromAdapter();
     }
 
-    private void receiveEmpolyeeIdFromAdapter() {
+    private void receiveEmployeeIdFromAdapter() {
         Intent intent = getIntent();
         if (intent == null) {
             showErrorMassage();
@@ -44,7 +44,7 @@ public class EmployeeProfileActivity extends AppCompatActivity {
 
 
     private void showErrorMassage() {
-        Toast.makeText(this, "NO Found Data", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.massage_data_error, Toast.LENGTH_SHORT).show();
         finish();
     }
 }

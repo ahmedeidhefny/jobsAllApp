@@ -14,16 +14,17 @@
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/default_internet" />
+        android:src="@drawable/default_internet"
+        android:contentDescription="@string/content_des_noInternet_image"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Whoops!"
+        android:text="@string/noInternet_header_massage"
         android:textAlignment="center"
         android:textColor="@color/colorBlue"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <TextView
@@ -32,9 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:padding="8dp"
-        android:text="No Internet Connection, Make Sure Wi-Fi or Cellular-data is turned On, Then Try Agin  .."
+        android:text="@string/noInternet_massage"
         android:textAlignment="center"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:textStyle="italic" />
 
     <Button
@@ -44,7 +45,7 @@
         android:layout_gravity="center"
         android:layout_margin="8dp"
         android:background="@drawable/btn_bold"
-        android:text="retry"
+        android:text="@string/retry_btn_text"
         android:textColor="@color/colorWhite"/>
 </LinearLayout>
 

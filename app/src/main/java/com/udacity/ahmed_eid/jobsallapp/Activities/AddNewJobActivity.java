@@ -20,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
 import com.udacity.ahmed_eid.jobsallapp.R;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -87,8 +86,8 @@ public class AddNewJobActivity extends AppCompatActivity {
     }
 
     private void addNewJob() {
-        String title= jobTitle.getText().toString().toLowerCase();
-        String titleLowerCase = title.toLowerCase() ;
+        String title = jobTitle.getText().toString().toLowerCase();
+        String titleLowerCase = title.toLowerCase();
         String city = jobCity.getText().toString();
         String country = jobCountry.getText().toString();
         String des = jobDescription.getText().toString();
@@ -103,24 +102,29 @@ public class AddNewJobActivity extends AppCompatActivity {
         String exDate = expiryDate.getText().toString();
 
         int checkedRadioButtonId = jobGenderRadioGroup.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.male_radioBtn) {
-            gender = "Male";
-        } else if (checkedRadioButtonId == R.id.female_radioBtn) {
-            gender = "Female";
-        } else if (checkedRadioButtonId == R.id.both_radioBtn) {
-            gender = "Male & Female";
-        } else {
-            Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
+        switch (checkedRadioButtonId) {
+            case R.id.male_radioBtn:
+                gender = "Male";
+                break;
+            case R.id.female_radioBtn:
+                gender = "Female";
+                break;
+            case R.id.both_radioBtn:
+                gender = "Male & Female";
+                break;
+            default:
+                Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
+                break;
         }
 
 
         String userId = mAuth.getCurrentUser().getUid();
 
-        if (category != null && jobType != null && !TextUtils.isEmpty(userId)&& !TextUtils.isEmpty(age)&& !TextUtils.isEmpty(sal)&& !TextUtils.isEmpty(exDate)&& !TextUtils.isEmpty(level)&& !TextUtils.isEmpty(des)&& !TextUtils.isEmpty(req)&& !TextUtils.isEmpty(country)&& !TextUtils.isEmpty(city)) {
+        if (category != null && jobType != null && !TextUtils.isEmpty(userId) && !TextUtils.isEmpty(age) && !TextUtils.isEmpty(sal) && !TextUtils.isEmpty(exDate) && !TextUtils.isEmpty(level) && !TextUtils.isEmpty(des) && !TextUtils.isEmpty(req) && !TextUtils.isEmpty(country) && !TextUtils.isEmpty(city)) {
             Job job = new Job(mDatabase.getKey(), userId, titleLowerCase, category, gender, age, sal, exDate, vanNum, jMin, jMax, level, jobType, nat, country, city, des, req);
             mDatabase.setValue(job);
             goToMainActivity();
-            Toast.makeText(getApplicationContext(), "Post New Job: Successfully..", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.massage_post_job, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -134,7 +138,6 @@ public class AddNewJobActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 jobSpinner.setError(null);
                 category = (String) jobSpinner.getSelectedItem();
-                Toast.makeText(AddNewJobActivity.this, "" + category, Toast.LENGTH_SHORT).show();
             }
 
             @Override

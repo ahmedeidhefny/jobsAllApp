@@ -32,11 +32,11 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="4dp"
-                    android:drawableLeft="@drawable/ic_comp_black_24dp"
+                    android:layout_marginEnd="4dp"
+                    android:drawableStart="@drawable/ic_comp_black_24dp"
                     android:drawablePadding="10dp"
                     android:ems="10"
-                    android:hint="Company Name"
+                    android:hint="@string/companyName_label"
                     android:inputType="text" />
 
                 <EditText
@@ -46,11 +46,11 @@
                     android:layout_below="@+id/company_name"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="4dp"
-                    android:drawableLeft="@drawable/ic_web_black_24dp"
+                    android:layout_marginEnd="4dp"
+                    android:drawableStart="@drawable/ic_web_black_24dp"
                     android:drawablePadding="10dp"
                     android:ems="10"
-                    android:hint="Website Link"
+                    android:hint="@string/website_label"
                     android:inputType="text" />
 
                 <RelativeLayout
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/websiteLink"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="4dp">
+                    android:layout_marginEnd="4dp">
 
                     <TextView
                         android:id="@+id/categoryName"
@@ -80,7 +80,7 @@
                         app:ms_floatingLabelText="Category:"
                         app:ms_hint="Choose Only One Category..."
                         app:ms_hintColor="#A9A9A9"
-                        app:ms_multiline="true"></fr.ganfra.materialspinner.MaterialSpinner>
+                        app:ms_multiline="true" />
 
                 </RelativeLayout>
 
@@ -91,10 +91,10 @@
                     android:layout_below="@+id/compSpinnerLayout"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="4dp"
-                    android:drawableRight="@drawable/ic_date_range_black_24dp"
+                    android:layout_marginEnd="4dp"
+                    android:drawableEnd="@drawable/ic_date_range_black_24dp"
                     android:ems="10"
-                    android:hint="Founded Date"
+                    android:hint="@string/founder_date_text_label"
                     android:inputType="date" />
 
                 <LinearLayout
@@ -104,14 +104,14 @@
                     android:layout_below="@+id/foundedDate"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginEnd="4dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_location_on_black_24dp"
-                        android:text="Location"
+                        android:drawableStart="@drawable/ic_location_on_black_24dp"
+                        android:text="@string/location_label"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -120,17 +120,17 @@
                         android:id="@+id/compLocation"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="4dp"
+                        android:layout_marginEnd="4dp"
                         android:orientation="horizontal">
 
                         <EditText
                             android:id="@+id/compCountry"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="30dp"
+                            android:layout_marginEnd="30dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Country"
+                            android:hint="@string/country_label"
                             android:inputType="text" />
 
                         <EditText
@@ -139,7 +139,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="City"
+                            android:hint="@string/city_label"
                             android:inputType="text" />
                     </LinearLayout>
                 </LinearLayout>
@@ -153,8 +153,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_sum_linear_black_24dp"
-                        android:text="Company Profile"
+                        android:drawableStart="@drawable/ic_sum_linear_black_24dp"
+                        android:text="@string/company_profile_label"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -163,10 +163,10 @@
                         android:id="@+id/company_profile"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginRight="4dp"
-                        android:gravity="top|left"
-                        android:hint="Summery About This Company.."
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="top|start"
+                        android:hint="@string/company_summery_hint"
                         android:inputType="textCapSentences|textMultiLine"
                         android:lines="8"
                         android:maxLines="20"
@@ -195,7 +195,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Go To App "
+                        android:text="@string/goToApp_btn_text"
                         android:textColor="@color/colorWhite"
                         android:textSize="18sp" />
                 </RelativeLayout>

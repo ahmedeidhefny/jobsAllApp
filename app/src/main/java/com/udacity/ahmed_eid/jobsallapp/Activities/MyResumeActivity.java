@@ -61,7 +61,7 @@ public class MyResumeActivity extends AppCompatActivity {
     ContentLoadingProgressBar progressBar;
     @BindView(R.id.progress_layout)
     RelativeLayout progressLayout;
-    private Uri fileUri;
+    Uri fileUri;
     private String pdf = null;
 
     @BindView(R.id.pdf_viewer)
@@ -110,7 +110,7 @@ public class MyResumeActivity extends AppCompatActivity {
     }
 
     private void showErrorMassage() {
-        Toast.makeText(this, "Not Found Data", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.massage_data_error, Toast.LENGTH_LONG).show();
         finish();
     }
 
@@ -130,7 +130,7 @@ public class MyResumeActivity extends AppCompatActivity {
 //                    //Uri uri = Uri.parse(pdf);
 //                    //showFileWebView.getSettings().setJavaScriptEnabled(true);
 //                    //showFileWebView.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + url);
-                    new RetrivePdfStreame().execute(pdf);
+                    new RetreivePdfStreame().execute(pdf);
                 } else {
                     if (mAuth.getCurrentUser().getUid().equals(employeeId)) {
                         AddFileBtn.setVisibility(View.VISIBLE);
@@ -147,7 +147,7 @@ public class MyResumeActivity extends AppCompatActivity {
         });
     }
 
-    public class RetrivePdfStreame extends AsyncTask<String, Void, InputStream> {
+    private class RetreivePdfStreame extends AsyncTask<String, Void, InputStream> {
 
         @Override
         protected InputStream doInBackground(String... strings) {
@@ -201,16 +201,16 @@ public class MyResumeActivity extends AppCompatActivity {
                 selectAndUploadFile();
                 break;
             case R.id.app_bar_download:
-                alertBuilder.setTitle("Download CV File !");
-                alertBuilder.setMessage("Are You Sure You Want To Download This CV File ?");
+                alertBuilder.setTitle(getString(R.string.alertDialog_download_title));
+                alertBuilder.setMessage(getString(R.string.alertDialog_download_massage));
                 alertBuilder.setIcon(R.drawable.ic_file_download_black_24dp);
-                alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                alertBuilder.setPositiveButton(R.string.alertDialog_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         downloadFile();
                     }
                 });
-                alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                alertBuilder.setNegativeButton(R.string.alertDialog_no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -219,16 +219,16 @@ public class MyResumeActivity extends AppCompatActivity {
                 alertBuilder.show();
                 break;
             case R.id.app_bar_delete:
-                alertBuilder.setTitle("Delete CV File !");
+                alertBuilder.setTitle(getString(R.string.alertDialog_deleteFile_title));
                 alertBuilder.setIcon(R.drawable.delete);
-                alertBuilder.setMessage("Are You Sure You Want To Delete This CV File ?");
-                alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                alertBuilder.setMessage(getString(R.string.alertDialog_deleteFile_massage));
+                alertBuilder.setPositiveButton(R.string.alertDialog_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         deleteCV();
                     }
                 });
-                alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                alertBuilder.setNegativeButton(R.string.alertDialog_no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -262,7 +262,7 @@ public class MyResumeActivity extends AppCompatActivity {
                 } else {
                     String error = task.getException().getMessage();
                     Log.e(TAG, "Error: " + error);
-                    Toast.makeText(getApplicationContext(), "Filed to Delete The CV File..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -275,12 +275,12 @@ public class MyResumeActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "The CV File Successfully Deleted.. ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.massage_delete_cv, Toast.LENGTH_SHORT).show();
                     startActivity(getIntent());
                 } else {
                     String error = task.getException().getMessage();
                     Log.e(TAG, "Error: " + error);
-                    Toast.makeText(getApplicationContext(), "Filed to Delete The CV File..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.massage_delete_cv_error, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -293,7 +293,7 @@ public class MyResumeActivity extends AppCompatActivity {
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             long reference = downloadManager.enqueue(request);
         } else {
-            Toast.makeText(this, "Not Found CV File", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.massage_found_cv_error, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -312,7 +312,7 @@ public class MyResumeActivity extends AppCompatActivity {
         if (requestCode == PERMISSION_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             selectFile();
         } else {
-            Toast.makeText(this, "Please Enable Storage Permission ..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.massage_enable_permission, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -329,13 +329,13 @@ public class MyResumeActivity extends AppCompatActivity {
             fileUri = data.getData();
             uploadFile(fileUri);
         } else {
-            Toast.makeText(this, "Please Select a File", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.massage_select_file, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void uploadFile(Uri fileUri) {
         if (fileUri != null) {
-            progressDialog.setTitle("Uploading File...");
+            progressDialog.setTitle(R.string.massage_progressDialog_title);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setProgress(0);
             progressDialog.show();
@@ -363,13 +363,13 @@ public class MyResumeActivity extends AppCompatActivity {
                     } else {
                         String error = task.getException().getMessage();
                         Log.e(TAG, "Error: " + error);
-                        Toast.makeText(getApplicationContext(), "Filed to Upload The File..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.massage_upload_cv_error, Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                 }
             });
         } else {
-            Toast.makeText(this, "Please Select a File", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.massage_select_file, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -378,11 +378,11 @@ public class MyResumeActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "The File Successfully Uploaded.. ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.massage_upload, Toast.LENGTH_SHORT).show();
                 } else {
                     String error = task.getException().getMessage();
                     Log.e(TAG, "Error: " + error);
-                    Toast.makeText(getApplicationContext(), "Filed to Upload The File..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.massage_upload_cv_error, Toast.LENGTH_SHORT).show();
                 }
                 progressDialog.dismiss();
                 startActivity(getIntent());

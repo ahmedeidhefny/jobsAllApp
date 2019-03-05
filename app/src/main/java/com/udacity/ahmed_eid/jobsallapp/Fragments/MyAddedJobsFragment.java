@@ -1,7 +1,5 @@
 package com.udacity.ahmed_eid.jobsallapp.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,10 +29,8 @@ import java.util.ArrayList;
 
 public class MyAddedJobsFragment extends Fragment {
     private RecyclerView myAddedJobsRecycler;
-    DatabaseReference mDatabase;
-    String companyId ;
-
-    //FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private String companyId ;
 
 
     @Override
@@ -46,7 +41,7 @@ public class MyAddedJobsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView;
         myView = inflater.inflate(R.layout.fragment_my_added_jobs, container, false);
@@ -55,7 +50,6 @@ public class MyAddedJobsFragment extends Fragment {
             companyId = savedInstanceState.getString(AppConstants.SaveInstance_MyJobs_UserKey);
         }
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Jobs");
-        //mAuth = FirebaseAuth.getInstance();
         readAllMyAddedJobs();
         return myView;
 
@@ -95,7 +89,7 @@ public class MyAddedJobsFragment extends Fragment {
                     JobAdapter jobAdapter = new JobAdapter(getActivity(), jobs);
                     myAddedJobsRecycler.setAdapter(jobAdapter);
                 } else {
-                    Toast.makeText(getActivity(), "Not Found Jobs", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.massage_not_found_job, Toast.LENGTH_LONG).show();
                 }
             }
 

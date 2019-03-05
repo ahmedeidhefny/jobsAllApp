@@ -137,9 +137,6 @@ public class Employee implements Parcelable {
         return userId;
     }
 
-    public String getUserType() {
-        return userType;
-    }
 
     public String getEmployeeName() {
         return employeeName;

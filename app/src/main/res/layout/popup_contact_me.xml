@@ -27,8 +27,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/phone" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/phone"
+                        android:contentDescription="@string/content_des_phone"/>
 
                     <EditText
                         android:id="@+id/edit_phone_number"
@@ -36,7 +37,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Phone Number" />
+                        android:hint="@string/phone_number_label"
+                        android:inputType="phone"/>
 
                 </TableRow>
 
@@ -48,8 +50,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/whatsapp" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/whatsapp"
+                        android:contentDescription="@string/content_des_whatsApp"/>
 
                     <EditText
                         android:id="@+id/edit_whats_app"
@@ -57,7 +60,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="What's App" />
+                        android:hint="@string/content_des_whatsApp"
+                        android:inputType="phone"/>
 
                 </TableRow>
 
@@ -69,8 +73,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/mail" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/mail"
+                        android:contentDescription="@string/content_des_mail"/>
 
                     <EditText
                         android:id="@+id/edit_mail"
@@ -78,7 +83,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Mail" />
+                        android:hint="@string/content_des_mail"
+                        android:inputType="textEmailAddress"/>
 
                 </TableRow>
 
@@ -90,8 +96,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/facebook" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/facebook"
+                        android:contentDescription="@string/content_des_facebook"/>
 
                     <EditText
                         android:id="@+id/edit_facebook_link"
@@ -99,7 +106,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Facebook" />
+                        android:hint="@string/content_des_facebook"
+                        android:inputType="text"/>
 
                 </TableRow>
 
@@ -111,8 +119,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/twitter" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/twitter"
+                        android:contentDescription="@string/content_des_twitter"/>
 
                     <EditText
                         android:id="@+id/edit_twitter_link"
@@ -120,7 +129,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Twitter" />
+                        android:hint="@string/content_des_twitter"
+                        android:inputType="text"/>
 
                 </TableRow>
 
@@ -132,8 +142,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/linkedin" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/linkedin"
+                        android:contentDescription="@string/content_des_linkedIn"/>
 
                     <EditText
                         android:id="@+id/edit_linkedin_link"
@@ -141,7 +152,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Linked In" />
+                        android:hint="@string/content_des_linkedIn"
+                        android:inputType="text"/>
 
                 </TableRow>
             </TableLayout>
@@ -154,7 +166,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/btn_bold"
-                android:text="Edit"
+                android:text="@string/edit_btn_text"
                 android:textColor="@color/colorWhite" />
         </LinearLayout>
     </ScrollView>

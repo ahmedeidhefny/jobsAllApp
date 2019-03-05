@@ -21,7 +21,8 @@
                 android:layout_height="250dp"
                 android:layout_marginBottom="20dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/social" />
+                android:src="@drawable/social"
+                android:contentDescription="@string/content_des_icon"/>
 
             <TableLayout
                 android:layout_width="350dp"
@@ -37,8 +38,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/phone" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/phone"
+                        android:contentDescription="@string/content_des_phone"/>
 
                     <TextView
                         android:id="@+id/phone_number"
@@ -47,7 +49,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textColor="@color/colorBlack"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:background="@color/itemBackground"/>
 
                 </TableRow>
@@ -61,8 +63,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/whatsapp" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/whatsapp"
+                        android:contentDescription="@string/content_des_whatsApp"/>
 
                     <TextView
                         android:id="@+id/whats_app"
@@ -71,7 +74,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textColor="@color/colorBlack"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:background="@color/itemBackground"/>
 
                 </TableRow>
@@ -84,8 +87,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/mail" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/mail"
+                        android:contentDescription="@string/content_des_mail"/>
 
                     <TextView
                         android:id="@+id/mail"
@@ -94,7 +98,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textColor="@color/colorBlack"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:background="@color/itemBackground"/>
 
                 </TableRow>
@@ -107,8 +111,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/facebook" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/facebook"
+                        android:contentDescription="@string/content_des_facebook"/>
 
                     <TextView
                         android:id="@+id/facebok_link"
@@ -117,7 +122,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textColor="@color/colorBlack"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:background="@color/itemBackground"/>
 
                 </TableRow>
@@ -130,8 +135,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/twitter" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/twitter"
+                        android:contentDescription="@string/content_des_twitter"/>
 
                     <TextView
                         android:id="@+id/twitter_link"
@@ -140,7 +146,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textColor="@color/colorBlack"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:background="@color/itemBackground"/>
 
                 </TableRow>
@@ -153,8 +159,9 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/linkedin" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/linkedin"
+                        android:contentDescription="@string/content_des_linkedIn"/>
 
                     <TextView
                         android:id="@+id/linkedin_link"
@@ -163,7 +170,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textColor="@color/colorBlack"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:background="@color/itemBackground"/>
 
                 </TableRow>
@@ -178,7 +185,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/btn_bold"
-                android:text="Close"
+                android:text="@string/close_text"
                 android:textColor="@color/colorWhite" />
         </LinearLayout>
     </ScrollView>

@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="8dp">
@@ -36,7 +36,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_below="@+id/image_layout"
             android:layout_weight="1"
             android:gravity="center">
 
@@ -47,11 +46,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
-                android:layout_marginRight="4dp"
-                android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
+                android:layout_marginEnd="4dp"
+                android:drawableStart="@drawable/ic_mail_outline_black_24dp"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Email"
+                android:hint="@string/email_label"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -60,11 +59,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/user_email"
                 android:layout_centerHorizontal="true"
-                android:layout_marginRight="4dp"
-                android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                android:layout_marginEnd="4dp"
+                android:drawableStart="@drawable/ic_lock_outline_black_24dp"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Password"
+                android:hint="@string/password_label"
                 android:inputType="textPassword" />
 
             <RelativeLayout
@@ -79,9 +78,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="4dp"
-                    android:text="Forget a Password?"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/forget_pass_label"
                     android:textColor="@color/colorBlue"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -102,13 +100,14 @@
                     android:id="@+id/login_btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:clickable="true">
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Log In"
+                        android:text="@string/login_btn_text"
                         android:textColor="@color/colorWhite"
                         android:textSize="18sp" />
                 </RelativeLayout>
@@ -125,7 +124,7 @@
                     android:id="@+id/register_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New To Our App? "
+                    android:text="@string/newApp_label"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -134,8 +133,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:drawableRight="@drawable/ic_send_black_24dp"
-                    android:text="Register Here "
+                    android:focusable="true"
+                    android:drawableEnd="@drawable/ic_send_black_24dp"
+                    android:text="@string/register_here_label"
                     android:textColor="@color/colorBlue"
                     android:textSize="14sp" />
             </LinearLayout>

@@ -149,12 +149,16 @@ public class EmployeeRegisterActivity extends AppCompatActivity {
         String miritary = miritaryStatus.getText().toString();
 
         int checkedRadioButtonId = genderRadioGroup.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.male_radioBtn) {
-            gender = "Male";
-        } else if (checkedRadioButtonId == R.id.female_radioBtn) {
-            gender = "Female";
-        } else {
-            Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
+        switch (checkedRadioButtonId) {
+            case R.id.male_radioBtn:
+                gender = "Male";
+                break;
+            case R.id.female_radioBtn:
+                gender = "Female";
+                break;
+            default:
+                Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
+                break;
         }
         String userId = mAuth.getCurrentUser().getUid();
         Toast.makeText(this, "" + empCategory, Toast.LENGTH_SHORT).show();
@@ -162,7 +166,7 @@ public class EmployeeRegisterActivity extends AppCompatActivity {
             Employee employee = new Employee(userId, empyName, userType, jobTile, empPhone, gender, nat, empCountry, empCity, birthDate, empSummery, empCategory, miritary, marital);
             mDatabase.child(userId).setValue(employee);
             goToMainActivity();
-            Toast.makeText(getApplicationContext(), "YourDataSaved:Successfully..", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.massage_savedData, Toast.LENGTH_LONG).show();
         }
     }
 

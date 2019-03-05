@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.register_btn)
     RelativeLayout registerBtn;
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     @BindView(R.id.register_bar)
     ProgressBar registerBar;
 
@@ -89,7 +89,8 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "AccountCreated:Successfully..", Toast.LENGTH_LONG).show();
+
+                            Toast.makeText(getApplicationContext(), R.string.massage_account_created, Toast.LENGTH_LONG).show();
                             goToPopupUserType();
                         } else {
                             String massage = task.getException().getMessage();
@@ -98,13 +99,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                Toast.makeText(this, "Password and ConfirmPassword Field Doesn't Match..!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.massage_pass_confirmPass_notMatch, Toast.LENGTH_SHORT).show();
             }
         }
         registerBar.setVisibility(View.INVISIBLE);
     }
 
-    public void goToPopupUserType() {
+    private void goToPopupUserType() {
         TextView txtClose;
         Button btnNext;
         final RadioGroup radioGroup;
@@ -129,13 +130,17 @@ public class RegisterActivity extends AppCompatActivity {
         myDialog.show();
     }
 
-    public void checkedRadioButton(int radioButtonId) {
-        if (radioButtonId == R.id.employee_radioBtn) {
-            goToCompanyOrEmployeeRegisterActivity(EmployeeRegisterActivity.class);
-        } else if (radioButtonId == R.id.company_radioBtn) {
-            goToCompanyOrEmployeeRegisterActivity(CompanyRegisterActivity.class);
-        } else {
-            Toast.makeText(this, R.string.massage_notSeclect_userType, Toast.LENGTH_LONG).show();
+    private void checkedRadioButton(int radioButtonId) {
+        switch (radioButtonId) {
+            case R.id.employee_radioBtn:
+                goToCompanyOrEmployeeRegisterActivity(EmployeeRegisterActivity.class);
+                break;
+            case R.id.company_radioBtn:
+                goToCompanyOrEmployeeRegisterActivity(CompanyRegisterActivity.class);
+                break;
+            default:
+                Toast.makeText(this, R.string.massage_notSeclect_userType, Toast.LENGTH_LONG).show();
+                break;
         }
     }
 

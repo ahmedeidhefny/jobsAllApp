@@ -1,10 +1,8 @@
 package com.udacity.ahmed_eid.jobsallapp.Adapters;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.udacity.ahmed_eid.jobsallapp.Activities.EmployeeProfileActivity;
-import com.udacity.ahmed_eid.jobsallapp.Fragments.MyEmployeeProfileFragment;
 import com.udacity.ahmed_eid.jobsallapp.Model.AppliedJob;
 import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
@@ -24,8 +21,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AppliedPersonJobAdapter extends RecyclerView.Adapter<AppliedPersonJobAdapter.AppliedPersonViewHolder> {
 
-    Context mContext;
-    ArrayList<AppliedJob> appliedJobs;
+    private final Context mContext;
+    private final ArrayList<AppliedJob> appliedJobs;
 
     public AppliedPersonJobAdapter(Context mContext, ArrayList<AppliedJob> appliedJobs) {
         this.mContext = mContext;
@@ -66,11 +63,11 @@ public class AppliedPersonJobAdapter extends RecyclerView.Adapter<AppliedPersonJ
     }
 
     public class AppliedPersonViewHolder extends RecyclerView.ViewHolder {
-        TextView empName, empTitle;
-        CircleImageView empImage;
-        View itemView;
+        final TextView empName, empTitle;
+        final CircleImageView empImage;
+        final View itemView;
 
-        public AppliedPersonViewHolder(View itemView) {
+        private AppliedPersonViewHolder(View itemView) {
             super(itemView);
             empName = itemView.findViewById(R.id.itemApplied_user_name);
             empTitle = itemView.findViewById(R.id.itemApplied_user_job);

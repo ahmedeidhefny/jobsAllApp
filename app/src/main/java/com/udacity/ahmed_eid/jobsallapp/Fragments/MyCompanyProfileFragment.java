@@ -42,7 +42,6 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.udacity.ahmed_eid.jobsallapp.Activities.EditCompanyProfileActivity;
-import com.udacity.ahmed_eid.jobsallapp.Activities.EditEmployeeProfileActivity;
 import com.udacity.ahmed_eid.jobsallapp.Model.Company;
 import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
@@ -78,7 +77,7 @@ public class MyCompanyProfileFragment extends Fragment {
     @BindView(R.id.comp_add_image_icon)
     CircleImageView compAddImageIcon;
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.edit_comp_profile_btn)
     ImageView editCompProfileBtn;
     private FirebaseAuth mAuth;
@@ -109,7 +108,7 @@ public class MyCompanyProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_company_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -210,7 +209,7 @@ public class MyCompanyProfileFragment extends Fragment {
     private void pickImage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getActivity(), "Permission is denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.massage_permission_denied, Toast.LENGTH_SHORT).show();
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             } else {
                 BuildImagePicker();
@@ -275,9 +274,9 @@ public class MyCompanyProfileFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Uploaded The Image Successfully.. ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.massage_upload_image, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "Filed to Uploaded The Image..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.massage_upload_image_error, Toast.LENGTH_SHORT).show();
                     String error = task.getException().getMessage();
                     Log.e(TAG, "writeImageInRealTime:" + error);
                 }

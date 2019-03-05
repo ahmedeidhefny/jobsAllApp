@@ -100,9 +100,9 @@ public class EditJobActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         categoryNameText.setVisibility(View.VISIBLE);
         jobTypeText.setVisibility(View.VISIBLE);
-        textEditBtn.setText("Edit Job");
-        jobSpinner.setHint("Change Category...");
-        jobTypeSpinner.setHint("Change Job Type...");
+        textEditBtn.setText(getString(R.string.edit_job_label));
+        jobSpinner.setHint(getString(R.string.change_category_label));
+        jobTypeSpinner.setHint(getString(R.string.job_type_label));
         mDatabase = FirebaseDatabase.getInstance().getReference();
         setSpinnersWithAdapters();
         receiveJobFromJobDetails();
@@ -180,12 +180,16 @@ public class EditJobActivity extends AppCompatActivity {
             expiryDate.setText(job.getExpireDate());
 
             this.gender = job.getGender();
-            if (gender.equals("Male")) {
-                maleRadioBtn.setChecked(true);
-            } else if (gender.equals("Female")) {
-                femaleRadioBtn.setChecked(true);
-            } else if (gender.equals("Male & Female")) {
-                bothRadioBtn.setChecked(true);
+            switch (gender) {
+                case "Male":
+                    maleRadioBtn.setChecked(true);
+                    break;
+                case "Female":
+                    femaleRadioBtn.setChecked(true);
+                    break;
+                case "Male & Female":
+                    bothRadioBtn.setChecked(true);
+                    break;
             }
             this.category = job.getCategory();
             categoryNameText.setText("Category:   " + category);
@@ -219,25 +223,30 @@ public class EditJobActivity extends AppCompatActivity {
         String exDate = expiryDate.getText().toString();
 
         int checkedRadioButtonId = jobGenderRadioGroup.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.male_radioBtn) {
-            this.gender = "Male";
-        } else if (checkedRadioButtonId == R.id.female_radioBtn) {
-            this.gender = "Female";
-        } else if (checkedRadioButtonId == R.id.both_radioBtn) {
-            this.gender = "Male & Female";
-        } else {
-            Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
+        switch (checkedRadioButtonId) {
+            case R.id.male_radioBtn:
+                this.gender = "Male";
+                break;
+            case R.id.female_radioBtn:
+                this.gender = "Female";
+                break;
+            case R.id.both_radioBtn:
+                this.gender = "Male & Female";
+                break;
+            default:
+                Toast.makeText(this, R.string.massage_notSeclect_gender, Toast.LENGTH_LONG).show();
+                break;
         }
         Job job = new Job(jobId, companyId, title, category, gender, age, sal, exDate, vanNum, jMin, jMax, level, jobType, nat, country, city, des, req);
         mDatabase.child("Jobs").child(jobId).setValue(job).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(EditJobActivity.this, "Job Edit Successfully..!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(EditJobActivity.this, "Please, Load Your Page To Update Data..!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditJobActivity.this, R.string.massage_edit, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditJobActivity.this, R.string.massage_loadPage, Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(EditJobActivity.this, "Filed To Edit Job ..!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditJobActivity.this, R.string.massage_edit_error, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

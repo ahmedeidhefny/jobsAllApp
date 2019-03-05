@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/itemBackground"
+    android:id="@+id/layout"
     android:padding="@dimen/widget_margin">
 
     <RelativeLayout
@@ -11,8 +11,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="JobsAll"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -20,8 +19,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/layout">
+        android:layout_height="match_parent">
 
         <StackView
             android:id="@+id/widget_stack_view"
@@ -36,7 +34,7 @@
             android:background="@drawable/gradient_btn"
             android:gravity="center"
             android:visibility="visible"
-            android:text="Empty"
+            android:text="@string/empty_label"
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold" />

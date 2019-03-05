@@ -95,10 +95,6 @@ public class Company implements Parcelable {
         return userId;
     }
 
-    public String getUserType() {
-        return userType;
-    }
-
     public String getCompLogo() {
         return compLogo;
     }

@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <include
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       layout="@layout/partial_no_internet_connection"></include>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/partial_no_internet_connection" />
 
     <include
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        layout="@layout/partial_progress_bar_loading"></include>
+        layout="@layout/partial_progress_bar_loading" />
 
     <FrameLayout
         android:id="@+id/container_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent" />
 </RelativeLayout>

@@ -72,7 +72,7 @@ public class MyEmployeeProfileFragment extends Fragment {
     Button myResumeBtn;
     @BindView(R.id.contactMe_btn)
     Button contactMeBtn;
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.profile_emp_gender)
     TextView profileEmpGender;
     @BindView(R.id.profile_emp_military)
@@ -121,7 +121,7 @@ public class MyEmployeeProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView;
         myView = inflater.inflate(R.layout.fragment_my_employee_profile, container, false);
@@ -239,7 +239,7 @@ public class MyEmployeeProfileFragment extends Fragment {
     private void pickImage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getActivity(), "Permission is denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.massage_permission_denied, Toast.LENGTH_SHORT).show();
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             } else {
                 BuildImagePicker();
@@ -306,9 +306,9 @@ public class MyEmployeeProfileFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Uploaded The Image Successfully.. ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.massage_upload_image, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "Filed to Uploaded The Image..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.massage_upload_image_error, Toast.LENGTH_SHORT).show();
                     String error = task.getException().getMessage();
                     Log.e(TAG, "writeImageInRealTime:" + error);
                 }

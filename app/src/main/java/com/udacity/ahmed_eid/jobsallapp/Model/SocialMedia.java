@@ -17,9 +17,6 @@ public class SocialMedia {
         this.empId = empId;
     }
 
-    public String getEmpId() {
-        return empId;
-    }
 
     public String getMail() {
         return mail;

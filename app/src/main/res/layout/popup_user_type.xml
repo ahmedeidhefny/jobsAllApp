@@ -14,7 +14,7 @@
         android:layout_gravity="end"
         android:background="@drawable/circle_background"
         android:gravity="center"
-        android:text="X"
+        android:text="@string/popup_close_btn_text"
         android:textColor="@color/colorWhite"
         android:textStyle="bold" />
 
@@ -22,15 +22,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/person" />
+        android:src="@drawable/person"
+        android:contentDescription="@string/content_des_icon"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Who are you ?Chosse Only one."
+        android:text="@string/userType_question_label"
         android:textColor="@color/colorWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <RadioGroup
@@ -46,10 +47,10 @@
             android:layout_height="wrap_content"
             android:button="@drawable/radio_btn_background"
             android:drawablePadding="20dp"
-            android:paddingLeft="10dp"
-            android:text="Vacancy Employee"
+            android:paddingStart="10dp"
+            android:text="@string/employee_label"
             android:textColor="@drawable/radio_btn_colortext"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
@@ -59,10 +60,10 @@
             android:layout_height="wrap_content"
             android:button="@drawable/radio_btn_background"
             android:drawablePadding="20dp"
-            android:paddingLeft="10dp"
-            android:text="Company"
+            android:paddingStart="10dp"
+            android:text="@string/company_label"
             android:textColor="@drawable/radio_btn_colortext"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textStyle="bold" />
     </RadioGroup>
 
@@ -73,6 +74,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:background="@drawable/btn_stroke_background"
-        android:text="Next"
+        android:text="@string/next_btn_text"
         android:textColor="@color/colorWhite" />
 </LinearLayout>

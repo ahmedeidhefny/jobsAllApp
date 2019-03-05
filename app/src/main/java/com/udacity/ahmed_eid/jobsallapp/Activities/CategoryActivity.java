@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class CategoryActivity extends AppCompatActivity {
     @BindView(R.id.categoryRecycler)
-    RecyclerView categoryRecycler;
+     RecyclerView categoryRecycler;
     private String categoryName;
     private DatabaseReference mDatabase;
 
@@ -54,7 +54,7 @@ public class CategoryActivity extends AppCompatActivity {
                     }
                     setRecyclerAndAdapter(jobs);
                 } else
-                    Toast.makeText(CategoryActivity.this, "Not Found Jobs", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CategoryActivity.this, getString(R.string.massage_not_found_job), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -65,7 +65,7 @@ public class CategoryActivity extends AppCompatActivity {
         });
     }
 
-    public void setRecyclerAndAdapter(ArrayList<Job> jobs) {
+    private void setRecyclerAndAdapter(ArrayList<Job> jobs) {
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         categoryRecycler.setLayoutManager(manager);
         JobAdapter adapter = new JobAdapter(getApplicationContext(), jobs);

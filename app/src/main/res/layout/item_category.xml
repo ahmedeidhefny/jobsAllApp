@@ -18,7 +18,8 @@
             android:id="@+id/item_catg_icon"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:contentDescription="@string/content_des_icon"/>
 
         <TextView
             android:id="@+id/item_catg_name"
@@ -26,9 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="RealState"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/colorWhite"></TextView>
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
 </RelativeLayout>

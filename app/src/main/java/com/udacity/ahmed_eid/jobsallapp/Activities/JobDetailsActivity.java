@@ -38,8 +38,6 @@ import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,8 +103,7 @@ public class JobDetailsActivity extends AppCompatActivity {
     private String userType = null;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private Menu menu = null;
-    private AlertDialog.Builder alertBuilder ;
+    private AlertDialog.Builder alertBuilder;
 
 
     @Override
@@ -138,13 +135,13 @@ public class JobDetailsActivity extends AppCompatActivity {
         if (intent.hasExtra(AppConstants.INTENT_JobAdapterCompNameKey)
                 && intent.hasExtra(AppConstants.INTENT_JobAdapterCompLogoKey)) {
             String comName = intent.getStringExtra(AppConstants.INTENT_JobAdapterCompNameKey);
-            if (!TextUtils.isEmpty(comName)){
+            if (!TextUtils.isEmpty(comName)) {
                 jobDetailsCompName.setText(comName);
                 jobDetailsCompName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), CompanyProfileActivity.class);
-                        intent.putExtra(AppConstants.INTENT_CompanyIdKey,companyId);
+                        intent.putExtra(AppConstants.INTENT_CompanyIdKey, companyId);
                         startActivity(intent);
                     }
                 });
@@ -166,7 +163,6 @@ public class JobDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_details_activity, menu);
-        this.menu = menu;
         return true;
     }
 
@@ -184,19 +180,19 @@ public class JobDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.detail_edit) {
-            editJob(jobId);
+            editJob();
             return true;
         } else if (item.getItemId() == R.id.detail_delete) {
-            alertBuilder.setTitle("Delete Job !");
+            alertBuilder.setTitle(getString(R.string.alertDialog_deleteJob_title));
             alertBuilder.setIcon(R.drawable.delete);
-            alertBuilder.setMessage("Are You Sure You Want To Delete This Job ?");
-            alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            alertBuilder.setMessage(getString(R.string.alertDialog_deleteJob_massage));
+            alertBuilder.setPositiveButton(R.string.alertDialog_yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     deleteJob(jobId);
                 }
             });
-            alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            alertBuilder.setNegativeButton(R.string.alertDialog_no, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -241,7 +237,7 @@ public class JobDetailsActivity extends AppCompatActivity {
         finish();
     }
 
-    private void editJob(String jobId) {
+    private void editJob() {
         Intent editIntent = new Intent(getApplicationContext(), EditJobActivity.class);
         editIntent.putExtra(AppConstants.INTENT_JobDetailsKey, job);
         startActivity(editIntent);
@@ -280,7 +276,7 @@ public class JobDetailsActivity extends AppCompatActivity {
                 if (userType.equals("Employee")) {
                     handleApplyToJob(jobId);
                 } else {
-                    Toast.makeText(JobDetailsActivity.this, "You Are Company, Not Available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JobDetailsActivity.this, R.string.massage_company_notVaild, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -295,7 +291,6 @@ public class JobDetailsActivity extends AppCompatActivity {
 
     private void readAppliedUsersInThisJobInRecycler(final String jobId) {
         final ArrayList<AppliedJob> appliedJobsArr = new ArrayList<>();
-        final ArrayList<String> strings = new ArrayList<>();
         mDatabase.child("ApplyJobs").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -325,8 +320,6 @@ public class JobDetailsActivity extends AppCompatActivity {
             jobDetailsAppliedRecycler.setLayoutManager(manager);
             AppliedPersonJobAdapter adapter = new AppliedPersonJobAdapter(getApplicationContext(), appliedJobsArr);
             jobDetailsAppliedRecycler.setAdapter(adapter);
-        } else {
-
         }
 
     }
@@ -478,12 +471,12 @@ public class JobDetailsActivity extends AppCompatActivity {
     }
 
     private void backgroundApplyBtnExistsToggle() {
-        textApplyBtn.setText("Already, Applied To This Job");
+        textApplyBtn.setText(getString(R.string.after_apply_btn_text));
         applyBtn.setBackgroundColor(Color.parseColor("#dc1125"));
     }
 
     private void backgroundApplyBtnNOTExistsToggle() {
-        textApplyBtn.setText("Apply To This Job");
+        textApplyBtn.setText(getString(R.string.apply_btn_text));
         applyBtn.setBackgroundColor(Color.parseColor("#6AB819"));
     }
 

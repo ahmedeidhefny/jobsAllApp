@@ -11,18 +11,17 @@ import com.udacity.ahmed_eid.jobsallapp.Model.Job;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Widget_MangeDataHelper {
 
-    public static final String SHARED_PREFERENCES_NAME = "widget_name";
-    public static final String SHARED_PREFERENCES_Key= "widget_key";
+    private static final String SHARED_PREFERENCES_NAME = "widget_name";
+    private static final String SHARED_PREFERENCES_Key= "widget_key";
     private static final String TAG = "Widget_MangeDataHelper";
 
-    SharedPreferences sharedPreferences ;
-    SharedPreferences.Editor editor ;
-    Gson gson ;
+    private SharedPreferences sharedPreferences ;
+    private SharedPreferences.Editor editor ;
+    private Gson gson ;
 
     public Widget_MangeDataHelper(Context context) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME,0);
@@ -42,7 +41,7 @@ public class Widget_MangeDataHelper {
 
     private void addInShared(ArrayList<Job> jobs) {
         String gsonJobsString = gson.toJson(jobs);
-        Log.e(TAG, gsonJobsString);
+        //Log.e(TAG, gsonJobsString);
         editor.putString(SHARED_PREFERENCES_Key, gsonJobsString);
         editor.commit();
         Log.e(TAG, "Added Recipe Object In SharedPref Successfully..!");

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.udacity.ahmed_eid.jobsallapp.Fragments.MyCompanyProfileFragment;
-import com.udacity.ahmed_eid.jobsallapp.Fragments.MyEmployeeProfileFragment;
 import com.udacity.ahmed_eid.jobsallapp.R;
 import com.udacity.ahmed_eid.jobsallapp.Utilites.AppConstants;
 
@@ -45,7 +44,7 @@ public class CompanyProfileActivity extends AppCompatActivity {
 
 
     private void showErrorMassage() {
-        Toast.makeText(this, "NO Found Data", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.massage_data_error, Toast.LENGTH_SHORT).show();
         finish();
     }
 }

@@ -12,27 +12,56 @@
     <string name="nav_close">Close</string>
 
     <string name="content_des_logo">JobsAll</string>
+    <string name="content_des_company_logo">Company Logo</string>
+    <string name="content_des_employee_profile">Employee Profile</string>
+    <string name="content_des_save_image">Save Job</string>
+    <string name="content_des_facebook">Facebook</string>
+    <string name="content_des_whatsApp">Whats App</string>
+    <string name="content_des_phone">Phone</string>
+    <string name="content_des_linkedIn">Linked In</string>
+    <string name="content_des_twitter">Twitter</string>
+    <string name="content_des_mail">Mail</string>
+    <string name="content_des_noInternet_image">No Internet</string>
+
+    <string name="noInternet_header_massage">Whoops!</string>
+    <string name="noInternet_massage">No Internet Connection, Make Sure Wi-Fi or Cellular-data is turned On, Then Try Agin  ..</string>
+    <string name="content_des_icon">Icon</string>
     <string name="massage_notSeclect_userType">Please, Select UserType?</string>
     <string name="massage_notSeclect_gender">Please, Select GenderType?</string>
     <string name="massage_user_error">Not Have User Data</string>
     <string name="massage_job_error">Not Have Job Data</string>
-    <string name="massage_category_error">Not Category Data</string>
-    <string-array name="subCategories">
-        <item>Android Developer</item>
-        <item>IOS Developer</item>
-        <item>Java Developer</item>
-        <item>Python Developer</item>
-        <item>PHP Developer</item>
-        <item>ASP.NET Developer</item>
-        <item>WordPress Developer</item>
-        <item>UI/UX Developer</item>
-        <item>Oracle Developer</item>
-        <item>Database Developer</item>
-        <item>System Analyst Developer</item>
-        <item>Developer</item>
-        <item>Other Jobs</item>
-    </string-array>
+    <string name="massage_data_error">Not Have Data</string>
+    <string name="massage_found_cv_error">Not Found CV File</string>
+    <string name="massage_delete_cv_error">Filed to Delete The CV File..</string>
+    <string name="massage_upload_cv_error">Filed to Upload The File..</string>
+    <string name="massage_upload">The File Successfully Uploaded..</string>
+    <string name="massage_delete_cv">The CV File Successfully Deleted.. </string>
+    <string name="massage_post_job">Post New Job: Successfully..</string>
+    <string name="massage_enable_permission">Please Enable Storage Permission..</string>
+    <string name="massage_select_file">Please Select a File</string>
+    <string name="massage_progressDialog_title">Uploading File...</string>
+    <string name="massage_not_found_job">Not Found Jobs...</string>
+    <string name="massage_upload_image">Uploaded The Image Successfully..</string>
+    <string name="massage_upload_image_error">Filed to Uploaded The Image..</string>
+    <string name="massage_company_notVaild">You Are Company, Not Available</string>
+    <string name="massage_search_enter_job">Enter Job Name !</string>
+    <string name="massage_permission_denied">Permission is denied</string>
+    <string name="massage_account_created">AccountCreated:Successfully..</string>
+    <string name="massage_pass_confirmPass_notMatch">Password and ConfirmPassword Field Doesnot Match..!</string>
+    <string name="massage_edit">Edit Your Data Successfully..!</string>
+    <string name="massage_edit_error">Filed To Edit Your Data!</string>
+    <string name="massage_signIn">SignIn Success..</string>
+    <string name="massage_loadPage">Please, Load Your Page To Update Data..!</string>
+    <string name="massage_savedData">YourDataSaved:Successfully..</string>
 
+    <string name="alertDialog_download_title">Download CV File !</string>
+    <string name="alertDialog_download_massage">Are You Sure You Want To Download This CV File ?</string>
+    <string name="alertDialog_yes">Yes</string>
+    <string name="alertDialog_no">No</string>
+    <string name="alertDialog_deleteFile_title">Delete CV File !</string>
+    <string name="alertDialog_deleteFile_massage">Are You Sure You Want To Delete This CV File ?</string>
+    <string name="alertDialog_deleteJob_title">Delete Job !</string>
+    <string name="alertDialog_deleteJob_massage">Are You Sure You Want To Delete This Job ?</string>
     <string-array name="categories">
         <item>Program Development</item>
         <item>IT</item>
@@ -53,7 +82,89 @@
         <item>Volunteer</item>
         <item>Temporary</item>
     </string-array>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
 
+    <string name="app_bar_download_cv">Download CV</string>
+    <string name="app_bar_change_cv">Change CV</string>
+    <string name="app_bar_delete_cv">Delete CV</string>
+    <string name="app_bar_close">Close</string>
+    <string name="app_bar_edit">Edit</string>
+    <string name="app_bar_edit_job">Edit Job</string>
+    <string name="app_bar_delete_job">Delete Job</string>
+    <string name="app_bar_search">Search</string>
+
+    <string name="job_description_label">Job Description</string>
+    <string name="job_requirement_label">Job Requirement</string>
+    <string name="applied_person_label">Applied Persons</string>
+    <string name="company_profile_label">Company Profile</string>
+    <string name="founder_date_label">Founded Date: </string>
+    <string name="company_jobs_label">Company Jobs</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="conform_password_label">Confirm Password</string>
+    <string name="personal_info_label">Personal Inf</string>
+    <string name="gender_label">Gender</string>
+    <string name="military_status_label">Military Status</string>
+    <string name="marital_status_label">Marital Status</string>
+    <string name="birth_date_label">Birth Of Date</string>
+    <string name="nationality_label">Nationality</string>
+    <string name="country_label">Country</string>
+    <string name="city_label">City</string>
+    <string name="full_name_hint">FullName</string>
+    <string name="job_title_hint">Job Title.. ex.Android Developer</string>
+    <string name="male_label">Male</string>
+    <string name="female_label">Female</string>
+    <string name="phone_number_label">Phone Number</string>
+    <string name="location_label">Location</string>
+    <string name="summery_label">Summery</string>
+    <string name="summery_hint">Summery about you. Only in 3 lines</string>
+    <string name="companyName_label">Company Name</string>
+    <string name="website_label">Website Link</string>
+    <string name="founder_date_text_label">Founded Date</string>
+    <string name="company_summery_hint">Summery About This Company..</string>
+    <string name="search_hint">Search About Job</string>
+    <string name="empty_label">Empty</string>
+    <string name="position_title_label">Position Title</string>
+    <string name="vacancies_num_label">Vacancies Number</string>
+    <string name="year_experience_label">Year Of Experience</string>
+    <string name="min_label">Min</string>
+    <string name="max_label">Max</string>
+    <string name="salary_label">Job Salary</string>
+    <string name="degree_label">Degree(Education) Level</string>
+    <string name="apply_gender_label">Apply Gender</string>
+    <string name="gender_both_label">Both</string>
+    <string name="expiry_date_label">Expiry Date</string>
+    <string name="age_hint">Apply Age Ex.22 - 30</string>
+    <string name="job_des_hint">Summery About The Job Description..</string>
+    <string name="job_req_hint">Summery About The Job Requirement..</string>
+    <string name="userType_question_label">Who are you ?Choose Only one.</string>
+    <string name="employee_label">Vacancy Employee</string>
+    <string name="company_label">Company</string>
+    <string name="forget_pass_label">Forget a Password?</string>
+    <string name="newApp_label">New To Our App? </string>
+    <string name="register_here_label"> Register Here </string>
+    <string name="job_details_label">Job Details</string>
+    <string name="category_label">Category</string>
+    <string name="employment_label">Employment Type</string>
+    <string name="age_label">Age</string>
+    <string name="unspecified_label">Unspecified</string>
+    <string name="edit_profile_label">Edit Profile</string>
+    <string name="edit_job_label">Edit Job</string>
+    <string name="change_category_label">Change Category...</string>
+    <string name="job_type_label">Change Job Type...</string>
+
+    <string name="retry_btn_text">retry</string>
+    <string name="register_btn_text">Register</string>
+    <string name="view_job_btn_text">View Job</string>
+    <string name="apply_btn_text">Apply To This Job!</string>
+    <string name="after_apply_btn_text">Already, Applied To This Job!</string>
+    <string name="goToApp_btn_text">Go To App </string>
+    <string name="myResume_btn_text">my Resume</string>
+    <string name="contactMe_btn_text">Contact Me</string>
+    <string name="edit_btn_text">Edit</string>
+    <string name="close_text">Close</string>
+    <string name="post_job_btn_text">Post New Job </string>
+    <string name="add_file_btn_text">add file</string>
+    <string name="next_btn_text">Next</string>
+    <string name="login_btn_text">Log In</string>
+    <string name="popup_close_btn_text">X</string>
 </resources>
