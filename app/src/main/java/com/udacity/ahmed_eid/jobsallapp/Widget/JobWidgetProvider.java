@@ -1,4 +1,4 @@
-package com.udacity.ahmed_eid.jobsallapp;
+package com.udacity.ahmed_eid.jobsallapp.Widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -10,6 +10,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.udacity.ahmed_eid.jobsallapp.Activities.MainScreenWithNavigation;
+import com.udacity.ahmed_eid.jobsallapp.R;
 
 
 public class JobWidgetProvider extends AppWidgetProvider {

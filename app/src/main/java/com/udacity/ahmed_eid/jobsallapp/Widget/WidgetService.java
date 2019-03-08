@@ -1,4 +1,4 @@
-package com.udacity.ahmed_eid.jobsallapp;
+package com.udacity.ahmed_eid.jobsallapp.Widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -9,8 +9,10 @@ import android.os.SystemClock;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.udacity.ahmed_eid.jobsallapp.Activities.MainScreenWithNavigation;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
+import com.udacity.ahmed_eid.jobsallapp.R;
 
 import java.util.ArrayList;
 
@@ -24,31 +26,23 @@ public class WidgetService extends RemoteViewsService {
         private final Context mContext;
         int appWidgetId;
         ArrayList<Job> tenJobs;
+        FirebaseAuth mAuth ;
 
         public WidgetItemFactory(Context mContext, Intent intent) {
             this.mContext = mContext;
             this.appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
             tenJobs = new ArrayList<>();
-//            {{
-//                add("android");
-//                add("python");
-//                add("ios");
-//                add("php");
-//                add(".net");
-//            }};
+            mAuth = FirebaseAuth.getInstance();
         }
 
         @Override
         public void onCreate() {
-            Widget_MangeDataHelper mangeDataHelper = new Widget_MangeDataHelper(getApplicationContext());
-            tenJobs = mangeDataHelper.getDataWidget();
+            //Widget_MangeDataHelper mangeDataHelper = new Widget_MangeDataHelper(getApplicationContext());
+            if(mAuth.getCurrentUser().getUid() != null) {
+               // tenJobs = mangeDataHelper.getDataWidget();
+            }
             SystemClock.sleep(3000);
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
 
         }
 

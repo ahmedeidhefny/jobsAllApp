@@ -46,7 +46,7 @@
         <activity android:name=".Activities.CategoryActivity" />
         <activity android:name=".Activities.MyResumeActivity" />
 
-        <receiver android:name=".JobWidgetProvider">
+        <receiver android:name=".Widget.JobWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -57,7 +57,7 @@
         </receiver>
 
         <service
-            android:name=".WidgetService"
+            android:name=".Widget.WidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 

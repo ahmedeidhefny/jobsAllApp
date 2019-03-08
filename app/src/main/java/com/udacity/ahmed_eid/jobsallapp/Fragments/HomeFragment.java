@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.udacity.ahmed_eid.jobsallapp.Adapters.JobAdapter;
 import com.udacity.ahmed_eid.jobsallapp.Model.Job;
 import com.udacity.ahmed_eid.jobsallapp.R;
-import com.udacity.ahmed_eid.jobsallapp.Widget_MangeDataHelper;
+import com.udacity.ahmed_eid.jobsallapp.Widget.Widget_MangeDataHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -134,7 +134,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void saveDataToShardPreferenceByWidget(ArrayList<Job> jobs) {
-        Widget_MangeDataHelper mangeDataHelper = new Widget_MangeDataHelper(getActivity());
-        mangeDataHelper.setDataWidget(jobs);
+        //Widget_MangeDataHelper mangeDataHelper = new Widget_MangeDataHelper(getActivity());
+       // mangeDataHelper.setDataWidget(jobs);
     }
 }
