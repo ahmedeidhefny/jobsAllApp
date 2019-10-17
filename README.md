@@ -20,6 +20,11 @@
 <img src="https://user-images.githubusercontent.com/39660065/67005250-7a801400-f0e2-11e9-83a0-57441ea1f043.png" width="100" heigh="200"/> <img src="https://user-images.githubusercontent.com/39660065/67005238-781dba00-f0e2-11e9-9ad6-ad9ab3e30fb0.png" width="100" heigh="200"/> <img src="https://user-images.githubusercontent.com/39660065/67005239-78b65080-f0e2-11e9-92fb-66b85af66df9.png" width="100" heigh="200"/> <img src="https://user-images.githubusercontent.com/39660065/67005237-781dba00-f0e2-11e9-8c74-edb5ca3bdde3.png" width="100" heigh="200"/> <img src="https://user-images.githubusercontent.com/39660065/67005236-781dba00-f0e2-11e9-8b9e-6663fde3cf24.png" width="100" heigh="200"/> <img src="https://user-images.githubusercontent.com/39660065/67005240-78b65080-f0e2-11e9-9722-d3a4f37d752d.png" width="100" heigh="200"/> <img src="https://user-images.githubusercontent.com/39660065/67005242-78b65080-f0e2-11e9-98ea-8824a0331003.png" width="100" heigh="200"/> <img src="https://user-images.githubusercontent.com/39660065/67005243-794ee700-f0e2-11e9-891c-a6859eb0510b.png" width="100" heigh="200"/> 
  
 
-### ................
-- Used Firebase as backend server (RealTime. Auth, Storage).
+### ................ 
+- Programming Language is Java.
+- Used Firebase as backend server (RealTime, Authentication, Storage).
+- Integrate Third-party Libraries in app.
+- Custom Views.
+
+
 
