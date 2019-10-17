@@ -15,7 +15,7 @@
 - Add/Edit company profile and info. 
 - Add/Edit/Delete information about jobs.
 
-<img src="Screenshot_20190319-000321.png" width="300" heigh="500"/><img src="Screenshot_20190319-000321.png" width="300" heigh="500"/><img src="Screenshot_20190319-000321.png" width="300" heigh="500"/>
+<img src="Screenshot_20190319-000321.png" width="100" heigh="200"/>
 
 ### ................
 - Used Firebase as backend server (RealTime. Auth, Storage).
